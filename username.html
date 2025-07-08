@@ -11,6 +11,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center; /* 위아래 가운데 정렬 */
+  min-height: 100vh;       /* 화면 전체 높이 */
 }
 canvas {
   display: block;
@@ -18,13 +20,14 @@ canvas {
   background: transparent;
   cursor: crosshair;
   touch-action: none;
+  margin: 20px auto;
 }
 .controls {
-  margin-top: 10px;
   display: flex;
-  gap: 10px;
-  align-items: center;
+  justify-content: center; /* 가로 가운데 정렬 */
   flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 button {
   padding: 8px 16px;
@@ -67,7 +70,7 @@ let isErasing = false;
 // 캔버스 크기 고정
 function resizeCanvas() {
   const width = 700;
-  const height = 400;
+  const height = 500;
   canvas.width = width;
   canvas.height = height;
   canvas.style.width = width + "px";
@@ -102,11 +105,11 @@ function drawLine(x1, y1, x2, y2) {
   if (isErasing) {
     ctx.globalCompositeOperation = 'destination-out';
     ctx.strokeStyle = 'rgba(0,0,0,1)';
-    ctx.lineWidth = 30;
+    ctx.lineWidth = 25; // 지우개 두께
   } else {
     ctx.globalCompositeOperation = 'source-over';
     ctx.strokeStyle = currentColor;
-    ctx.lineWidth = 45; // 기존 15 * 3배 = 45
+    ctx.lineWidth = 25; // 선 두께
   }
 
   ctx.stroke();
