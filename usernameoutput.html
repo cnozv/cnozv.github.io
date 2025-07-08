@@ -5,46 +5,55 @@
 <title>그림 떠다니는 화면</title>
 <style>
 body {
-margin: 0;
-overflow: hidden;
-background-color: #000;
+  margin: 0;
+  overflow: hidden;
+  background-color: #fff; /* 흰색 배경 */
 }
 .floating-img {
-position: absolute;
-width: 100px;
-height: 100px;
-opacity: 0.8;
-animation: floatAnim 10s infinite ease-in-out;
+  position: absolute;
+  width: 150px; /* 크기 키움 */
+  height: 150px;
+  opacity: 0.8;
+  animation: floatAnim 10s infinite ease-in-out;
 }
 @keyframes floatAnim {
-0% { transform: translateY(0); }
-50% { transform: translateY(-20px); }
-100% { transform: translateY(0); }
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0); }
 }
 </style>
 </head>
 <body>
 
 <script>
+const loadedImages = new Set(); // 이미 표시된 이미지 URL 저장
+
 async function floatImages() {
-try {
-const res = await fetch("https://script.google.com/macros/s/AKfycbz4IdjipIivdWWQPDTmFL0hCTxRU_F5MbZfLVnwYcMMn0NelyM4Nwt5RgUV3oKE_Rv7/exec");
-const imgs = await res.json(); // Base64 이미지 데이터 리스트 받음
+  try {
+    const res = await fetch("https://script.google.com/macros/s/AKfycbz4IdjipIivdWWQPDTmFL0hCTxRU_F5MbZfLVnwYcMMn0NelyM4Nwt5RgUV3oKE_Rv7/exec");
+    const imgs = await res.json(); // Base64 이미지 리스트
 
-imgs.forEach(imgData => {
-const el = document.createElement("img");
-el.classList.add("floating-img");
-el.src = imgData;
-el.style.left = Math.random() * 90 + "%";
-el.style.top = Math.random() * 90 + "%";
-document.body.appendChild(el);
-});
-} catch (e) {
-console.error("이미지 로딩 실패:", e);
-}
+    imgs.forEach(imgData => {
+      if (loadedImages.has(imgData)) return; // 이미 띄운 건 패스
+      loadedImages.add(imgData);
+
+      const el = document.createElement("img");
+      el.classList.add("floating-img");
+      el.src = imgData;
+      el.style.left = Math.random() * 90 + "%";
+      el.style.top = Math.random() * 90 + "%";
+      document.body.appendChild(el);
+    });
+  } catch (e) {
+    console.error("이미지 로딩 실패:", e);
+  }
 }
 
-window.onload = floatImages;
+// 최초 실행
+floatImages();
+
+// 10초마다 새로 요청해서 새 이미지만 추가
+setInterval(floatImages, 10000);
 </script>
 
 </body>

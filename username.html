@@ -6,30 +6,31 @@
 <style>
 body {
   margin: 0;
-  background: #111 url('https://cnozv.github.io/background_black.png') center/cover no-repeat;
-  /* body 전체에 배경을 깔아줌 */
+  background: #111 url('https://cnozv.github.io/background_white%20(2).png') center/cover no-repeat;
   color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  min-height: 100vh;
 }
 canvas {
+  display: block;
+  width: 100%;
+  height: 700px;
   border: 1px solid #fff;
-  background: transparent; /* canvas 자체에는 배경 없음 */
+  background: transparent;
   cursor: crosshair;
   touch-action: none; /* 터치스크롤 방지 */
 }
 .controls {
-  margin-top: 20px;
+  margin-top: 10px;
   display: flex;
   gap: 10px;
   align-items: center;
+  flex-wrap: wrap;
 }
 button {
-  padding: 10px 20px;
-  font-size: 16px;
+  padding: 8px 16px;
+  font-size: 14px;
   background: #4caf50;
   border: none;
   border-radius: 4px;
@@ -46,24 +47,50 @@ label {
 </head>
 <body>
 
-<canvas id="canvas" width="1200" height="900"></canvas>
+<canvas id="canvas"></canvas>
 <div class="controls">
   <label for="colorPicker">선 색상:</label>
-  <input type="color" id="colorPicker" value="#ffffff">
+  <input type="color" id="colorPicker" value="#000000">
+  <button id="eraserButton">지우개</button>
+  <button id="clearButton">전체 지우기</button>
   <button id="saveButton">그림 저장하기</button>
 </div>
 
 <script>
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
+
 let drawing = false;
 let lastX = 0;
 let lastY = 0;
 
-// 선택 색상
+// 현재 모드
 let currentColor = document.getElementById('colorPicker').value;
+let isErasing = false;
+
+// 캔버스 크기 조절
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = 700;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+// 색상 선택
 document.getElementById('colorPicker').addEventListener('input', e => {
   currentColor = e.target.value;
+  isErasing = false;
+});
+
+// 지우개 버튼
+document.getElementById('eraserButton').addEventListener('click', () => {
+  isErasing = true;
+});
+
+// 전체 지우기 버튼
+document.getElementById('clearButton').addEventListener('click', () => {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  isErasing = false;
 });
 
 // 마우스 이벤트
@@ -110,17 +137,29 @@ canvas.addEventListener('touchend', e => {
 
 // 선 그리기
 function drawLine(x1, y1, x2, y2) {
-  ctx.strokeStyle = currentColor;
-  ctx.lineWidth = 3;
-  ctx.lineCap = 'round';
   ctx.beginPath();
   ctx.moveTo(x1, y1);
   ctx.lineTo(x2, y2);
+  ctx.lineCap = 'round';
+
+  if (isErasing) {
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.strokeStyle = 'rgba(0,0,0,1)';
+    ctx.lineWidth = 30;
+  } else {
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.strokeStyle = currentColor;
+    ctx.lineWidth = 5;
+  }
+
   ctx.stroke();
 }
 
 // 그림 저장
 document.getElementById('saveButton').onclick = async () => {
+  ctx.globalCompositeOperation = 'source-over';
+  isErasing = false;
+
   const imgData = canvas.toDataURL('image/png');
 
   await fetch("https://script.google.com/macros/s/AKfycbz4IdjipIivdWWQPDTmFL0hCTxRU_F5MbZfLVnwYcMMn0NelyM4Nwt5RgUV3oKE_Rv7/exec", {
@@ -132,6 +171,8 @@ document.getElementById('saveButton').onclick = async () => {
   });
 
   alert('그림이 저장되었습니다! (조금 기다렸다가 띄우는 화면 새로고침하세요)');
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 };
 </script>
 
