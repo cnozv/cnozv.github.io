@@ -8,10 +8,8 @@ html, body {
   height: 100%;
   margin: 0;
 }
-
 body {
   overflow: hidden;
-  /* background 스타일에 !important로 우선순위 강제 */
   background: #111 url('https://cnozv.github.io/background_white%20(2).png') center/cover no-repeat !important;
   background-size: cover !important;
   background-position: center center !important;
@@ -33,7 +31,6 @@ body {
 <body>
 
 <script>
-// 이미지를 불러오는 로직은 동일
 const loadedImages = new Set();
 const imageElements = [];
 
@@ -63,6 +60,7 @@ async function floatImages() {
       el.src = imgData;
 
       const size = 100 + Math.random() * 100;
+
       let x, y;
       let tries = 0;
       let removedCount = 0;
@@ -113,8 +111,11 @@ async function floatImages() {
   }
 }
 
-floatImages();
-setInterval(floatImages, 5000);
+// ✅ window.onload에 묶어서 뷰포트 초기화 이후 실행
+window.onload = function() {
+  floatImages();
+  setInterval(floatImages, 5000);
+};
 </script>
 
 </body>
