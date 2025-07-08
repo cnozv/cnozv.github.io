@@ -32,17 +32,15 @@ body {
 
 <script>
 const loadedImages = new Set(); // 중복 방지
-const imageElements = [];       // 화면에 배치된 이미지
-const MAX_IMAGES = 25;          // 최대 갯수
+const imageElements = [];       // 화면에 배치된 이미지들
 
 function isOverlapping(x, y, size, others) {
   for (const o of others) {
     const dx = o.x - x;
     const dy = o.y - y;
     const distance = Math.hypot(dx, dy);
-    // 살짝 겹치는 건 허용하기 위해 0.4로 조정
     if (distance < (size + o.size) * 0.6) {
-      return true;
+      return true; // 너무 가까움
     }
   }
   return false;
@@ -73,7 +71,7 @@ async function floatImages() {
         y = Math.random() * (window.innerHeight - size);
 
         if (!isOverlapping(x, y, size, imageElements)) {
-          break; // 적당한 위치 찾음
+          break;
         }
 
         tries++;
@@ -83,7 +81,7 @@ async function floatImages() {
           const removed = imageElements.shift();
           removed.el.remove();
           removedCount++;
-          tries = 0; // 시도 다시 초기화
+          tries = 0;
         }
       }
 
@@ -92,19 +90,16 @@ async function floatImages() {
       el.style.left = x + "px";
       el.style.top = y + "px";
 
-      // 랜덤 이동량
       const dx = Math.floor(Math.random() * 20 - 10) + "px";
       const dy = Math.floor(Math.random() * 40 - 20) + "px";
       el.style.setProperty("--x", dx);
       el.style.setProperty("--y", dy);
 
-      // 랜덤 지속시간
       const duration = 6 + Math.random() * 6;
       el.style.animation = `floatAnim ${duration}s ease-in-out infinite alternate`;
 
       document.body.appendChild(el);
 
-      // 페이드인
       requestAnimationFrame(() => {
         el.style.opacity = "0";
         requestAnimationFrame(() => {
@@ -115,11 +110,7 @@ async function floatImages() {
       // 위치 기록
       imageElements.push({ el, x, y, size });
 
-      // 최대 개수 초과 시 오래된 것 제거
-      if (imageElements.length > MAX_IMAGES) {
-        const removed = imageElements.shift();
-        removed.el.remove();
-      }
+      // ⛔️ 최대 개수 초과 시 삭제하는 부분 제거됨
     });
   } catch (e) {
     console.error("이미지 로딩 실패:", e);
@@ -128,7 +119,7 @@ async function floatImages() {
 
 // 최초 로드
 floatImages();
-// 주기적 갱신
+// 5초마다 갱신
 setInterval(floatImages, 5000);
 </script>
 
