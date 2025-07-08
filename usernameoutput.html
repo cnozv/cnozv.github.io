@@ -2,58 +2,134 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>그림 떠다니는 화면</title>
+<title>떠다니는 이미지</title>
 <style>
 body {
   margin: 0;
   overflow: hidden;
-  background-color: #fff; /* 흰색 배경 */
+  background: #111 url('https://cnozv.github.io/background_white%20(2).png') center/cover no-repeat;
 }
 .floating-img {
   position: absolute;
-  width: 150px; /* 크기 키움 */
-  height: 150px;
-  opacity: 0.8;
-  animation: floatAnim 10s infinite ease-in-out;
+  opacity: 0;
+  will-change: transform;
+  transition: opacity 1.5s ease; /* 페이드인 */
 }
 @keyframes floatAnim {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-20px); }
-  100% { transform: translateY(0); }
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(var(--x), var(--y));
+  }
+  100% {
+    transform: translate(0, 0);
+  }
 }
 </style>
 </head>
 <body>
 
 <script>
-const loadedImages = new Set(); // 이미 표시된 이미지 URL 저장
+const loadedImages = new Set(); // 중복 방지
+const imageElements = [];       // 화면에 배치된 이미지
+const MAX_IMAGES = 25;          // 최대 갯수
+
+function isOverlapping(x, y, size, others) {
+  for (const o of others) {
+    const dx = o.x - x;
+    const dy = o.y - y;
+    const distance = Math.hypot(dx, dy);
+    // 살짝 겹치는 건 허용하기 위해 0.4로 조정
+    if (distance < (size + o.size) * 0.6) {
+      return true;
+    }
+  }
+  return false;
+}
 
 async function floatImages() {
   try {
     const res = await fetch("https://script.google.com/macros/s/AKfycbz4IdjipIivdWWQPDTmFL0hCTxRU_F5MbZfLVnwYcMMn0NelyM4Nwt5RgUV3oKE_Rv7/exec");
-    const imgs = await res.json(); // Base64 이미지 리스트
+    const imgs = await res.json();
 
     imgs.forEach(imgData => {
-      if (loadedImages.has(imgData)) return; // 이미 띄운 건 패스
+      if (loadedImages.has(imgData)) return;
       loadedImages.add(imgData);
 
       const el = document.createElement("img");
       el.classList.add("floating-img");
       el.src = imgData;
-      el.style.left = Math.random() * 90 + "%";
-      el.style.top = Math.random() * 90 + "%";
+
+      const size = 100 + Math.random() * 100;
+
+      let x, y;
+      let tries = 0;
+      let removedCount = 0;
+      const MAX_REMOVES = 10;
+
+      while (tries < 20) {
+        x = Math.random() * (window.innerWidth - size);
+        y = Math.random() * (window.innerHeight - size);
+
+        if (!isOverlapping(x, y, size, imageElements)) {
+          break; // 적당한 위치 찾음
+        }
+
+        tries++;
+
+        if (tries === 20 && removedCount < MAX_REMOVES && imageElements.length > 0) {
+          // 이미지 하나 지우고 다시 시도
+          const removed = imageElements.shift();
+          removed.el.remove();
+          removedCount++;
+          tries = 0; // 시도 다시 초기화
+        }
+      }
+
+      el.style.width = size + "px";
+      el.style.height = size + "px";
+      el.style.left = x + "px";
+      el.style.top = y + "px";
+
+      // 랜덤 이동량
+      const dx = Math.floor(Math.random() * 20 - 10) + "px";
+      const dy = Math.floor(Math.random() * 40 - 20) + "px";
+      el.style.setProperty("--x", dx);
+      el.style.setProperty("--y", dy);
+
+      // 랜덤 지속시간
+      const duration = 6 + Math.random() * 6;
+      el.style.animation = `floatAnim ${duration}s ease-in-out infinite alternate`;
+
       document.body.appendChild(el);
+
+      // 페이드인
+      requestAnimationFrame(() => {
+        el.style.opacity = "0";
+        requestAnimationFrame(() => {
+          el.style.opacity = "0.8";
+        });
+      });
+
+      // 위치 기록
+      imageElements.push({ el, x, y, size });
+
+      // 최대 개수 초과 시 오래된 것 제거
+      if (imageElements.length > MAX_IMAGES) {
+        const removed = imageElements.shift();
+        removed.el.remove();
+      }
     });
   } catch (e) {
     console.error("이미지 로딩 실패:", e);
   }
 }
 
-// 최초 실행
+// 최초 로드
 floatImages();
-
-// 10초마다 새로 요청해서 새 이미지만 추가
-setInterval(floatImages, 10000);
+// 주기적 갱신
+setInterval(floatImages, 5000);
 </script>
 
 </body>
