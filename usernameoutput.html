@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>그림 떠다니는 화면</title>
+<style>
+body {
+margin: 0;
+overflow: hidden;
+background-color: #000;
+}
+.floating-img {
+position: absolute;
+width: 100px;
+height: 100px;
+opacity: 0.8;
+animation: floatAnim 10s infinite ease-in-out;
+}
+@keyframes floatAnim {
+0% { transform: translateY(0); }
+50% { transform: translateY(-20px); }
+100% { transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<script>
+async function floatImages() {
+try {
+const res = await fetch("https://script.google.com/macros/s/AKfycbz4IdjipIivdWWQPDTmFL0hCTxRU_F5MbZfLVnwYcMMn0NelyM4Nwt5RgUV3oKE_Rv7/exec");
+const imgs = await res.json(); // Base64 이미지 데이터 리스트 받음
+
+imgs.forEach(imgData => {
+const el = document.createElement("img");
+el.classList.add("floating-img");
+el.src = imgData;
+el.style.left = Math.random() * 90 + "%";
+el.style.top = Math.random() * 90 + "%";
+document.body.appendChild(el);
+});
+} catch (e) {
+console.error("이미지 로딩 실패:", e);
+}
+}
+
+window.onload = floatImages;
+</script>
+
+</body>
+</html>

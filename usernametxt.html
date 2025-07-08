@@ -1,0 +1,57 @@
+<style>
+body {
+background-color: #111;
+color: #fff;
+font-family: sans-serif;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+}
+
+#nameForm {
+display: flex;
+flex-direction: column;
+gap: 12px;
+background: #222;
+padding: 24px;
+border-radius: 8px;
+box-shadow: 0 0 20px rgba(255,255,255,0.1);
+}
+
+input[type="text"] {
+padding: 10px;
+font-size: 18px;
+border: none;
+border-radius: 4px;
+}
+
+button {
+padding: 10px 20px;
+font-size: 18px;
+background-color: #4caf50;
+color: white;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+}
+
+button:hover {
+background-color: #45a049;
+}
+
+#status {
+margin-top: 10px;
+font-size: 14px;
+color: #ccc;
+}
+</style>
+
+<iframe name="hiddenFrame" style="display: none;"></iframe>
+
+<form action="https://script.google.com/macros/s/AKfycbwTiMViCGG6sFyfPlliwC6kBGEkVLYNpit4e5rQZZ8Cj8SZnKDoiSDZHxVaLcr8l3FyiQ/exec"
+method="POST" target="hiddenFrame" id="nameForm">
+<input type="text" name="name" placeholder="당신의 이름을 입력하세요" required>
+<button type="submit">입력</button>
+<div id="status">전송하면 몇 초 뒤에 반영됩니다.</div>
+</form>
