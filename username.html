@@ -105,11 +105,11 @@ function drawLine(x1, y1, x2, y2) {
   if (isErasing) {
     ctx.globalCompositeOperation = 'destination-out';
     ctx.strokeStyle = 'rgba(0,0,0,1)';
-    ctx.lineWidth = 25; // 지우개 두께
+    ctx.lineWidth = 10; // 지우개 두께
   } else {
     ctx.globalCompositeOperation = 'source-over';
     ctx.strokeStyle = currentColor;
-    ctx.lineWidth = 25; // 선 두께
+    ctx.lineWidth = 10; // 선 두께
   }
 
   ctx.stroke();
