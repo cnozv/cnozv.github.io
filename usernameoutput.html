@@ -8,34 +8,34 @@ html, body {
   height: 100%;
   margin: 0;
 }
+
 body {
   overflow: hidden;
-  background: #111 url('https://cnozv.github.io/background_white%20(2).png') center/cover no-repeat;
+  /* background 스타일에 !important로 우선순위 강제 */
+  background: #111 url('https://cnozv.github.io/background_white%20(2).png') center/cover no-repeat !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
 }
 .floating-img {
   position: absolute;
   opacity: 0;
   will-change: transform;
-  transition: opacity 1.5s ease; /* 페이드인 */
+  transition: opacity 1.5s ease;
 }
 @keyframes floatAnim {
-  0% {
-    transform: translate(0, 0);
-  }
-  50% {
-    transform: translate(var(--x), var(--y));
-  }
-  100% {
-    transform: translate(0, 0);
-  }
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(var(--x), var(--y)); }
+  100% { transform: translate(0, 0); }
 }
 </style>
 </head>
 <body>
 
 <script>
-const loadedImages = new Set(); // 중복 방지
-const imageElements = [];       // 화면에 배치된 이미지들
+// 이미지를 불러오는 로직은 동일
+const loadedImages = new Set();
+const imageElements = [];
 
 function isOverlapping(x, y, size, others) {
   for (const o of others) {
@@ -43,7 +43,7 @@ function isOverlapping(x, y, size, others) {
     const dy = o.y - y;
     const distance = Math.hypot(dx, dy);
     if (distance < (size + o.size) * 0.6) {
-      return true; // 너무 가까움
+      return true;
     }
   }
   return false;
@@ -63,7 +63,6 @@ async function floatImages() {
       el.src = imgData;
 
       const size = 100 + Math.random() * 100;
-
       let x, y;
       let tries = 0;
       let removedCount = 0;
@@ -76,11 +75,8 @@ async function floatImages() {
         if (!isOverlapping(x, y, size, imageElements)) {
           break;
         }
-
         tries++;
-
         if (tries === 20 && removedCount < MAX_REMOVES && imageElements.length > 0) {
-          // 이미지 하나 지우고 다시 시도
           const removed = imageElements.shift();
           removed.el.remove();
           removedCount++;
@@ -117,9 +113,7 @@ async function floatImages() {
   }
 }
 
-// 최초 로드
 floatImages();
-// 주기적 갱신
 setInterval(floatImages, 5000);
 </script>
 
