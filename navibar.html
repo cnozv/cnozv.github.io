@@ -1,0 +1,315 @@
+/*
+박민지(parkminji0111@gmail.com)가 작성한 스크립트이며, 작성자의 동의 없는 복사, 수정, 재배포 등 이용을 금합니다.
+*/
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Responsive Navigation Bar</title>
+
+<style>
+/* 네비게이션 바 스타일 */
+.navbar {
+background-color: #ffffff;
+display: flex;
+justify-content: flex-start;
+padding: 20px 20px;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+z-index: 1000;
+align-items: center;
+}
+
+.navbar .home-button {
+color: #000;
+text-decoration: none;
+font-size: 13px;
+padding: 0 10px;
+}
+
+/* 데스크탑에서 메뉴 스타일 */
+.navbar .menu {
+margin-left: auto;
+display: flex;
+align-items: center;
+}
+
+/* 모바일에서 메뉴 스타일 */
+@media screen and (max-width: 768px) {
+.navbar .menu {
+background-color: #ffffff;
+display: flex;
+justify-content: flex-start;
+padding: 8px 0;
+position: fixed;
+top: 45px;
+left: 0;
+width: 100%;
+z-index: 1000;
+align-items: center;
+display: none; /* 기본적으로 숨김 (모바일에서만 보이게 설정) */
+
+}
+
+.navbar .menu.show {
+display: flex; /* 'show' 클래스가 있을 때 메뉴를 펼침 */
+}
+}
+
+.navbar a {
+color: #000;
+text-decoration: none;
+padding: 0 20px;
+font-size: 13px;
+display: flex;
+align-items: center;
+justify-content: center;
+height: 20px;
+line-height: 20px;
+position: relative;
+}
+
+.navbar a:hover {
+font-weight: bold;
+}
+
+.dropdown {
+position: relative;
+}
+
+.dropdown-content {
+display: none;
+position: absolute;
+background-color:#ffffff;
+white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+padding: 5px 10px; /* 여백 추가 */
+left: 50%; /* 부모 요소 기준으로 중앙 정렬 */
+transform: translateX(-50%); /* 정확한 중앙 배치 */
+z-index: 10;
+text-align: center;
+top: 100%;
+}
+
+.dropdown-content a {
+color: #000;
+height: 35px;
+line-height: 35px;
+text-decoration: none;
+display: block;
+}
+
+.dropdown-content a:hover {
+font-weight: bold;
+}
+
+/* 데스크톱에서 호버 시 드롭다운 표시 */
+@media screen and (min-width: 769px) {
+.dropdown:hover .dropdown-content {
+display: block;
+}
+}
+
+/* 모바일 메뉴 버튼 스타일 */
+.menu-button {
+display: none;
+cursor: pointer;
+font-size: 13px;
+padding: 0 10px;
+position: absolute;
+right: 20px;
+z-index: 1100;
+align-items: center;
+justify-content: center;
+height: 20px;
+line-height: 20px;
+color: #000;
+}
+
+@media (max-width: 768px) {
+.menu-button {
+display: flex;
+margin-left: auto;
+
+}
+}
+
+.menu-button div {
+width: 25px;
+height: 2px;
+background-color: black;
+margin: 5px 0;
+}
+
+/* 모바일 환경에서 메뉴 숨기기 */
+@media (max-width: 768px) {
+.menu {
+display: none;
+flex-direction: column;
+position: absolute;
+top: 100%;
+left: 0;
+width: 100%;
+background-color: #ffffff;
+padding: 10px 0;
+
+}
+
+.menu.show {
+display: flex;
+
+}
+
+.navbar a {
+color: #000;
+text-decoration: none;
+padding: 20px 10px;
+font-size: 13px;
+display: flex;
+align-items: center;
+justify-content: center;
+height: 20px;
+line-height: 20px;
+position: relative;
+}
+
+.dropdown {
+position: relative;
+text-align: center; /* 드롭다운 버튼 중앙 정렬 */
+}
+
+.dropdown-content {
+display: none;
+position: absolute; /* 여전히 절대 위치로 설정 */
+background-color: #ffffff;
+width: 100%;
+left: 0%;
+transform: none; /* 정확한 중앙 정렬 */
+text-align: center; /* 내부 항목도 중앙 정렬 */
+}
+
+.dropdown.open .dropdown-content {
+display: block;
+position: static; /* 자연스럽게 아래로 확장 */
+}
+
+.menu-button {
+display: flex;
+margin-left: auto;
+
+}
+}
+</style>
+</head>
+<body>
+
+<div class="navbar">
+<a href="#" class="home-button">Autosave_</a>
+<div class="menu-button" onclick="toggleMenu(event)">
+menu
+</div>
+<div class="menu">
+<a href="#planningarticle" class="menu-item">전시 서문</a>
+<a href="#info" class="menu-item">전시 정보</a>
+<div class="dropdown">
+<a href="#" class="dropdown-toggle" onclick="toggleDropdown(event)">미시성 ▼</a>
+<div class="dropdown-content">
+<a href="#rondipark" class="dropdown-item">박론디</a>
+<a href="#yoogeuntaek" class="dropdown-item">유근택</a>
+<a href="#heesujeon" class="dropdown-item">전희수</a>
+<a href="#chanminjeong" class="dropdown-item">정찬민</a>
+</div>
+</div>
+<div class="dropdown">
+<a href="#" class="dropdown-toggle" onclick="toggleDropdown(event)">가상성 ▼</a>
+<div class="dropdown-content">
+<a href="#lineofpiers" class="dropdown-item">교각들</a>
+<a href="#woonghyunkim" class="dropdown-item">김웅현</a>
+<a href="#sungsilryu" class="dropdown-item">류성실</a>
+<a href="#murphyyum" class="dropdown-item">머피염</a>
+<a href="#sungermone" class="dropdown-item">선점원</a>
+<a href="#tzusoo" class="dropdown-item">추수</a>
+</div>
+</div>
+<div class="dropdown">
+<a href="#" class="dropdown-toggle" onclick="toggleDropdown(event)">시간성 ▼</a>
+<div class="dropdown-content">
+<a href="#kimhyunseok" class="dropdown-item">김현석</a>
+<a href="#nohsangho" class="dropdown-item">노상호</a>
+<a href="#hyunhohwang" class="dropdown-item">황현호</a>
+<a href="#elinorodonovan" class="dropdown-item">Elinor O’Donovan</a>
+<a href="#elisalohmuller" class="dropdown-item">Elisa Lohmüller</a>
+</div>
+</div>
+<a href="#partners" class="menu-item">협찬·후원</a>
+<a href="#collective201" class="menu-item">콜렉티브 201</a>
+</div>
+</div>
+
+<script>
+function toggleMenu(event) {
+event.stopPropagation();
+const menu = document.querySelector('.menu');
+menu.classList.toggle('show');
+}
+
+document.addEventListener('click', function(event) {
+const menu = document.querySelector('.menu');
+const menuButton = document.querySelector('.menu-button');
+if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
+menu.classList.remove('show');
+}
+});
+
+function toggleDropdown(event) {
+event.preventDefault();
+event.stopPropagation();
+const dropdown = event.currentTarget.parentElement;
+dropdown.classList.toggle('open');
+}
+
+document.addEventListener('click', function(event) {
+const menu = document.querySelector('.menu');
+const menuButton = document.querySelector('.menu-button');
+
+// 메뉴 닫기 (메뉴 바깥 클릭 시)
+if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
+menu.classList.remove('show');
+}
+
+// 드롭다운 닫기 (드롭다운 바깥 클릭 시)
+document.querySelectorAll('.dropdown').forEach(dropdown => {
+if (!dropdown.contains(event.target)) {
+dropdown.classList.remove('open');
+}
+});
+});
+
+// 모바일 메뉴에서 페이지 이동 시 메뉴 닫기
+const menuItems = document.querySelectorAll('.menu-item');
+const 참여작가Button = document.querySelector('.dropdown-toggle'); // '참여 작가' 버튼
+const dropdownItems = document.querySelectorAll('.dropdown-item'); // 드롭다운 메뉴 항목
+
+menuItems.forEach(item => {
+item.addEventListener("click", function (event) {
+if (item !== 참여작가Button) { // '참여 작가' 버튼을 제외하고
+const menu = document.querySelector('.menu');
+menu.classList.remove('show'); // 메뉴 닫기
+}
+});
+});
+
+// 드롭다운 메뉴 항목 클릭 시에도 메뉴 닫기
+dropdownItems.forEach(item => {
+item.addEventListener("click", function (event) {
+const menu = document.querySelector('.menu');
+menu.classList.remove('show'); // 메뉴 닫기
+});
+});
+</script>
+
+</body>
+</html>
