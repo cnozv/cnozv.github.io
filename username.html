@@ -32,30 +32,38 @@ canvas {
 button {
   padding: 8px 16px;
   font-size: 14px;
-  background: #4caf50;
+  background: #C29557;
   border: none;
   border-radius: 4px;
   color: white;
   cursor: pointer;
 }
 button:hover {
-  background: #45a049;
+  background: #AF7613;
 }
 label {
   font-size: 14px;
 }
+
+
 </style>
 </head>
 <body>
 
 <canvas id="canvas"></canvas>
 <div class="controls">
-  <label for="colorPicker">선 색상:</label>
-  <input type="color" id="colorPicker" value="#000000">
+  <div style="display: flex; align-items: center; gap: 5px;">
+    <label for="colorPicker">선 색상:</label>
+    <input type="color" id="colorPicker" value="#000000">
+  </div>
+  <button id="penButton">펜</button>
   <button id="eraserButton">지우개</button>
   <button id="clearButton">전체 지우기</button>
-  <button id="saveButton">쿠키 저장하기</button>
+ <button id="saveButton" style="margin-left: 20px;">쿠키 저장하기</button>
+
 </div>
+
+
 
 <script>
 const canvas = document.getElementById('canvas');
@@ -81,6 +89,11 @@ resizeCanvas();
 // 색상 선택
 document.getElementById('colorPicker').addEventListener('input', e => {
   currentColor = e.target.value;
+  isErasing = false;
+});
+
+// 펜 버튼
+document.getElementById('penButton').addEventListener('click', () => {
   isErasing = false;
 });
 
