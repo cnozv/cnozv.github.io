@@ -16,7 +16,7 @@ body {
 }
 canvas {
   display: block;
-  border: 2px solid #000; /* 검은 테두리 */
+  border: 2px solid #C29557; /* 테두리 */
   background: transparent;
   cursor: crosshair;
   touch-action: none;
@@ -168,7 +168,7 @@ document.getElementById('saveButton').onclick = async () => {
     body: "imgdata=" + encodeURIComponent(imgData),
   });
 
-  alert('그림이 저장되었습니다! (조금 기다렸다가 새로고침하세요)');
+  alert('쿠키가 저장되었습니다!');
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 };
