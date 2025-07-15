@@ -43,17 +43,38 @@ body {
   width: 100%;
   margin: 20px auto;
 }
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+#loadingIndicator {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #ccc;
+  border-top-color: #333;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 20px;
+}
 </style>
 </head>
 <body>
 
+<div id="loadingIndicator"></div>
 <div class="container" id="imageContainer"></div>
 
 <script>
 const loadedImages = new Set();
+let firstLoad = true; // 첫 로딩 표시 플래그
 
 async function floatImages() {
+  const loadingEl = document.getElementById("loadingIndicator");
   try {
+    if (firstLoad) {
+      loadingEl.style.display = "block";
+    }
+
     const res = await fetch("https://script.google.com/macros/s/AKfycbz4IdjipIivdWWQPDTmFL0hCTxRU_F5MbZfLVnwYcMMn0NelyM4Nwt5RgUV3oKE_Rv7/exec");
     const imgs = await res.json();
 
@@ -77,7 +98,6 @@ async function floatImages() {
       const duration = 6 + Math.random() * 6;
       el.style.animation = `floatAnim ${duration}s ease-in-out infinite alternate`;
 
-      // 컨테이너에 추가
       document.getElementById("imageContainer").appendChild(el);
 
       requestAnimationFrame(() => {
@@ -89,6 +109,11 @@ async function floatImages() {
     });
   } catch (e) {
     console.error("이미지 로딩 실패:", e);
+  } finally {
+    if (firstLoad) {
+      loadingEl.style.display = "none";
+      firstLoad = false; // 첫 로딩 끝
+    }
   }
 }
 
