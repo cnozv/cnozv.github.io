@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Autosave Archive</title>
+<style>
+html, body {
+  height: 100%;
+  margin: 0;
+}
+body {
+  background-color: #ffffff;
+  background-image: none;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.floating-img {
+  display: inline-block;
+  margin: 15px;
+  opacity: 0;
+  will-change: transform;
+  transition: opacity 1.5s ease;
+}
+@keyframes floatAnim {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(var(--x), var(--y));
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  margin: 20px auto;
+}
+</style>
+</head>
+<body>
+
+<div class="container" id="imageContainer"></div>
+
+<script>
+const loadedImages = new Set();
+
+async function floatImages() {
+  try {
+    const res = await fetch("https://script.google.com/macros/s/AKfycbz4IdjipIivdWWQPDTmFL0hCTxRU_F5MbZfLVnwYcMMn0NelyM4Nwt5RgUV3oKE_Rv7/exec");
+    const imgs = await res.json();
+
+    imgs.forEach(imgData => {
+      if (loadedImages.has(imgData)) return;
+      loadedImages.add(imgData);
+
+      const el = document.createElement("img");
+      el.classList.add("floating-img");
+      el.src = imgData;
+
+      const size = 100 + Math.random() * 100;
+      el.style.width = size + "px";
+      el.style.height = size + "px";
+
+      const dx = Math.floor(Math.random() * 20 - 10) + "px";
+      const dy = Math.floor(Math.random() * 40 - 20) + "px";
+      el.style.setProperty("--x", dx);
+      el.style.setProperty("--y", dy);
+
+      const duration = 6 + Math.random() * 6;
+      el.style.animation = `floatAnim ${duration}s ease-in-out infinite alternate`;
+
+      // 컨테이너에 추가
+      document.getElementById("imageContainer").appendChild(el);
+
+      requestAnimationFrame(() => {
+        el.style.opacity = "0";
+        requestAnimationFrame(() => {
+          el.style.opacity = "0.8";
+        });
+      });
+    });
+  } catch (e) {
+    console.error("이미지 로딩 실패:", e);
+  }
+}
+
+// 최초 로드
+floatImages();
+// 5초마다 갱신
+setInterval(floatImages, 5000);
+</script>
+
+</body>
+</html>
