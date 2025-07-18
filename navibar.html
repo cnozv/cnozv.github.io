@@ -1,314 +1,251 @@
-/*
-박민지(parkminji0111@gmail.com)가 작성한 스크립트이며, 작성자의 동의 없는 복사, 수정, 재배포 등 이용을 금합니다.
-*/
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Responsive Navigation Bar</title>
+  <meta charset="UTF-8">
+  <title>Autosave_</title>
 
-<style>
-/* 네비게이션 바 스타일 */
-.navbar {
-background-color: #ffffff;
-display: flex;
-justify-content: flex-start;
-padding: 20px 20px;
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-z-index: 1000;
-align-items: center;
-}
+  <!-- ✅ Pretendard 웹폰트 추가 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css" />
 
-.navbar .home-button {
-color: #000;
-text-decoration: none;
-font-size: 13px;
-padding: 0 10px;
-}
+  <style>
+    * {
+      font-family: 'Pretendard Variable', Pretendard, sans-serif;
+      box-sizing: border-box;
+    }
 
-/* 데스크탑에서 메뉴 스타일 */
-.navbar .menu {
-margin-left: auto;
-display: flex;
-align-items: center;
-}
+    body {
+      margin: 0;
+      background: #111 url('https://cnozv.github.io/background_white%20(2).png') center/cover no-repeat;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
 
-/* 모바일에서 메뉴 스타일 */
-@media screen and (max-width: 768px) {
-.navbar .menu {
-background-color: #ffffff;
-display: flex;
-justify-content: flex-start;
-padding: 8px 0;
-position: fixed;
-top: 45px;
-left: 0;
-width: 100%;
-z-index: 1000;
-align-items: center;
-display: none; /* 기본적으로 숨김 (모바일에서만 보이게 설정) */
+    #cookieCount {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 18px;
+      color: #AF7613;
+      font-weight: bold;
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 6px 12px;
+      border-radius: 8px;
+    }
 
-}
+    canvas {
+      display: block;
+      border: 2px solid #C29557;
+      background: transparent;
+      cursor: crosshair;
+      touch-action: none;
+      margin: 20px auto;
+    }
 
-.navbar .menu.show {
-display: flex; /* 'show' 클래스가 있을 때 메뉴를 펼침 */
-}
-}
+    .controls {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
 
-.navbar a {
-color: #000;
-text-decoration: none;
-padding: 0 20px;
-font-size: 13px;
-display: flex;
-align-items: center;
-justify-content: center;
-height: 20px;
-line-height: 20px;
-position: relative;
-}
+    button {
+      padding: 8px 16px;
+      font-size: 14px;
+      background: #C29557;
+      border: none;
+      border-radius: 4px;
+      color: white;
+      cursor: pointer;
+    }
 
-.navbar a:hover {
-font-weight: bold;
-}
+    button:disabled {
+      background: #888;
+      cursor: not-allowed;
+    }
 
-.dropdown {
-position: relative;
-}
+    button:hover:enabled {
+      background: #AF7613;
+    }
 
-.dropdown-content {
-display: none;
-position: absolute;
-background-color:#ffffff;
-white-space: nowrap; /* 텍스트 줄바꿈 방지 */
-padding: 5px 10px; /* 여백 추가 */
-left: 50%; /* 부모 요소 기준으로 중앙 정렬 */
-transform: translateX(-50%); /* 정확한 중앙 배치 */
-z-index: 10;
-text-align: center;
-top: 100%;
-}
+    label {
+      font-size: 14px;
+    }
 
-.dropdown-content a {
-color: #000;
-height: 35px;
-line-height: 35px;
-text-decoration: none;
-display: block;
-}
+    .spinner {
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top: 3px solid white;
+      border-radius: 50%;
+      width: 16px;
+      height: 16px;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
 
-.dropdown-content a:hover {
-font-weight: bold;
-}
-
-/* 데스크톱에서 호버 시 드롭다운 표시 */
-@media screen and (min-width: 769px) {
-.dropdown:hover .dropdown-content {
-display: block;
-}
-}
-
-/* 모바일 메뉴 버튼 스타일 */
-.menu-button {
-display: none;
-cursor: pointer;
-font-size: 13px;
-padding: 0 10px;
-position: absolute;
-right: 20px;
-z-index: 1100;
-align-items: center;
-justify-content: center;
-height: 20px;
-line-height: 20px;
-color: #000;
-}
-
-@media (max-width: 768px) {
-.menu-button {
-display: flex;
-margin-left: auto;
-
-}
-}
-
-.menu-button div {
-width: 25px;
-height: 2px;
-background-color: black;
-margin: 5px 0;
-}
-
-/* 모바일 환경에서 메뉴 숨기기 */
-@media (max-width: 768px) {
-.menu {
-display: none;
-flex-direction: column;
-position: absolute;
-top: 100%;
-left: 0;
-width: 100%;
-background-color: #ffffff;
-padding: 10px 0;
-
-}
-
-.menu.show {
-display: flex;
-
-}
-
-.navbar a {
-color: #000;
-text-decoration: none;
-padding: 20px 10px;
-font-size: 13px;
-display: flex;
-align-items: center;
-justify-content: center;
-height: 20px;
-line-height: 20px;
-position: relative;
-}
-
-.dropdown {
-position: relative;
-text-align: center; /* 드롭다운 버튼 중앙 정렬 */
-}
-
-.dropdown-content {
-display: none;
-position: absolute; /* 여전히 절대 위치로 설정 */
-background-color: #ffffff;
-width: 100%;
-left: 0%;
-transform: none; /* 정확한 중앙 정렬 */
-text-align: center; /* 내부 항목도 중앙 정렬 */
-}
-
-.dropdown.open .dropdown-content {
-display: block;
-position: static; /* 자연스럽게 아래로 확장 */
-}
-
-.menu-button {
-display: flex;
-margin-left: auto;
-
-}
-}
-</style>
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
 </head>
 <body>
 
-<div class="navbar">
-<a href="#" class="home-button">Autosave_</a>
-<div class="menu-button" onclick="toggleMenu(event)">
-menu
-</div>
-<div class="menu">
-<a href="#planningarticle" class="menu-item">전시 서문</a>
-<a href="#info" class="menu-item">전시 정보</a>
-<div class="dropdown">
-<a href="#" class="dropdown-toggle" onclick="toggleDropdown(event)">미시성 ▼</a>
-<div class="dropdown-content">
-<a href="#rondipark" class="dropdown-item">박론디</a>
-<a href="#yoogeuntaek" class="dropdown-item">유근택</a>
-<a href="#heesujeon" class="dropdown-item">전희수</a>
-<a href="#chanminjeong" class="dropdown-item">정찬민</a>
-</div>
-</div>
-<div class="dropdown">
-<a href="#" class="dropdown-toggle" onclick="toggleDropdown(event)">가상성 ▼</a>
-<div class="dropdown-content">
-<a href="#lineofpiers" class="dropdown-item">교각들</a>
-<a href="#woonghyunkim" class="dropdown-item">김웅현</a>
-<a href="#sungsilryu" class="dropdown-item">류성실</a>
-<a href="#murphyyum" class="dropdown-item">머피염</a>
-<a href="#sungermone" class="dropdown-item">선점원</a>
-<a href="#tzusoo" class="dropdown-item">추수</a>
-</div>
-</div>
-<div class="dropdown">
-<a href="#" class="dropdown-toggle" onclick="toggleDropdown(event)">시간성 ▼</a>
-<div class="dropdown-content">
-<a href="#kimhyunseok" class="dropdown-item">김현석</a>
-<a href="#nohsangho" class="dropdown-item">노상호</a>
-<a href="#hyunhohwang" class="dropdown-item">황현호</a>
-<a href="#elinorodonovan" class="dropdown-item">Elinor O’Donovan</a>
-<a href="#elisalohmuller" class="dropdown-item">Elisa Lohmüller</a>
-</div>
-</div>
-<a href="#partners" class="menu-item">협찬·후원</a>
-<a href="#collective201" class="menu-item">콜렉티브 201</a>
-</div>
+<!-- ✅ 쿠키 수 표시 영역 -->
+<div id="cookieCount"></div>
+
+<canvas id="canvas"></canvas>
+<div class="controls">
+  <div style="display: flex; align-items: center; gap: 5px;">
+    <label for="colorPicker">선 색상:</label>
+    <input type="color" id="colorPicker" value="#000000">
+  </div>
+  <button id="penButton">펜</button>
+  <button id="eraserButton">지우개</button>
+  <button id="clearButton">전체 지우기</button>
+  <button id="saveButton" style="margin-left: 20px;">쿠키 저장하기</button>
 </div>
 
 <script>
-function toggleMenu(event) {
-event.stopPropagation();
-const menu = document.querySelector('.menu');
-menu.classList.toggle('show');
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const cookieCountDisplay = document.getElementById('cookieCount');
+
+let drawing = false;
+let lastX = 0;
+let lastY = 0;
+let currentColor = document.getElementById('colorPicker').value;
+let isErasing = false;
+
+function resizeCanvas() {
+  const width = 700;
+  const height = 500;
+  canvas.width = width;
+  canvas.height = height;
+  canvas.style.width = width + "px";
+  canvas.style.height = height + "px";
+}
+resizeCanvas();
+
+document.getElementById('colorPicker').addEventListener('input', e => {
+  currentColor = e.target.value;
+  isErasing = false;
+});
+document.getElementById('penButton').addEventListener('click', () => {
+  isErasing = false;
+});
+document.getElementById('eraserButton').addEventListener('click', () => {
+  isErasing = true;
+});
+document.getElementById('clearButton').addEventListener('click', () => {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  isErasing = false;
+});
+
+function drawLine(x1, y1, x2, y2) {
+  ctx.beginPath();
+  ctx.moveTo(x1, y1);
+  ctx.lineTo(x2, y2);
+  ctx.lineCap = 'round';
+
+  if (isErasing) {
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.strokeStyle = 'rgba(0,0,0,1)';
+    ctx.lineWidth = 10;
+  } else {
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.strokeStyle = currentColor;
+    ctx.lineWidth = 10;
+  }
+
+  ctx.stroke();
 }
 
-document.addEventListener('click', function(event) {
-const menu = document.querySelector('.menu');
-const menuButton = document.querySelector('.menu-button');
-if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
-menu.classList.remove('show');
-}
+canvas.addEventListener('mousedown', e => {
+  drawing = true;
+  [lastX, lastY] = [e.offsetX, e.offsetY];
+});
+canvas.addEventListener('mouseup', () => drawing = false);
+canvas.addEventListener('mouseout', () => drawing = false);
+canvas.addEventListener('mousemove', e => {
+  if (!drawing) return;
+  drawLine(lastX, lastY, e.offsetX, e.offsetY);
+  [lastX, lastY] = [e.offsetX, e.offsetY];
 });
 
-function toggleDropdown(event) {
-event.preventDefault();
-event.stopPropagation();
-const dropdown = event.currentTarget.parentElement;
-dropdown.classList.toggle('open');
-}
-
-document.addEventListener('click', function(event) {
-const menu = document.querySelector('.menu');
-const menuButton = document.querySelector('.menu-button');
-
-// 메뉴 닫기 (메뉴 바깥 클릭 시)
-if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
-menu.classList.remove('show');
-}
-
-// 드롭다운 닫기 (드롭다운 바깥 클릭 시)
-document.querySelectorAll('.dropdown').forEach(dropdown => {
-if (!dropdown.contains(event.target)) {
-dropdown.classList.remove('open');
-}
+canvas.addEventListener('touchstart', e => {
+  e.preventDefault();
+  drawing = true;
+  const touch = e.touches[0];
+  const rect = canvas.getBoundingClientRect();
+  lastX = touch.clientX - rect.left;
+  lastY = touch.clientY - rect.top;
 });
+canvas.addEventListener('touchmove', e => {
+  e.preventDefault();
+  if (!drawing) return;
+  const touch = e.touches[0];
+  const rect = canvas.getBoundingClientRect();
+  const x = touch.clientX - rect.left;
+  const y = touch.clientY - rect.top;
+  drawLine(lastX, lastY, x, y);
+  lastX = x;
+  lastY = y;
 });
-
-// 모바일 메뉴에서 페이지 이동 시 메뉴 닫기
-const menuItems = document.querySelectorAll('.menu-item');
-const 참여작가Button = document.querySelector('.dropdown-toggle'); // '참여 작가' 버튼
-const dropdownItems = document.querySelectorAll('.dropdown-item'); // 드롭다운 메뉴 항목
-
-menuItems.forEach(item => {
-item.addEventListener("click", function (event) {
-if (item !== 참여작가Button) { // '참여 작가' 버튼을 제외하고
-const menu = document.querySelector('.menu');
-menu.classList.remove('show'); // 메뉴 닫기
-}
-});
+canvas.addEventListener('touchend', e => {
+  e.preventDefault();
+  drawing = false;
 });
 
-// 드롭다운 메뉴 항목 클릭 시에도 메뉴 닫기
-dropdownItems.forEach(item => {
-item.addEventListener("click", function (event) {
-const menu = document.querySelector('.menu');
-menu.classList.remove('show'); // 메뉴 닫기
-});
-});
+const saveButton = document.getElementById('saveButton');
+
+saveButton.onclick = async () => {
+  saveButton.disabled = true;
+  saveButton.innerHTML = '전송 중... <span class="spinner"></span>';
+
+  ctx.globalCompositeOperation = 'source-over';
+  isErasing = false;
+
+  const imgData = canvas.toDataURL('image/png');
+
+  try {
+    const response = await fetch("https://script.google.com/macros/s/AKfycbywTV8VXa0QDLJypbi1mdSaQw5nIuDbM9q8FpiBzXtEcms-MJChuvLXVFebDbArnBUv/exec", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: "imgdata=" + encodeURIComponent(imgData),
+    });
+
+    const text = await response.text();
+    console.log("서버 응답:", text);
+
+    if (!response.ok) {
+      alert("저장 중 오류가 발생했습니다.\n서버 응답: " + text);
+      return;
+    }
+
+    const result = JSON.parse(text);
+    const count = result.count;
+
+    alert(`등록되었습니다! ${count}번째 쿠키가 전시장에 도착했어요 🍪`);
+    cookieCountDisplay.textContent = `현재까지 저장된 쿠키 : ${count}개 🍪`;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  } catch (error) {
+    console.error("에러:", error);
+    alert("저장 중 오류가 발생했습니다.");
+  } finally {
+    saveButton.disabled = false;
+    saveButton.innerHTML = '쿠키 저장하기';
+  }
+};
 </script>
 
 </body>

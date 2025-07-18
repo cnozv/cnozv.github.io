@@ -1,50 +1,72 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>Autosave_</title>
-<style>
-body {
-  margin: 0;
-  background: #111 url('https://cnozv.github.io/background_white%20(2).png') center/cover no-repeat;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-}
-canvas {
-  display: block;
-  border: 2px solid #C29557;
-  background: transparent;
-  cursor: crosshair;
-  touch-action: none;
-  margin: 20px auto;
-}
-.controls {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-button {
-  padding: 8px 16px;
-  font-size: 14px;
-  background: #C29557;
-  border: none;
-  border-radius: 4px;
-  color: white;
-  cursor: pointer;
-}
-button:hover {
-  background: #AF7613;
-}
-label {
-  font-size: 14px;
-}
-</style>
+  <meta charset="UTF-8">
+  <title>Autosave_</title>
+  <style>
+    body {
+      margin: 0;
+      background: #111 url('https://cnozv.github.io/background_white%20(2).png') center/cover no-repeat;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    canvas {
+      display: block;
+      border: 2px solid #C29557;
+      background: transparent;
+      cursor: crosshair;
+      touch-action: none;
+      margin: 20px auto;
+    }
+    .controls {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 8px 16px;
+      font-size: 14px;
+      background: #C29557;
+      border: none;
+      border-radius: 4px;
+      color: white;
+      cursor: pointer;
+    }
+    button:disabled {
+      background: #888;
+      cursor: not-allowed;
+    }
+    button:hover:enabled {
+      background: #AF7613;
+    }
+    label {
+      font-size: 14px;
+    }
+
+    /* 로딩 스피너 */
+    .spinner {
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top: 3px solid white;
+      border-radius: 50%;
+      width: 16px;
+      height: 16px;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
 </head>
 <body>
 
@@ -162,7 +184,12 @@ canvas.addEventListener('touchend', e => {
 });
 
 // 쿠키 저장
-document.getElementById('saveButton').onclick = async () => {
+const saveButton = document.getElementById('saveButton');
+
+saveButton.onclick = async () => {
+  saveButton.disabled = true;
+  saveButton.innerHTML = '전송 중... <span class="spinner"></span>';
+
   ctx.globalCompositeOperation = 'source-over';
   isErasing = false;
 
@@ -177,28 +204,28 @@ document.getElementById('saveButton').onclick = async () => {
       body: "imgdata=" + encodeURIComponent(imgData),
     });
 
-    const text = await response.text(); // 💡 JSON 대신 text로 먼저 받기
-    console.log("서버 응답:", text); // 💡 콘솔에 출력
+    const text = await response.text();
+    console.log("서버 응답:", text);
 
     if (!response.ok) {
       alert("저장 중 오류가 발생했습니다.\n서버 응답: " + text);
       return;
     }
 
-    // JSON 파싱 시도
     const result = JSON.parse(text);
     const count = result.count;
 
     alert(`등록되었습니다! ${count}번째 쿠키가 전시장에 도착했어요 🍪`);
-
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   } catch (error) {
     console.error("에러:", error);
     alert("저장 중 오류가 발생했습니다.");
+  } finally {
+    saveButton.disabled = false;
+    saveButton.innerHTML = '쿠키 저장하기';
   }
 };
-
 </script>
 
 </body>
