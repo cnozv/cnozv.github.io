@@ -3,7 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <title>Autosave_</title>
+
+  <!-- ✅ Pretendard 웹폰트 추가 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css" />
+
   <style>
+    * {
+      font-family: 'Pretendard Variable', Pretendard, sans-serif;
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       background: #111 url('https://cnozv.github.io/background_white%20(2).png') center/cover no-repeat;
@@ -14,6 +23,20 @@
       justify-content: center;
       min-height: 100vh;
     }
+
+    #cookieCount {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 18px;
+      color: #AF7613;
+      font-weight: bold;
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 6px 12px;
+      border-radius: 8px;
+    }
+
     canvas {
       display: block;
       border: 2px solid #C29557;
@@ -22,6 +45,7 @@
       touch-action: none;
       margin: 20px auto;
     }
+
     .controls {
       display: flex;
       justify-content: center;
@@ -29,6 +53,7 @@
       gap: 10px;
       margin-bottom: 20px;
     }
+
     button {
       padding: 8px 16px;
       font-size: 14px;
@@ -38,18 +63,20 @@
       color: white;
       cursor: pointer;
     }
+
     button:disabled {
       background: #888;
       cursor: not-allowed;
     }
+
     button:hover:enabled {
       background: #AF7613;
     }
+
     label {
       font-size: 14px;
     }
 
-    /* 로딩 스피너 */
     .spinner {
       border: 3px solid rgba(255, 255, 255, 0.3);
       border-top: 3px solid white;
@@ -70,6 +97,9 @@
 </head>
 <body>
 
+<!-- ✅ 쿠키 수 표시 영역 -->
+<div id="cookieCount"></div>
+
 <canvas id="canvas"></canvas>
 <div class="controls">
   <div style="display: flex; align-items: center; gap: 5px;">
@@ -85,6 +115,7 @@
 <script>
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
+const cookieCountDisplay = document.getElementById('cookieCount');
 
 let drawing = false;
 let lastX = 0;
@@ -92,7 +123,6 @@ let lastY = 0;
 let currentColor = document.getElementById('colorPicker').value;
 let isErasing = false;
 
-// 캔버스 크기 고정
 function resizeCanvas() {
   const width = 700;
   const height = 500;
@@ -103,29 +133,21 @@ function resizeCanvas() {
 }
 resizeCanvas();
 
-// 색상 선택
 document.getElementById('colorPicker').addEventListener('input', e => {
   currentColor = e.target.value;
   isErasing = false;
 });
-
-// 펜 버튼
 document.getElementById('penButton').addEventListener('click', () => {
   isErasing = false;
 });
-
-// 지우개 버튼
 document.getElementById('eraserButton').addEventListener('click', () => {
   isErasing = true;
 });
-
-// 전체 지우기
 document.getElementById('clearButton').addEventListener('click', () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   isErasing = false;
 });
 
-// 선 그리기
 function drawLine(x1, y1, x2, y2) {
   ctx.beginPath();
   ctx.moveTo(x1, y1);
@@ -145,7 +167,6 @@ function drawLine(x1, y1, x2, y2) {
   ctx.stroke();
 }
 
-// 마우스 이벤트
 canvas.addEventListener('mousedown', e => {
   drawing = true;
   [lastX, lastY] = [e.offsetX, e.offsetY];
@@ -158,7 +179,6 @@ canvas.addEventListener('mousemove', e => {
   [lastX, lastY] = [e.offsetX, e.offsetY];
 });
 
-// 터치 이벤트
 canvas.addEventListener('touchstart', e => {
   e.preventDefault();
   drawing = true;
@@ -183,7 +203,6 @@ canvas.addEventListener('touchend', e => {
   drawing = false;
 });
 
-// 쿠키 저장
 const saveButton = document.getElementById('saveButton');
 
 saveButton.onclick = async () => {
@@ -216,6 +235,7 @@ saveButton.onclick = async () => {
     const count = result.count;
 
     alert(`등록되었습니다! ${count}번째 쿠키가 전시장에 도착했어요 🍪`);
+    cookieCountDisplay.textContent = `현재까지 저장된 쿠키 : ${count}개 🍪`;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   } catch (error) {
