@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>페이지 생성기 - 포트폴리오 에디터</title>
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+  <style>
+    body {
+      font-family: Pretendard, sans-serif;
+      max-width: 1080px;
+      margin: 3rem auto;
+      padding: 0 1.5rem;
+      background-color: #f5f7fa;
+      color: #333;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+      font-size: 1.05rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background: white;
+    }
+    button {
+      padding: 0.7rem 1.4rem;
+      font-size: 1.05rem;
+      cursor: pointer;
+      margin-right: 0.5rem;
+      border: none;
+      border-radius: 6px;
+      background-color: #007bff;
+      color: white;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      color: #222;
+    }
+    #editor-area {
+      min-height: 200px;
+      border: 2px dashed #ccc;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      background-color: #ffffff;
+      border-radius: 8px;
+    }
+    .editor-block {
+      border: 1px solid #bbb;
+      padding: 12px;
+      margin: 8px 0;
+      background: #ffffff;
+      border-radius: 6px;
+      position: relative;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+    .editor-block img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+    .editor-block .button {
+      display: inline-block;
+      padding: 8px 16px;
+      background-color: #000;
+      color: #fff;
+      text-decoration: none;
+      margin-top: 6px;
+      border-radius: 6px;
+    }
+    .delete-btn {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      font-size: 0.8rem;
+      padding: 4px 8px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .text-content {
+      min-height: 80px;
+      padding: 0.8rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background: #fafafa;
+    }
+    iframe {
+      width: 100%;
+      height: 400px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+    }
+    .preview h1 {
+      margin-top: 2rem;
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>📄 새 포트폴리오 페이지 만들기</h1>
+
+  <form id="page-form">
+    <label>제목</label>
+    <input type="text" id="title" required />
+
+    <label>슬러그 (URL 주소: 영문, 예: game-study)</label>
+    <input type="text" id="slug" required />
+
+    <label>설명</label>
+    <textarea id="description" rows="4" required></textarea>
+
+    <label>본문 콘텐츠</label>
+    <div style="margin-bottom: 1rem;">
+      <button type="button" onclick="addTextBlock()">+ 텍스트</button>
+      <button type="button" onclick="addLinkBlock()">+ 링크</button>
+      <button type="button" onclick="addPdfBlock()">+ PDF</button>
+    </div>
+    <div id="editor-area"></div>
+
+    <label>이미지 추가</label>
+    <input type="file" id="imageUpload" accept="image/*" multiple />
+
+    <label>PDF 링크 (선택)</label>
+    <input type="url" id="pdf" placeholder="https://..." />
+
+    <label>버튼 추가</label>
+    <input type="text" id="buttonText" placeholder="버튼 이름" />
+    <input type="url" id="buttonLink" placeholder="버튼 링크 https://..." />
+    <button type="button" onclick="addButtonBlock()">+ 버튼 삽입</button>
+
+    <button type="submit">+ 페이지 추가</button>
+    <button type="button" onclick="previewPage()">👁 페이지 미리보기</button>
+  </form>
+
+  <div id="pagePreview" class="preview"></div>
+
+  <script>
+    const editorArea = document.getElementById('editor-area');
+
+    function addDeleteButton(div) {
+      const del = document.createElement('button');
+      del.className = 'delete-btn';
+      del.innerText = '삭제';
+      del.onclick = () => div.remove();
+      div.appendChild(del);
+    }
+
+    function addTextBlock() {
+      const div = document.createElement('div');
+      div.className = 'editor-block';
+      div.innerHTML = `<div class="text-content" contenteditable="true">텍스트 입력</div>`;
+      addDeleteButton(div);
+      editorArea.appendChild(div);
+    }
+
+    function addLinkBlock() {
+      const div = document.createElement('div');
+      div.className = 'editor-block';
+      div.innerHTML = `
+        <input type="text" placeholder="링크 텍스트" oninput="updateLink(this)" />
+        <input type="url" placeholder="https://..." oninput="updateLink(this)" />
+        <p><a href="#" target="_blank">링크 텍스트</a></p>
+      `;
+      addDeleteButton(div);
+      editorArea.appendChild(div);
+    }
+
+    function updateLink(input) {
+      const block = input.closest('.editor-block');
+      const [textInput, urlInput] = block.querySelectorAll('input');
+      const link = block.querySelector('a');
+      link.textContent = textInput.value || '링크 텍스트';
+      link.href = urlInput.value || '#';
+    }
+
+    function addPdfBlock() {
+      const div = document.createElement('div');
+      div.className = 'editor-block';
+      div.innerHTML = `
+        <input type="url" placeholder="PDF 링크 (https://...)" />
+        <iframe src="" style="display:none;"></iframe>
+      `;
+      const input = div.querySelector('input');
+      const iframe = div.querySelector('iframe');
+
+      input.addEventListener('input', () => {
+        if (input.value.startsWith('http')) {
+          iframe.src = input.value;
+          iframe.style.display = 'block';
+        } else {
+          iframe.src = '';
+          iframe.style.display = 'none';
+        }
+      });
+
+      addDeleteButton(div);
+      editorArea.appendChild(div);
+    }
+
+    document.getElementById('imageUpload').addEventListener('change', function(e) {
+      [...e.target.files].forEach(file => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const div = document.createElement('div');
+          div.className = 'editor-block';
+          div.innerHTML = `<img src="${reader.result}" alt="업로드 이미지" />`;
+          addDeleteButton(div);
+          editorArea.appendChild(div);
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+
+    function addButtonBlock() {
+      const text = document.getElementById('buttonText').value.trim();
+      const link = document.getElementById('buttonLink').value.trim();
+      if (text && link) {
+        const div = document.createElement('div');
+        div.className = 'editor-block';
+        div.innerHTML = `<a href="${link}" class="button" target="_blank">${text}</a>`;
+        addDeleteButton(div);
+        editorArea.appendChild(div);
+      }
+    }
+
+    new Sortable(editorArea, {
+      animation: 150,
+      handle: '.editor-block',
+      draggable: '.editor-block'
+    });
+
+    function previewPage() {
+      const title = document.getElementById('title').value;
+      const description = document.getElementById('description').value;
+      const pdf = document.getElementById('pdf').value;
+      const iframe = pdf ? `<div class='iframe-container'><iframe src='${pdf}'></iframe></div>` : '';
+      const content = Array.from(editorArea.children).map(el => el.outerHTML).join('\n');
+      document.getElementById('pagePreview').innerHTML = `<h1>${title}</h1><p>${description}</p>${content}${iframe}`;
+    }
+
+    document.getElementById('page-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const content = Array.from(editorArea.children).map(el => el.outerHTML).join('\n');
+      const newPage = {
+        title: document.getElementById('title').value.trim(),
+        slug: document.getElementById('slug').value.trim(),
+        description: document.getElementById('description').value.trim(),
+        content: content,
+        pdf: document.getElementById('pdf').value.trim()
+      };
+
+      fetch('data/pages.json')
+        .then(res => res.json())
+        .then(data => {
+          data.pages.push(newPage);
+          const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'pages.json';
+          a.click();
+        });
+    });
+  </script>
+</body>
+</html>

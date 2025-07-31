@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{title}}</title>
+
+  <!-- Pretendard Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff" rel="stylesheet" />
+
+  <style>
+    body {
+      font-family: 'Pretendard', sans-serif;
+      margin: 0;
+      padding: 100px 20px 100px;
+      background-color: #f4f4f4;
+      color: #222;
+      line-height: 1.6;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    p {
+      font-size: 16px;
+      margin: 12px 0;
+    }
+
+    img.inline-img {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      margin: 12px 0;
+    }
+
+    .image-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin: 16px 0;
+    }
+
+    .image-row img {
+      flex: 1;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    a {
+      color: #1a73e8;
+      text-decoration: underline;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #222;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+      margin: 12px 0;
+    }
+
+    .iframe-container {
+      width: 100%;
+      height: 85vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    iframe {
+      max-width: 100vw;
+      max-height: 85vh;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border: none;
+    }
+
+    @media (max-width: 768px) {
+      .iframe-container {
+        height: 60vh;
+      }
+      iframe {
+        width: 90vw;
+        height: 60vh;
+      }
+    }
+
+    /* ============================
+       네비게이션 바 통합
+    ============================= */
+    .navbar {
+      background-color: #ededed;
+      display: flex;
+      justify-content: flex-start;
+      padding: 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      align-items: center;
+    }
+
+    .navbar .home-button {
+      color: #000;
+      text-decoration: none;
+      font-size: 13px;
+      padding: 0 10px;
+    }
+
+    .navbar .menu {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar a {
+      color: #000;
+      text-decoration: none;
+      padding: 0 20px;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 20px;
+      line-height: 20px;
+      position: relative;
+    }
+
+    .navbar a:hover {
+      font-weight: bold;
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #ededed;
+      white-space: nowrap;
+      padding: 5px 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      text-align: center;
+      top: 100%;
+    }
+
+    .dropdown-content a {
+      color: #000;
+      height: 35px;
+      line-height: 35px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .dropdown-content a:hover {
+      font-weight: bold;
+    }
+
+    @media screen and (min-width: 769px) {
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+    }
+
+    .menu-button {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      padding: 5px 10px;
+      position: absolute;
+      right: 20px;
+      z-index: 1100;
+    }
+
+    .menu-button div {
+      width: 25px;
+      height: 2px;
+      background-color: black;
+      margin: 5px 0;
+    }
+
+    @media (max-width: 768px) {
+      .menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: #ededed;
+        padding: 10px 0;
+      }
+
+      .menu.show {
+        display: flex;
+      }
+
+      .menu-button {
+        display: flex;
+        margin-left: auto;
+      }
+
+      .dropdown-content {
+        position: static;
+        width: 100%;
+      }
+
+      .dropdown.open .dropdown-content {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ✅ 네비게이션 바 시작 -->
+  <div class="navbar">
+    <a href="/" class="home-button">박민지 포트폴리오</a>
+    <div class="menu-button" onclick="toggleMenu(event)">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div class="menu">
+      <div class="dropdown">
+        <a href="#" class="dropdown-toggle" onclick="toggleDropdown(event)">게임 개발 경험 ▼</a>
+        <div class="dropdown-content">
+          <a href="/#gameproject">8개 전체 보기</a>
+          <a href="/#dreampals">Dream Pals</a>
+          <a href="/#rifa">RIFA</a>
+        </div>
+      </div>
+      <div class="dropdown">
+        <a href="#" class="dropdown-toggle" onclick="toggleDropdown(event)">대외활동 ▼</a>
+        <div class="dropdown-content">
+          <a href="/#pearlrush">2024 넥슨 게임잼</a>
+          <a href="/#metoring">2025 커리어 캠프</a>
+          <a href="/#unphysicalrhythm">《언피지컬 리듬》</a>
+          <a href="/#modemspace">모바일 앱</a>
+        </div>
+      </div>
+      <div class="dropdown">
+        <a href="#" class="dropdown-toggle" onclick="toggleDropdown(event)">ABOUT ME ▼</a>
+        <div class="dropdown-content">
+          <a href="/#cv">자기소개</a>
+          <a href="/#review">게임 리뷰</a>
+          <a href="/#study">건축공간론</a>
+          <a href="/#gamestudy">게임 분석</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ✅ 네비게이션 바 끝 -->
+
+  <!-- 본문 시작 -->
+  <h1>{{title}}</h1>
+  <p>{{description}}</p>
+
+  {{content}}
+
+  {{pdf}}
+
+  <!-- 네비게이션 스크립트 -->
+  <script>
+    function toggleMenu(event) {
+      event.stopPropagation();
+      const menu = document.querySelector('.menu');
+      menu.classList.toggle('show');
+    }
+
+    function toggleDropdown(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      const dropdown = event.currentTarget.parentElement;
+      dropdown.classList.toggle('open');
+    }
+
+    document.addEventListener('click', function (event) {
+      const menu = document.querySelector('.menu');
+      const menuButton = document.querySelector('.menu-button');
+      if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
+        menu.classList.remove('show');
+      }
+      document.querySelectorAll('.dropdown').forEach(dropdown => {
+        if (!dropdown.contains(event.target)) {
+          dropdown.classList.remove('open');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

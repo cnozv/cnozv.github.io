@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>박민지 포트폴리오</title>
+
+  <!-- Pretendard Font 적용 -->
+  <style>
+    @font-face {
+      font-family: 'Pretendard';
+      src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+      font-weight: 400;
+      font-style: normal;
+    }
+    body, p, span, h1, h2, h3, h4, h5, h6, div, a {
+      font-family: 'Pretendard', sans-serif !important;
+    }
+  </style>
+
+  <!-- 외부 링크 새 창 열기 -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('a').forEach(function(link) {
+        if (link.hostname !== window.location.hostname) {
+          link.setAttribute('target', '_blank');
+        } else {
+          link.removeAttribute('target');
+        }
+      });
+    });
+  </script>
+
+  <!-- 네비게이션 바 스타일 및 스크립트 포함 -->
+   <!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Responsive Navigation Bar</title>
+
+<style>
+/* 네비게이션 바 스타일 */
+.navbar {
+background-color: #ededed;
+display: flex;
+justify-content: flex-start;
+padding: 20px 20px;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+z-index: 1000;
+align-items: center;
+}
+
+.navbar .home-button {
+color: #000;
+text-decoration: none;
+font-size: 13px;
+padding: 0 10px;
+}
+
+/* 데스크탑에서 메뉴 스타일 */
+.navbar .menu {
+margin-left: auto;
+display: flex;
+align-items: center;
+}
+
+/* 모바일에서 메뉴 스타일 */
+@media screen and (max-width: 768px) {
+.navbar .menu {
+background-color: #ededed;
+display: flex;
+justify-content: flex-start;
+padding: 8px 0;
+position: fixed;
+top: 45px;
+left: 0;
+width: 100%;
+z-index: 1000;
+align-items: center;
+display: none; /* 기본적으로 숨김 (모바일에서만 보이게 설정) */
+
+}
+
+.navbar .menu.show {
+display: flex; /* 'show' 클래스가 있을 때 메뉴를 펼침 */
+}
+}
+
+.navbar a {
+color: #000;
+text-decoration: none;
+padding: 0 20px;
+font-size: 13px;
+display: flex;
+align-items: center;
+justify-content: center;
+height: 20px;
+line-height: 20px;
+position: relative;
+}
+
+.navbar a:hover {
+font-weight: bold;
+}
+
+.dropdown {
+position: relative;
+}
+
+.dropdown-content {
+display: none;
+position: absolute;
+background-color:#ededed;
+white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+padding: 5px 10px; /* 여백 추가 */
+left: 50%; /* 부모 요소 기준으로 중앙 정렬 */
+transform: translateX(-50%); /* 정확한 중앙 배치 */
+z-index: 10;
+text-align: center;
+top: 100%;
+}
+
+.dropdown-content a {
+color: #000;
+height: 35px;
+line-height: 35px;
+text-decoration: none;
+display: block;
+}
+
+.dropdown-content a:hover {
+font-weight: bold;
+}
+
+/* 데스크톱에서 호버 시 드롭다운 표시 */
+@media screen and (min-width: 769px) {
+.dropdown:hover .dropdown-content {
+display: block;
+}
+}
+
+/* 모바일 메뉴 버튼 스타일 */
+.menu-button {
+display: none;
+flex-direction: column;
+cursor: pointer;
+padding: 5px 10px;
+position: absolute;
+right: 20px;
+z-index: 1100;
+}
+
+.menu-button div {
+width: 25px;
+height: 2px;
+background-color: black;
+margin: 5px 0;
+}
+
+/* 모바일 환경에서 메뉴 숨기기 */
+@media (max-width: 768px) {
+.menu {
+display: none;
+flex-direction: column;
+position: absolute;
+top: 100%;
+left: 0;
+width: 100%;
+background-color: #ededed;
+padding: 10px 0;
+
+}
+
+.menu.show {
+display: flex;
+
+}
+
+.navbar a {
+color: #000;
+text-decoration: none;
+padding: 20px 10px;
+font-size: 13px;
+display: flex;
+align-items: center;
+justify-content: center;
+height: 20px;
+line-height: 20px;
+position: relative;
+}
+
+.dropdown {
+position: relative;
+text-align: center; /* 드롭다운 버튼 중앙 정렬 */
+}
+
+.dropdown-content {
+display: none;
+position: absolute; /* 여전히 절대 위치로 설정 */
+background-color: #ededed;
+width: 100%;
+left: 0%;
+transform: none; /* 정확한 중앙 정렬 */
+text-align: center; /* 내부 항목도 중앙 정렬 */
+}
+
+.dropdown.open .dropdown-content {
+display: block;
+position: static; /* 자연스럽게 아래로 확장 */
+}
+
+.menu-button {
+display: flex;
+margin-left: auto;
+
+}
+}
+</style>
+</head>
+<body>
+
+<div class="navbar">
+<a href="#" class="home-button">박민지 포트폴리오</a>
+<div class="menu-button" onclick="toggleMenu(event)">
+<div></div>
+<div></div>
+<div></div>
+</div>
+<div class="menu">
+<div class="dropdown">
+<a href="#" class="dropdown-toggle" onclick="toggleDropdown(event)">게임 개발 경험 ▼</a>
+<div class="dropdown-content">
+<a href="#gameproject" class="dropdown-item">8개 전체 보기</a>
+<a href="#dreampals" class="dropdown-item">Dream Pals</a>
+<a href="#rifa" class="dropdown-item">RIFA</a>
+</div>
+</div>
+<div class="dropdown">
+<a href="#" class="dropdown-toggle" onclick="toggleDropdown(event)">대외활동 ▼</a>
+<div class="dropdown-content">
+<a href="#pearlrush" class="dropdown-item">2024 넥슨 대학생 게임잼 최우수상</a>
+<a href="#metoring" class="dropdown-item">2025 넥슨 커리어 캠프 최우수상/기획 MVP</a>
+<a href="#unphysicalrhythm" class="dropdown-item">전시 《언피지컬 리듬》 기획</a>
+<a href="#modemspace" class="dropdown-item">모바일 전시 애플리케이션 프로젝트</a>
+</div>
+</div>
+<div class="dropdown">
+<a href="#" class="dropdown-toggle" onclick="toggleDropdown(event)">ABOUT ME ▼</a>
+<div class="dropdown-content">
+<a href="#cv" class="dropdown-item">자기소개</a>
+<a href="#review" class="dropdown-item">게임 리뷰</a>
+<a href="#study" class="dropdown-item">건축공간론 스터디</a>
+<a href="#gamestudy" class="dropdown-item">게임 분석 스터디</a>
+</div>
+</div>
+
+<script>
+function toggleMenu(event) {
+event.stopPropagation();
+const menu = document.querySelector('.menu');
+menu.classList.toggle('show');
+}
+
+document.addEventListener('click', function(event) {
+const menu = document.querySelector('.menu');
+const menuButton = document.querySelector('.menu-button');
+if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
+menu.classList.remove('show');
+}
+});
+
+function toggleDropdown(event) {
+event.preventDefault();
+event.stopPropagation();
+const dropdown = event.currentTarget.parentElement;
+dropdown.classList.toggle('open');
+}
+
+document.addEventListener('click', function(event) {
+const menu = document.querySelector('.menu');
+const menuButton = document.querySelector('.menu-button');
+
+// 메뉴 닫기 (메뉴 바깥 클릭 시)
+if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
+menu.classList.remove('show');
+}
+
+// 드롭다운 닫기 (드롭다운 바깥 클릭 시)
+document.querySelectorAll('.dropdown').forEach(dropdown => {
+if (!dropdown.contains(event.target)) {
+dropdown.classList.remove('open');
+}
+});
+});
+
+// 모바일 메뉴에서 페이지 이동 시 메뉴 닫기
+const menuItems = document.querySelectorAll('.menu-item');
+const 참여작가Button = document.querySelector('.dropdown-toggle'); // '참여 작가' 버튼
+const dropdownItems = document.querySelectorAll('.dropdown-item'); // 드롭다운 메뉴 항목
+
+menuItems.forEach(item => {
+item.addEventListener("click", function (event) {
+if (item !== 참여작가Button) { // '참여 작가' 버튼을 제외하고
+const menu = document.querySelector('.menu');
+menu.classList.remove('show'); // 메뉴 닫기
+}
+});
+});
+
+// 드롭다운 메뉴 항목 클릭 시에도 메뉴 닫기
+dropdownItems.forEach(item => {
+item.addEventListener("click", function (event) {
+const menu = document.querySelector('.menu');
+menu.classList.remove('show'); // 메뉴 닫기
+});
+});
+</script>
+
+</body>
+</html>
+  <style>
+    /* 여기에 네비게이션 바 CSS 복붙 */
+
+    .iframe-container {
+      width: 100%;
+      height: 85vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    iframe {
+      max-width: 100vw;
+      max-height: 85vh;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border: none;
+    }
+
+    @media (max-width: 768px) {
+      .iframe-container {
+        height: 60vh;
+      }
+      iframe {
+        width: 90vw;
+        height: 60vh;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 네비게이션 바 복붙 위치 -->
+  <div class="navbar">
+    <!-- 네비게이션 바 HTML 코드 여기에 삽입 -->
+  </div>
+
+  <main style="padding-top: 100px">
+    <section id="gameproject">
+      <h2 id="section-gameproject-title"></h2>
+      <p id="section-gameproject-desc"></p>
+    </section>
+    <section id="dreampals">
+      <h2 id="section-dreampals-title"></h2>
+      <p id="section-dreampals-desc"></p>
+    </section>
+    <section id="rifa">
+      <h2 id="section-rifa-title"></h2>
+      <p id="section-rifa-desc"></p>
+    </section>
+    <section id="pearlrush">
+      <h2 id="section-pearlrush-title"></h2>
+      <p id="section-pearlrush-desc"></p>
+    </section>
+    <section id="cv">
+      <h2 id="section-cv-title"></h2>
+      <p id="section-cv-desc"></p>
+    </section>
+    <section id="review">
+      <h2 id="section-review-title"></h2>
+      <p id="section-review-desc"></p>
+    </section>
+    <section id="study">
+      <h2 id="section-study-title"></h2>
+      <p id="section-study-desc"></p>
+    </section>
+    <section id="gamestudy">
+      <h2 id="section-gamestudy-title"></h2>
+      <p id="section-gamestudy-desc"></p>
+    </section>
+
+    <!-- PDF Viewer 대체 삽입 -->
+    <div class="iframe-container">
+      <iframe src="https://cnozv.github.io/rifa.pdf"></iframe>
+    </div>
+  </main>
+
+  <script src="render.js"></script>
+  <script>
+    // 네비게이션 관련 JS 복붙 위치
+  </script>
+</body>
+</html>
