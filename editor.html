@@ -144,7 +144,8 @@
   }
   .text-content {
     text-align: center;
-    line-height: 2;
+    line-height: 2 !important;
+    word-break: break-word;
     min-height: 80px;
     padding: 0.8rem;
     border: 1px solid #ccc;
@@ -288,18 +289,53 @@ function loadFromJSON(event) {
     Array.from(temp.children).forEach(block => {
       // 삭제 버튼 추가
       addDeleteButton(block);
+      // 불러온 블록 안의 색상 선택기 기능 다시 연결
+    block.querySelectorAll('.editor-block').forEach(editor => {
+  const colorInput = editor.querySelector('input[type="color"]');
+  const textDiv = editor.querySelector('.text-content');
 
-      // 레이아웃 블록 내부 컬럼에도 블록이 있을 경우, 삭제 버튼 추가
+  if (colorInput && textDiv) {
+   colorInput.addEventListener('input', () => {
+  const color = colorInput.value;
+  textDiv.style.color = color;
+
+  // 내부 모든 요소(span, p, br 등)에 강제로 색 적용
+  textDiv.querySelectorAll('*').forEach(child => {
+    child.style.color = color;
+  });
+});
+
+  }
+});
+
+      // 텍스트 블록 <p>를 <div contenteditable>로 복구
+      block.querySelectorAll('p').forEach(p => {
+        const editable = document.createElement('div');
+        editable.className = 'text-content';
+        editable.contentEditable = true;
+        editable.innerHTML = p.innerHTML;
+
+        // 스타일 복사 (색상, 정렬, 줄간격)
+        editable.style.color = p.style.color || '';
+        editable.style.textAlign = p.style.textAlign || '';
+        editable.style.lineHeight = p.style.lineHeight || '';
+
+        p.replaceWith(editable);
+      });
+
+      // 레이아웃 내부 블록에도 삭제 버튼 다시 붙이기
       block.querySelectorAll('.editor-block').forEach(inner => {
         addDeleteButton(inner);
       });
-
+      
       editorArea.appendChild(block);
     });
   };
 
   reader.readAsText(file);
 }
+
+
 
 
 function addTextBlock() {
@@ -718,13 +754,11 @@ document.addEventListener('contextmenu', function(e) {
 }
 
 
-// 드래그 초기화 (에디터 및 레이아웃 칼럼)
 window.addEventListener('load', () => {
   new Sortable(editorArea, {
     group: 'shared',
     animation: 150,
-    handle: '.editor-block',
-    draggable: '.editor-block',
+    draggable: '.editor-block, .layout-block',  // ✅ layout-block도 포함
     fallbackOnBody: true,
     swapThreshold: 0.65
   });
