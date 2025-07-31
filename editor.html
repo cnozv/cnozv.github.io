@@ -259,14 +259,32 @@ function saveAsJSON() {
 function loadFromJSON(event) {
   const file = event.target.files[0];
   if (!file) return;
+
   const reader = new FileReader();
   reader.onload = e => {
     const data = JSON.parse(e.target.result);
-    document.getElementById('title').value = data.title;
-    document.getElementById('slug').value = data.slug;
-    document.getElementById('description').value = data.description;
-    editorArea.innerHTML = data.content;
+    document.getElementById('title').value = data.title || '';
+    document.getElementById('slug').value = data.slug || '';
+    document.getElementById('description').value = data.description || '';
+
+    editorArea.innerHTML = ''; // 기존 콘텐츠 제거
+
+    const temp = document.createElement('div');
+    temp.innerHTML = data.content || '';
+
+    Array.from(temp.children).forEach(block => {
+      // 삭제 버튼 추가
+      addDeleteButton(block);
+
+      // 레이아웃 블록 내부 컬럼에도 블록이 있을 경우, 삭제 버튼 추가
+      block.querySelectorAll('.editor-block').forEach(inner => {
+        addDeleteButton(inner);
+      });
+
+      editorArea.appendChild(block);
+    });
   };
+
   reader.readAsText(file);
 }
 
