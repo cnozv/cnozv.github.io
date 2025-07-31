@@ -18,8 +18,7 @@
       e.replaceWith(p);
     });
     return clone.outerHTML;
-  }).join('
-');
+  }).join('\n');
 
   const finalHTML = `<!DOCTYPE html>
 <html lang="ko">
@@ -217,9 +216,16 @@
     <button type="button" onclick="addLayoutBlock(3)">+ 3단 레이아웃</button>
   </div>
   <div id="editor-area"></div>
-  <button type="submit">+ 페이지 저장</button>
-  <button type="button" onclick="previewPage()">👁 페이지 미리보기</button>
+<button type="button" onclick="saveAsJSON()">JSON으로 임시저장</button>
 <button type="button" onclick="savePage()">💾 HTML로 저장</button>
+
+<label style="display: inline-block; margin: 1rem 0;">
+  🔄 임시저장된 JSON 불러오기
+  <input type="file" accept=".json" onchange="loadFromJSON(event)" style="margin-top: 0.5rem;">
+</label>
+
+
+
 </form>
 <div class="preview" id="pagePreview"></div>
 <script>
@@ -233,6 +239,36 @@ function addDeleteButton(div) {
   div.appendChild(del);
 }
 
+
+function saveAsJSON() {
+  const data = {
+    title: document.getElementById('title').value,
+    slug: document.getElementById('slug').value,
+    description: document.getElementById('description').value,
+    content: editorArea.innerHTML
+  };
+
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = (data.slug || 'draft') + '.json';
+  a.click();
+}
+
+function loadFromJSON(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const data = JSON.parse(e.target.result);
+    document.getElementById('title').value = data.title;
+    document.getElementById('slug').value = data.slug;
+    document.getElementById('description').value = data.description;
+    editorArea.innerHTML = data.content;
+  };
+  reader.readAsText(file);
+}
 
 
 function addTextBlock() {
@@ -476,6 +512,7 @@ function savePage() {
   </style>
 </head>
 <body>
+  <script src="/navbar.js"><\/script>
   <h1>${title}</h1>
   <p>${description}</p>
   ${content}
