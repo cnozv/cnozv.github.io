@@ -1,17 +1,11 @@
-
-
 <!DOCTYPE html>
-
 <html lang="ko">
 <head>
-  
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Responsive Navigation Bar</title>
 
 <style>
-/* 박민지(parkminji0111@gmail.com)가 작성한 스크립트이며, 작성자의 동의 없는 복사, 수정, 재배포 등 이용을 금합니다. */
-/* 네비게이션 바 스타일 */
 .navbar {
 background-color: #ffffff;
 display: flex;
@@ -32,14 +26,12 @@ font-size: 13px;
 padding: 0 10px;
 }
 
-/* 데스크탑에서 메뉴 스타일 */
 .navbar .menu {
 margin-left: auto;
 display: flex;
 align-items: center;
 }
 
-/* 모바일에서 메뉴 스타일 */
 @media screen and (max-width: 768px) {
 .navbar .menu {
 background-color: #ffffff;
@@ -52,12 +44,12 @@ left: 0;
 width: 100%;
 z-index: 1000;
 align-items: center;
-display: none; /* 기본적으로 숨김 (모바일에서만 보이게 설정) */
+display: none;
 
 }
 
 .navbar .menu.show {
-display: flex; /* 'show' 클래스가 있을 때 메뉴를 펼침 */
+display: flex;
 }
 }
 
@@ -86,10 +78,10 @@ position: relative;
 display: none;
 position: absolute;
 background-color:#ffffff;
-white-space: nowrap; /* 텍스트 줄바꿈 방지 */
-padding: 5px 10px; /* 여백 추가 */
-left: 50%; /* 부모 요소 기준으로 중앙 정렬 */
-transform: translateX(-50%); /* 정확한 중앙 배치 */
+white-space: nowrap;
+padding: 5px 10px;
+left: 50%;
+transform: translateX(-50%);
 z-index: 10;
 text-align: center;
 top: 100%;
@@ -107,14 +99,12 @@ display: block;
 font-weight: bold;
 }
 
-/* 데스크톱에서 호버 시 드롭다운 표시 */
 @media screen and (min-width: 769px) {
 .dropdown:hover .dropdown-content {
 display: block;
 }
 }
 
-/* 모바일 메뉴 버튼 스타일 */
 .menu-button {
 display: none;
 cursor: pointer;
@@ -145,7 +135,6 @@ background-color: black;
 margin: 5px 0;
 }
 
-/* 모바일 환경에서 메뉴 숨기기 */
 @media (max-width: 768px) {
 .menu {
 display: none;
@@ -179,22 +168,22 @@ position: relative;
 
 .dropdown {
 position: relative;
-text-align: center; /* 드롭다운 버튼 중앙 정렬 */
+text-align: center;
 }
 
 .dropdown-content {
 display: none;
-position: absolute; /* 여전히 절대 위치로 설정 */
+position: absolute;
 background-color: #ffffff;
 width: 100%;
 left: 0%;
-transform: none; /* 정확한 중앙 정렬 */
-text-align: center; /* 내부 항목도 중앙 정렬 */
+transform: none;
+text-align: center;
 }
 
 .dropdown.open .dropdown-content {
 display: block;
-position: static; /* 자연스럽게 아래로 확장 */
+position: static;
 }
 
 .menu-button {
@@ -276,12 +265,11 @@ document.addEventListener('click', function(event) {
 const menu = document.querySelector('.menu');
 const menuButton = document.querySelector('.menu-button');
 
-// 메뉴 닫기 (메뉴 바깥 클릭 시)
 if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
 menu.classList.remove('show');
 }
 
-// 드롭다운 닫기 (드롭다운 바깥 클릭 시)
+// 드롭다운_닫기_(드롭다운 바깥 클릭 시)
 document.querySelectorAll('.dropdown').forEach(dropdown => {
 if (!dropdown.contains(event.target)) {
 dropdown.classList.remove('open');
@@ -289,25 +277,24 @@ dropdown.classList.remove('open');
 });
 });
 
-// 모바일 메뉴에서 페이지 이동 시 메뉴 닫기
 const menuItems = document.querySelectorAll('.menu-item');
-const 참여작가Button = document.querySelector('.dropdown-toggle'); // '참여 작가' 버튼
-const dropdownItems = document.querySelectorAll('.dropdown-item'); // 드롭다운 메뉴 항목
+const 참여작가Button = document.querySelector('.dropdown-toggle'); // '참여 작가'_버튼
+const dropdownItems = document.querySelectorAll('.dropdown-item'); // 드롭다운_메뉴_항목
 
 menuItems.forEach(item => {
 item.addEventListener("click", function (event) {
-if (item !== 참여작가Button) { // '참여 작가' 버튼을 제외하고
+if (item !== 참여작가Button) { // '참여 작가' 버튼을_제외하고
 const menu = document.querySelector('.menu');
 menu.classList.remove('show'); // 메뉴 닫기
 }
 });
 });
 
-// 드롭다운 메뉴 항목 클릭 시에도 메뉴 닫기
+// 드롭다운_메뉴_클릭_시에도_메뉴_닫기
 dropdownItems.forEach(item => {
 item.addEventListener("click", function (event) {
 const menu = document.querySelector('.menu');
-menu.classList.remove('show'); // 메뉴 닫기
+menu.classList.remove('show'); // 메뉴_닫기
 });
 });
 </script>
