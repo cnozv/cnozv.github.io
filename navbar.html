@@ -6,289 +6,227 @@
 <title>Responsive Navigation Bar</title>
 
 <style>
+/* 박민지(parkminji0111@gmail.com)가 작성한 스크립트이며, 작성자의 동의 없는 복사, 수정, 재배포 등 이용을 금합니다. */
+
+/* 네비게이션 바 스타일 */
 .navbar {
-background-color: #ffffff;
-display: flex;
-justify-content: flex-start;
-padding: 20px 20px;
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-z-index: 1000;
-align-items: center;
-box-sizing: border-box;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: flex-start;
+  padding: 20px 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  align-items: center;
+  box-sizing: border-box;
 }
 
 .navbar .home-button {
-color: #000;
-text-decoration: none;
-font-size: 13px;
-padding: 0 10px;
+  color: #000;
+  text-decoration: none;
+  font-size: 13px;
+  padding: 0 10px;
 }
 
+/* 데스크탑 메뉴 스타일 */
 .navbar .menu {
-margin-left: auto;
-display: flex;
-align-items: center;
-}
-
-@media screen and (max-width: 768px) {
-.navbar .menu {
-background-color: #ffffff;
-display: flex;
-justify-content: flex-start;
-padding: 8px 0;
-position: fixed;
-top: 45px;
-left: 0;
-width: 100%;
-z-index: 1000;
-align-items: center;
-display: none;
-
-}
-
-.navbar .menu.show {
-display: flex;
-}
+  margin-left: auto;
+  display: flex;
+  align-items: center;
 }
 
 .navbar a {
-color: #000;
-text-decoration: none;
-padding: 0 20px;
-font-size: 13px;
-display: flex;
-align-items: center;
-justify-content: center;
-height: 20px;
-line-height: 20px;
-position: relative;
+  color: #000;
+  text-decoration: none;
+  padding: 0 20px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  line-height: 20px;
+  position: relative;
 }
 
 .navbar a:hover {
-font-weight: bold;
+  font-weight: bold;
 }
 
 .dropdown {
-position: relative;
+  position: relative;
 }
 
 .dropdown-content {
-display: none;
-position: absolute;
-background-color:#ffffff;
-white-space: nowrap;
-padding: 5px 10px;
-left: 50%;
-transform: translateX(-50%);
-z-index: 10;
-text-align: center;
-top: 100%;
+  display: none;
+  position: absolute;
+  background-color: #ffffff;
+  white-space: nowrap;
+  padding: 5px 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  text-align: center;
+  top: 100%;
 }
 
 .dropdown-content a {
-color: #000;
-height: 35px;
-line-height: 35px;
-text-decoration: none;
-display: block;
+  color: #000;
+  height: 35px;
+  line-height: 35px;
+  text-decoration: none;
+  display: block;
 }
 
 .dropdown-content a:hover {
-font-weight: bold;
+  font-weight: bold;
 }
 
+/* 데스크탑 드롭다운 호버 표시 */
 @media screen and (min-width: 769px) {
-.dropdown:hover .dropdown-content {
-display: block;
-}
-}
-
-.menu-button {
-display: none;
-cursor: pointer;
-font-size: 13px;
-padding: 0 10px;
-position: absolute;
-right: 20px;
-z-index: 1100;
-align-items: center;
-justify-content: center;
-height: 20px;
-line-height: 20px;
-color: #000;
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
 }
 
+/* 모바일 메뉴 스타일 */
 @media (max-width: 768px) {
-.menu-button {
-display: flex;
-margin-left: auto;
+  .menu-button {
+    display: flex;
+    margin-left: auto;
+    cursor: pointer;
+    font-size: 13px;
+    padding: 0 10px;
+    position: absolute;
+    right: 20px;
+    z-index: 1100;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+    line-height: 20px;
+    color: #000;
+  }
+  
 
-}
-}
-
-.menu-button div {
-width: 25px;
-height: 2px;
-background-color: black;
-margin: 5px 0;
-}
-
-@media (max-width: 768px) {
-.menu {
-display: none;
-flex-direction: column;
-position: absolute;
-top: 100%;
-left: 0;
-width: 100%;
-background-color: #ffffff;
-padding: 10px 0;
-
-}
-
-.menu.show {
-display: flex;
-
-}
-
-.navbar a {
-color: #000;
-text-decoration: none;
-padding: 20px 10px;
-font-size: 13px;
-display: flex;
-align-items: center;
-justify-content: center;
-height: 20px;
-line-height: 20px;
-position: relative;
+  .navbar .menu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 45px;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    padding: 10px 0;
+    z-index: 1000;
+  }
+  
+  .dropdown-content a {
+  display: block;
+  text-align: center;
+  margin: 0;
+  padding: 10px 0;
+  font-size: 13px;
+  line-height: 1.4;
+  width: 100%;
+  box-sizing: border-box;
+  white-space: normal;
 }
 
-.dropdown {
-position: relative;
-text-align: center;
-}
 
-.dropdown-content {
-display: none;
-position: absolute;
-background-color: #ffffff;
-width: 100%;
-left: 0%;
-transform: none;
-text-align: center;
-}
+  .navbar .menu.show {
+    display: flex;
+  }
 
-.dropdown.open .dropdown-content {
-display: block;
-position: static;
-}
+  .navbar a {
+    padding: 20px 10px;
+  }
 
-.menu-button {
-display: flex;
-margin-left: auto;
+  .dropdown {
+    text-align: center;
+  }
 
-}
+  .dropdown-content {
+    display: none;
+    position: static;
+    background-color: #ffffff;
+    width: 100%;
+    text-align: center;
+  }
+
+  .dropdown.open .dropdown-content {
+    display: block;
+  }
 }
 </style>
 </head>
 <body>
 
 <div class="navbar">
-<a href="index" class="home-button">박민지 포트폴리오</a>
-<div class="menu-button" onclick="toggleMenu(event)">
-menu
-</div>
-<div class="menu">
-
-  <div class="dropdown">
-<a href="#" class="dropdown-toggle" onclick="toggleDropdown(event)">개발 프로젝트</a>
-<div class="dropdown-content">
-<a href="game" class="dropdown-item">모아보기</a>
-<a href="sample" class="dropdown-item">샘플페이지</a>
-</div>
-</div>
-
-<div class="dropdown">
-<a href="#" class="dropdown-toggle" onclick="toggleDropdown(event)">대외활동</a>
-<div class="dropdown-content">
-<a href="gamejam" class="dropdown-item">2024 넥슨 대학생 게임잼 최우수상</a>
-<a href="metoring" class="dropdown-item">2025 넥슨 커리어 캠프 메토링 최우수상</a>
-</div>
-</div>
-
-<div class="dropdown">
-<a href="#" class="dropdown-toggle" onclick="toggleDropdown(event)">레벨디자인</a>
-<div class="dropdown-content">
-<a href="level01" class="dropdown-item">레벨01</a>
-<a href="level02" class="dropdown-item">레벨02</a>
-<a href="level03" class="dropdown-item">레벨03</a>
-</div>
-</div>
-<a href="about" class="menu-item">자기소개</a>
-</div>
+  <a href="index" class="home-button">박민지 포트폴리오</a>
+  <div class="menu-button" onclick="toggleMenu(event)">menu</div>
+  <div class="menu">
+    <div class="dropdown">
+      <a href="#" class="dropdown-toggle" onclick="toggleDropdown(event)">개발 프로젝트</a>
+      <div class="dropdown-content">
+        <a href="game" class="dropdown-item">모아보기</a>
+        <a href="sample" class="dropdown-item">샘플페이지</a>
+      </div>
+    </div>
+    <div class="dropdown">
+      <a href="#" class="dropdown-toggle" onclick="toggleDropdown(event)">대외활동</a>
+      <div class="dropdown-content">
+        <a href="gamejam" class="dropdown-item">2024 넥슨 대학생 게임잼 최우수상</a>
+        <a href="metoring" class="dropdown-item">2025 넥슨 커리어 캠프 메토링 최우수상</a>
+      </div>
+    </div>
+    <div class="dropdown">
+      <a href="#" class="dropdown-toggle" onclick="toggleDropdown(event)">레벨디자인</a>
+      <div class="dropdown-content">
+        <a href="level01" class="dropdown-item">레벨01</a>
+        <a href="level02" class="dropdown-item">레벨02</a>
+        <a href="level03" class="dropdown-item">레벨03</a>
+      </div>
+    </div>
+    <a href="about" class="menu-item">자기소개</a>
+  </div>
 </div>
 
 <script>
 function toggleMenu(event) {
-event.stopPropagation();
-const menu = document.querySelector('.menu');
-menu.classList.toggle('show');
+  event.stopPropagation();
+  const menu = document.querySelector('.menu');
+  menu.classList.toggle('show');
 }
 
 document.addEventListener('click', function(event) {
-const menu = document.querySelector('.menu');
-const menuButton = document.querySelector('.menu-button');
-if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
-menu.classList.remove('show');
-}
+  const menu = document.querySelector('.menu');
+  const menuButton = document.querySelector('.menu-button');
+  if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
+    menu.classList.remove('show');
+  }
+
+  // 드롭다운 닫기
+  document.querySelectorAll('.dropdown').forEach(dropdown => {
+    if (!dropdown.contains(event.target)) {
+      dropdown.classList.remove('open');
+    }
+  });
 });
 
 function toggleDropdown(event) {
-event.preventDefault();
-event.stopPropagation();
-const dropdown = event.currentTarget.parentElement;
-dropdown.classList.toggle('open');
+  event.preventDefault();
+  event.stopPropagation();
+  const dropdown = event.currentTarget.parentElement;
+  dropdown.classList.toggle('open');
 }
 
-document.addEventListener('click', function(event) {
-const menu = document.querySelector('.menu');
-const menuButton = document.querySelector('.menu-button');
-
-if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
-menu.classList.remove('show');
-}
-
-// 드롭다운_닫기_(드롭다운 바깥 클릭 시)
-document.querySelectorAll('.dropdown').forEach(dropdown => {
-if (!dropdown.contains(event.target)) {
-dropdown.classList.remove('open');
-}
-});
-});
-
-const menuItems = document.querySelectorAll('.menu-item');
-const 참여작가Button = document.querySelector('.dropdown-toggle'); // '참여 작가'_버튼
-const dropdownItems = document.querySelectorAll('.dropdown-item'); // 드롭다운_메뉴_항목
-
-menuItems.forEach(item => {
-item.addEventListener("click", function (event) {
-if (item !== 참여작가Button) { // '참여 작가' 버튼을_제외하고
-const menu = document.querySelector('.menu');
-menu.classList.remove('show'); // 메뉴 닫기
-}
-});
-});
-
-// 드롭다운_메뉴_클릭_시에도_메뉴_닫기
-dropdownItems.forEach(item => {
-item.addEventListener("click", function (event) {
-const menu = document.querySelector('.menu');
-menu.classList.remove('show'); // 메뉴_닫기
-});
+// 메뉴 항목 클릭 시 메뉴 닫기
+document.querySelectorAll('.menu-item, .dropdown-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const menu = document.querySelector('.menu');
+    menu.classList.remove('show');
+  });
 });
 </script>
 
