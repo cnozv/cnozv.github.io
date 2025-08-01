@@ -130,6 +130,57 @@
     margin-top: 6px;
     border-radius: 6px;
   }
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap; /* 줄바꿈 허용 */
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+form {
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 모든 입력 요소가 반응형으로 */
+input,
+textarea {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* JSON 불러오기 섹션 정리 */
+form label[style*="inline-block"] {
+  display: block;
+  width: 100%;
+}
+
+
+@media (max-width: 768px) {
+  body {
+    padding: 1rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  input,
+  textarea {
+    font-size: 1rem;
+  }
+
+  .add-btn {
+    font-size: 0.95rem;
+    padding: 0.4rem 0.8rem;
+  }
+}
+
+
+
   .delete-btn {
     position: absolute;
     top: 6px;
@@ -218,7 +269,7 @@
   <label>설명</label>
   <textarea id="description" required rows="4"></textarea>
   <label>본문 콘텐츠</label>
- <div style="margin-bottom: 1rem;">
+ <div class="button-group">
   <button type="button" class="add-btn" onclick="addTextBlock()">+ 텍스트</button>
   <button type="button" class="add-btn" onclick="addLinkBlock()">+ 링크</button>
   <button type="button" class="add-btn" onclick="addPdfBlock()">+ PDF</button>
@@ -229,12 +280,13 @@
   <button type="button" class="add-btn" onclick="addLayoutBlock(2)">+ 2단 레이아웃</button>
   <button type="button" class="add-btn" onclick="addLayoutBlock(3)">+ 3단 레이아웃</button>
 </div>
+
   <div id="editor-area"></div>
 <button type="button" onclick="saveAsJSON()">JSON으로 임시저장</button>
 <button type="button" onclick="savePage()">HTML로 저장</button>
 
 <label style="display: inline-block; margin: 1rem 0;">
-  🔄 임시저장된 JSON 불러오기
+  임시저장된 JSON 불러오기
   <input type="file" accept=".json" onchange="loadFromJSON(event)" style="margin-top: 0.5rem;">
 </label>
 
@@ -617,6 +669,7 @@ function savePage() {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${title}</title>
   <style>
+
     @font-face {
 font-family: 'Pretendard';
 src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Thin.woff') format('woff');
@@ -718,7 +771,46 @@ html, body {
     section:first-of-type {
       scroll-margin-top: 80px; /* 앵커_이동 시_겹치지_않게 */
     }
+    
+@media (max-width: 768px) {
+  body {
+    padding: 2rem 1rem;
+    font-size: 16px;
+    line-height: 1.8;
   }
+
+  h1, h2, h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 1rem;
+    margin: rem auto;
+    padding: 0 1rem;
+    max-width: 80%;
+  }
+
+  iframe {
+    width: 80% !important;
+    max-width: 80% !important;
+    margin: 1.5rem auto;
+    display: block;
+    border-radius: 8px;
+  }
+    
+  .layout-block {
+  width: 100vw;                /* 뷰포트 전체 너비 차지 */
+  margin-left: calc(-50vw + 50%);  /* 부모 max-width 무효화 */
+  padding: 0;                  /* 바깥 여백 제거 */
+  border: none;                /* 개발용 테두리 제거 가능 */
+  }
+
+  }
+
+
+
+
 </style>
 
 </head>
