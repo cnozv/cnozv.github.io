@@ -271,7 +271,7 @@ form label[style*="inline-block"] {
   <label>본문 콘텐츠</label>
  <div class="button-group">
   <button type="button" class="add-btn" onclick="addTextBlock()">+ 텍스트</button>
-  <button type="button" class="add-btn" onclick="addLinkBlock()">+ 링크</button>
+<button type="button" class="add-btn" onclick="addLinkButtonBlock()">+ 버튼</button>
   <button type="button" class="add-btn" onclick="addPdfBlock()">+ PDF</button>
   <button type="button" class="add-btn" onclick="addImageBlock()">+ 이미지</button>
   <button type="button" class="add-btn" onclick="addDivider()">+ 구분선</button>
@@ -491,17 +491,30 @@ function addYoutubeBlock() {
 
 
 
-function addLinkBlock() {
+function addLinkButtonBlock() {
   const div = document.createElement('div');
   div.className = 'editor-block';
   div.innerHTML = `
-    <input type="text" placeholder="링크 텍스트" oninput="updateLink(this)" />
-    <input type="url" placeholder="https://..." oninput="updateLink(this)" />
-    <p><a href="#" target="_blank">링크 텍스트</a></p>
+    <input type="text" placeholder="버튼 텍스트" style="margin-bottom: 6px; width: 100%;" />
+    <input type="url" placeholder="링크 URL (예: https://example.com)" style="margin-bottom: 6px; width: 100%;" />
+    <a href="#" class="button" target="_blank">버튼 텍스트</a>
   `;
+
+  const [textInput, urlInput] = div.querySelectorAll('input');
+  const buttonLink = div.querySelector('a');
+
+  function updateButton() {
+    buttonLink.textContent = textInput.value || '버튼 텍스트';
+    buttonLink.href = urlInput.value || '#';
+  }
+
+  textInput.addEventListener('input', updateButton);
+  urlInput.addEventListener('input', updateButton);
+
   addDeleteButton(div);
   editorArea.appendChild(div);
 }
+
 
 function updateLink(input) {
   const block = input.closest('.editor-block');
