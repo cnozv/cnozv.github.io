@@ -1,0 +1,318 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>웹사이트 에디터 (최종)</title>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <style>
+        /* 폰트 설정 */
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        body {
+            font-family: 'Pretendard', sans-serif;
+            max-width: 1080px;
+            margin: 3rem auto;
+            padding: 0 1.5rem;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+
+        /* 에디터 스타일 */
+        input, textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            background: white;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 0.5rem 1.0rem;
+            font-size: 1.05rem;
+            cursor: pointer;
+            margin-right: 0.5rem;
+            border: none;
+            border-radius: 6px;
+            background-color: #89b4e2;
+            color: white;
+            transition: background 0.3s;
+        }
+
+            button:hover {
+                background-color: #629edf;
+            }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #222;
+        }
+
+        #editor-area {
+            min-height: 200px;
+            border: 2px dashed #ccc;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            background-color: #ffffff;
+            border-radius: 8px;
+        }
+
+        .editor-block {
+            text-align: center;
+            border: 1px solid #bbb;
+            padding: 12px;
+            margin: 8px 0;
+            background: #ffffff;
+            border-radius: 6px;
+            position: relative;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            font-size: 0.8rem;
+            padding: 4px 8px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        /* 버튼 그룹 */
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* 미리보기용 스타일 */
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+            display: block;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            iframe {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>웹사이트 페이지 만들기</h1>
+
+    <form id="page-form">
+        <label>제목</label>
+        <input id="title" required type="text" placeholder="페이지 제목 입력" />
+
+        <label>슬러그 (영문 파일명)</label>
+        <input id="slug" required type="text" placeholder="예: game-study" />
+
+        <label>설명</label>
+        <textarea id="description" required rows="4" placeholder="페이지 설명 입력"></textarea>
+
+        <label>본문 콘텐츠</label>
+        <div class="button-group">
+            <button type="button" onclick="addTextBlock()">+ 텍스트</button>
+            <button type="button" onclick="addPdfBlock()">+ PDF (완벽수정)</button>
+            <button type="button" onclick="addImageBlock()">+ 이미지</button>
+            <button type="button" onclick="addDivider()">+ 구분선</button>
+            <button type="button" onclick="addYoutubeBlock()">+ 유튜브</button>
+        </div>
+
+        <div id="editor-area"></div>
+
+        <button type="button" onclick="savePage()" style="background-color: #28a745; width: 100%; margin-top: 10px;">HTML로 저장 (다운로드)</button>
+    </form>
+
+    <script>
+const editorArea = document.getElementById('editor-area');
+
+// 삭제 버튼 추가 함수
+function addDeleteButton(div) {
+  const del = document.createElement('button');
+  del.className = 'delete-btn';
+  del.innerText = '삭제';
+  del.onclick = () => div.remove();
+  div.appendChild(del);
+}
+
+// 1. 텍스트 블록
+function addTextBlock() {
+  const div = document.createElement('div');
+  div.className = 'editor-block';
+  div.innerHTML = `<div class="text-content" contenteditable="true" style="min-height:50px; text-align:left;">내용을 입력하세요...</div>`;
+  addDeleteButton(div);
+  editorArea.appendChild(div);
+}
+
+// 2. PDF 블록 (★ 여기가 핵심 수정됨 ★)
+function addPdfBlock() {
+  const div = document.createElement('div');
+  div.className = 'editor-block';
+  div.innerHTML = `
+    <div style="margin-bottom: 8px;">
+      <input type="url" placeholder="PDF 링크 (예: https://cnozv.github.io/...pdf)" style="width: 100%; padding: 8px; box-sizing: border-box;" />
+      <p style="font-size: 0.8rem; color: #666; margin: 4px 0;">* 링크를 넣으면 자동으로 구글 뷰어로 변환됩니다.</p>
+    </div>
+    <iframe src="" style="display:none; border: 1px solid #ddd;"></iframe>
+  `;
+
+  const input = div.querySelector('input');
+  const iframe = div.querySelector('iframe');
+
+  input.addEventListener('input', () => {
+    const rawUrl = input.value.trim();
+    if (rawUrl) {
+      // 구글 뷰어 주소로 강제 변환
+      iframe.src = `https://docs.google.com/gview?embedded=true&url=${encodeURIComponent(rawUrl)}`;
+      iframe.style.display = 'block';
+    } else {
+      iframe.style.display = 'none';
+    }
+  });
+
+  addDeleteButton(div);
+  editorArea.appendChild(div);
+}
+
+// 3. 이미지 블록
+function addImageBlock() {
+  const input = document.createElement('input');
+  input.type = 'file'; input.accept = 'image/*'; input.style.display = 'none';
+  input.onchange = () => {
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const div = document.createElement('div');
+      div.className = 'editor-block';
+      div.innerHTML = `<img src="${reader.result}" style="width: 50%; max-width: 100%; border-radius: 4px;" />`;
+      addDeleteButton(div);
+      editorArea.appendChild(div);
+    };
+    reader.readAsDataURL(file);
+  };
+  document.body.appendChild(input); input.click(); document.body.removeChild(input);
+}
+
+// 4. 구분선
+function addDivider() {
+  const div = document.createElement('div');
+  div.className = 'editor-block';
+  div.innerHTML = `<hr style="border-top: 2px solid #ccc; margin: 1rem 0;" />`;
+  addDeleteButton(div);
+  editorArea.appendChild(div);
+}
+
+// 5. 유튜브
+function addYoutubeBlock() {
+  const div = document.createElement('div');
+  div.className = 'editor-block';
+  div.innerHTML = `<input type="url" placeholder="유튜브 링크" style="width: 100%; margin-bottom: 8px;" /><iframe style="aspect-ratio: 16/9; width: 100%; display:none;"></iframe>`;
+  const input = div.querySelector('input');
+  const iframe = div.querySelector('iframe');
+  input.addEventListener('input', () => {
+    const match = input.value.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
+    if (match) { iframe.src = `https://www.youtube.com/embed/${match[1]}`; iframe.style.display = 'block'; }
+  });
+  addDeleteButton(div);
+  editorArea.appendChild(div);
+}
+
+// ★ 저장 함수 (HTML 생성 로직 수정됨) ★
+function savePage() {
+  const title = document.getElementById('title').value || '제목 없음';
+  const slug = document.getElementById('slug').value.trim() || 'index';
+  const description = document.getElementById('description').value;
+
+  // 에디터 내용을 HTML로 변환
+  const content = Array.from(editorArea.children).map(el => {
+    const clone = el.cloneNode(true);
+    clone.querySelectorAll('.delete-btn, input, select').forEach(e => e.remove()); // 입력창, 버튼 제거
+
+    // PDF 블록 처리 (입력된 주소를 iframe src로 고정)
+    const iframe = el.querySelector('iframe');
+    const pdfInput = el.querySelector('input[type="url"]');
+    if (iframe && pdfInput && pdfInput.value) {
+        const fixedIframe = clone.querySelector('iframe');
+        fixedIframe.src = `https://docs.google.com/gview?embedded=true&url=${encodeURIComponent(pdfInput.value)}`;
+        fixedIframe.style.display = 'block';
+    }
+
+    // 텍스트 편집 가능 속성 제거
+    clone.querySelectorAll('[contenteditable]').forEach(e => {
+        e.removeAttribute('contenteditable');
+        e.style.border = 'none';
+    });
+
+    return clone.outerHTML;
+  }).join('\n');
+
+  const finalHTML = `<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${title}</title>
+<style>
+  @font-face { font-family: 'Pretendard'; src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff'); font-weight: 400; font-style: normal; }
+  body { font-family: 'Pretendard', sans-serif; margin: 0; padding: 20px; text-align: center; line-height: 1.6; max-width: 800px; margin: 0 auto; }
+  h1 { margin-bottom: 1rem; }
+  p { margin-bottom: 2rem; color: #555; }
+  img { max-width: 100%; height: auto; }
+
+  /* PDF가 저장 후에도 잘 보이게 하는 핵심 스타일 */
+  iframe { width: 100%; height: 800px; border: none; display: block; margin: 20px 0; }
+  @media (max-width: 768px) { iframe { height: 500px; } }
+
+  .editor-block { margin-bottom: 20px; }
+</style>
+</head>
+<body>
+  <h1>${title}</h1>
+  <p>${description}</p>
+  ${content}
+</body>
+</html>`;
+
+  const blob = new Blob([finalHTML], { type: 'text/html' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = slug + '.html';
+  a.click();
+}
+
+// 드래그 앤 드롭 정렬
+new Sortable(editorArea, { animation: 150, handle: '.editor-block' });
+    </script>
+</body>
+</html>
