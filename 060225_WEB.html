@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PARK MINJI | Level Design Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Pretendard", sans-serif;
+            letter-spacing: -0.03em;
+            background-color: #fff;
+            color: #1f2937;
+        }
+
+        .sidebar {
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-y: auto;
+            z-index: 50;
+            border-right: 1px solid #f3f4f6;
+            background: #fff;
+        }
+
+        .main-content {
+            margin-left: 280px;
+        }
+
+        .project-section {
+            min-height: 80vh;
+            padding-top: 80px;
+            margin-bottom: 120px;
+            border-bottom: 1px solid #f9fafb;
+        }
+
+        .dummy-img {
+            background-color: #f9fafb;
+            border: 1px dashed #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9ca3af;
+            border-radius: 12px;
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                position: relative;
+                height: auto;
+                width: 100%;
+                border-right: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar w-[280px] p-10">
+        <div class="mb-14">
+            <h1 class="text-xl font-black tracking-tighter">PARK MINJI</h1>
+            <p class="text-[10px] text-gray-400 mt-1 uppercase tracking-widest font-bold">Level Designer</p>
+        </div>
+
+        <nav class="space-y-10 text-[13px]">
+            <div>
+                <h2 class="font-bold text-gray-900 mb-3 text-sm">1. ����������</h2>
+                <ul class="space-y-2 text-gray-500">
+                    <li><a href="#watatsumi" class="hover:text-teal-600 transition-colors">���� �̳�� ��Ÿ���̼� ����ȹ (2026)</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h2 class="font-bold text-gray-900 mb-3 text-sm">2. ������Ʈ �̷�</h2>
+                <div class="space-y-5">
+                    <div>
+                        <p class="text-[10px] text-gray-400 mb-2 font-bold uppercase tracking-wider">* 2023</p>
+                        <ul class="space-y-2 pl-2 border-l border-gray-100">
+                            <li><a href="#catch-memory" class="hover:text-teal-600 transition-colors">ĳġ �޸�!</a></li>
+                            <li><a href="#alba" class="hover:text-teal-600 transition-colors">������! �˹ٻ�</a></li>
+                            <li><a href="#be-kind" class="hover:text-teal-600 transition-colors">���ϰ� ����</a></li>
+                            <li><a href="#modem" class="hover:text-teal-600 transition-colors">�� �����̽�</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p class="text-[10px] text-gray-400 mb-2 font-bold uppercase tracking-wider">* 2024</p>
+                        <ul class="space-y-2 pl-2 border-l border-gray-100">
+                            <li><a href="#rifa" class="hover:text-teal-600 transition-colors">RIFA</a></li>
+                            <li><a href="#dream-pals" class="hover:text-teal-600 transition-colors">Dream Pals</a></li>
+                            <li><a href="#pearl-rush" class="hover:text-teal-600 transition-colors">Pearl Rush</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p class="text-[10px] text-gray-400 mb-2 font-bold uppercase tracking-wider">* 2025</p>
+                        <ul class="space-y-2 pl-2 border-l border-gray-100">
+                            <li><a href="#trombone" class="hover:text-teal-600 transition-colors">Ʈ���� ����</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h2 class="font-bold text-gray-900 mb-3 text-sm">3. ����</h2>
+                <ul class="space-y-2 text-gray-500">
+                    <li><a href="#unphysical" class="hover:text-teal-600 transition-colors">���������� ���롷(2024)</a></li>
+                    <li><a href="#autosave" class="hover:text-teal-600 transition-colors">��Autosave_��(2025)</a></li>
+                </ul>
+            </div>
+
+            <div class="pt-4">
+                <a href="#about-me" class="font-bold text-gray-900 hover:text-teal-600 text-sm">4. About Me</a>
+            </div>
+        </nav>
+    </aside>
+
+    <main class="main-content p-10 md:p-24 max-w-5xl">
+
+        <section id="watatsumi" class="project-section">
+            <span class="text-teal-600 font-bold text-xs tracking-widest uppercase">Level Design</span>
+            <h2 class="text-4xl font-black mt-4 mb-8">���� �̳�� ��Ÿ���̼� ����ȹ (2026)</h2>
+            <div class="dummy-img aspect-video mb-10">Watatsumi Island Visual Archive</div>
+            <div class="prose prose-sm text-gray-600 leading-relaxed">
+                <p>�𸮾� ���� 5�� Ȱ���Ͽ� ������ �������� ���� ������ �м��� ������Ʈ�Դϴ�. �������Ʈ�� �̿��� ������ ���� ��� ������ �����ϰ� �ֽ��ϴ�.</p>
+            </div>
+        </section>
+
+        <section id="catch-memory" class="project-section">
+            <h2 class="text-3xl font-black mb-8">ĳġ �޸�! (2023)</h2>
+            <div class="dummy-img h-80 mb-8">Catch Memory Screenshot</div>
+            <p class="text-gray-500">���� ����� ���ͷ�Ƽ�� ���� ���� ���� ����.</p>
+        </section>
+
+        <section id="alba" class="project-section">
+            <h2 class="text-3xl font-black mb-8">������! �˹ٻ� (2023)</h2>
+            <div class="dummy-img h-80 mb-8">Save the Part-timer Layout</div>
+            <p class="text-gray-500">�پ��� ȯ�� ����� Ȱ���� Ż�� ���� ���̾ƿ� ����.</p>
+        </section>
+
+        <section id="be-kind" class="project-section">
+            <h2 class="text-3xl font-black mb-8">���ϰ� ���� (2023)</h2>
+            <div class="dummy-img h-80 mb-8">Be Kind Game Design</div>
+            <p class="text-gray-500">���� ��� �ý����� ���� ������ ��ġ�� ���� ����.</p>
+        </section>
+
+        <section id="modem" class="project-section">
+            <h2 class="text-3xl font-black mb-8">�� �����̽� (2023)</h2>
+            <div class="dummy-img h-80 mb-8">Modem Space Exhibition Plan</div>
+            <p class="text-gray-500">������ ������ ���� ���ͷ����� ������ ���� ���� ��ȹ.</p>
+        </section>
+
+        <section id="rifa" class="project-section">
+            <h2 class="text-3xl font-black mb-8">RIFA (2024)</h2>
+            <div class="dummy-img h-80 mb-8">RIFA Visual Feedback System</div>
+            <p class="text-gray-500">���־� �ǵ�� �ý��۰� ���� ���� ������ ����.</p>
+        </section>
+
+        <section id="dream-pals" class="project-section">
+            <h2 class="text-3xl font-black mb-8">Dream Pals (2024)</h2>
+            <div class="dummy-img h-80 mb-8">Dream Pals Cooperation Level</div>
+            <p class="text-gray-500">ĳ���� ���� �߽��� ���� �������� ������.</p>
+        </section>
+
+        <section id="pearl-rush" class="project-section">
+            <h2 class="text-3xl font-black mb-8">Pearl Rush (2024)</h2>
+            <div class="dummy-img h-80 border-teal-100 bg-teal-50">Award: Nexon Game Jam Winner</div>
+            <p class="text-gray-500">�ؽ� ���л� ������ '��ճ�' �ֿ���� ������. �뷱�� �� ���� ��ȹ ����.</p>
+        </section>
+
+        <section id="trombone" class="project-section">
+            <h2 class="text-3xl font-black mb-8">Ʈ���� ���� (2025)</h2>
+            <div class="dummy-img h-80 mb-8">Trombone Rumble Layout</div>
+            <p class="text-gray-500">�Ǳ� ���ֿ� ���� �ʵ尡 ���յ� ������� ���� ������.</p>
+        </section>
+
+        <section id="unphysical" class="project-section">
+            <h2 class="text-3xl font-black mb-8">���������� ���롷(2024)</h2>
+            <div class="dummy-img h-[500px] mb-8 italic text-lg text-gray-300">Exhibition Photography</div>
+            <p class="text-gray-500">������ �Ҹ��� ��ȣ�ۿ��� �ٷ� ���� ��ȹ �� ���� ����.</p>
+        </section>
+
+        <section id="autosave" class="project-section">
+            <h2 class="text-3xl font-black mb-8">��Autosave_��(2025)</h2>
+            <div class="dummy-img h-[500px] mb-8 italic text-lg text-gray-300">Archived Project Data</div>
+            <p class="text-gray-500">������ ������ �Ҹ��� ������ �� ���ͷ�Ƽ�� ���� ����.</p>
+        </section>
+
+        <section id="about-me" class="project-section border-none">
+            <h2 class="text-4xl font-black mb-12">About Me</h2>
+            <div class="flex flex-col md:flex-row gap-12 items-start">
+                <div class="w-40 h-40 bg-gray-900 rounded-full shrink-0"></div>
+                <div class="space-y-6">
+                    <p class="text-xl font-bold">26�� ���� �����̳� �ڹ����Դϴ�.</p>
+                    <p class="text-gray-600 leading-loose">
+                        ���� ��⵵�� �����ϸ�, ����ý������� 'Project N'�� ��ǥ�� ��Ʈ�������� ���ȭ�ϰ� �ֽ��ϴ�. ������ ���� ����� ���� ���踦 ���ϴ�.
+                    </p>
+                    <p class="text-sm font-mono text-gray-400">Contact: minji@ac.kr</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>

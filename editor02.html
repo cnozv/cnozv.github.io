@@ -1,259 +1,186 @@
-
 <!DOCTYPE html>
-
 <html lang="ko">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>페이지 생성기 - 포트폴리오 에디터</title>
-<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
-<style>
-    body {
-      font-family: Pretendard, sans-serif;
-      max-width: 1080px;
-      margin: 3rem auto;
-      padding: 0 1.5rem;
-      background-color: #f5f7fa;
-      color: #333;
-    }
-    input, textarea {
-      width: 100%;
-      padding: 0.8rem;
-      margin-bottom: 1rem;
-      font-size: 1.05rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      background: white;
-    }
-    button {
-      padding: 0.7rem 1.4rem;
-      font-size: 1.05rem;
-      cursor: pointer;
-      margin-right: 0.5rem;
-      border: none;
-      border-radius: 6px;
-      background-color: #007bff;
-      color: white;
-      transition: background 0.3s;
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
-    label {
-      font-weight: bold;
-      display: block;
-      margin-bottom: 0.5rem;
-    }
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 1.5rem;
-      color: #222;
-    }
-    #editor-area {
-      min-height: 200px;
-      border: 2px dashed #ccc;
-      padding: 1rem;
-      margin-bottom: 1.5rem;
-      background-color: #ffffff;
-      border-radius: 8px;
-    }
-    .editor-block {
-      border: 1px solid #bbb;
-      padding: 12px;
-      margin: 8px 0;
-      background: #ffffff;
-      border-radius: 6px;
-      position: relative;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-    }
-    .editor-block img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 4px;
-    }
-    .editor-block .button {
-      display: inline-block;
-      padding: 8px 16px;
-      background-color: #000;
-      color: #fff;
-      text-decoration: none;
-      margin-top: 6px;
-      border-radius: 6px;
-    }
-    .delete-btn {
-      position: absolute;
-      top: 6px;
-      right: 6px;
-      background: #ff4d4d;
-      color: white;
-      border: none;
-      font-size: 0.8rem;
-      padding: 4px 8px;
-      cursor: pointer;
-      border-radius: 4px;
-    }
-    .text-content {
-      min-height: 80px;
-      padding: 0.8rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      background: #fafafa;
-    }
-    iframe {
-      width: 100%;
-      height: 400px;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-    }
-    .preview h1 {
-      margin-top: 2rem;
-      border-bottom: 2px solid #ccc;
-      padding-bottom: 0.5rem;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PARK MINJI | Level Designer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;800;900&display=swap');
+        :root { --accent: #2dd4bf; --bg: #050810; --glass: rgba(255, 255, 255, 0.03); }
+        body { font-family: 'Pretendard', sans-serif; background: var(--bg); color: #e2e8f0; scroll-behavior: smooth; overflow-x: hidden; }
+        .glass { background: var(--glass); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .text-accent { color: var(--accent); }
+        .bg-accent { background-color: var(--accent); }
+        .page { display: none; opacity: 0; transition: opacity 0.5s ease; }
+        .page.active { display: block; opacity: 1; }
+        .card-hover:hover { border-color: var(--accent); transform: translateY(-5px); transition: all 0.3s; }
+        /* 스크롤바 커스텀 */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+    </style>
 </head>
 <body>
-<!-- 내용은 유지 -->
 
-<script>
-  const editorArea = document.getElementById('editor-area');
+    <div id="home-page" class="page active">
+        <nav class="fixed top-0 w-full z-50 glass py-5 px-10 flex justify-between items-center">
+            <div class="text-2xl font-black tracking-tighter text-accent">PARK MINJI</div>
+            <div class="hidden md:flex space-x-10 text-[11px] font-bold uppercase tracking-[0.2em]">
+                <a href="#portfolio" class="hover:text-accent transition">Portfolio</a>
+                <a href="#history" class="hover:text-accent transition">Project History</a>
+                <a href="#about" class="hover:text-accent transition">About Me</a>
+            </div>
+        </nav>
 
-  function addDeleteButton(div) {
-    const del = document.createElement('button');
-    del.className = 'delete-btn';
-    del.innerText = '삭제';
-    del.onclick = () => div.remove();
-    div.appendChild(del);
-  }
+        <header class="h-screen flex items-center justify-center relative">
+            <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(var(--accent) 1px, transparent 1px); background-size: 40px 40px;"></div>
+            <div class="text-center z-10" data-aos="zoom-in">
+                <p class="text-accent font-bold tracking-[0.3em] mb-4 uppercase text-sm">Level Designer & Creator</p>
+                <h1 class="text-7xl md:text-[10rem] font-black leading-none tracking-tighter mb-8">PARK<br>MINJI</h1>
+                <p class="text-gray-500 text-lg md:text-xl font-light">공간의 시스템을 통해 플레이어의 경험을 설계합니다.</p>
+            </div>
+        </header>
 
-  function addTextBlock() {
-    const div = document.createElement('div');
-    div.className = 'editor-block';
-    div.innerHTML = `<div class="text-content" contenteditable="true">텍스트 입력</div>`;
-    addDeleteButton(div);
-    editorArea.appendChild(div);
-  }
+        <section id="portfolio" class="max-w-7xl mx-auto py-32 px-6">
+            <h2 class="text-xs font-bold text-accent tracking-[0.4em] uppercase mb-4">Selected Work</h2>
+            <h3 class="text-4xl font-black mb-16 uppercase">포트폴리오</h3>
+            
+            <div class="group relative glass rounded-[2.5rem] p-8 md:p-12 flex flex-col md:flex-row gap-12 cursor-pointer card-hover" 
+                 onclick="showPage('detail-page')" data-aos="fade-up">
+                <div class="w-full md:w-3/5 aspect-video bg-slate-900 rounded-2xl overflow-hidden relative">
+                    <img src="watatsumi_thumb.jpg" alt="와타츠미섬" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                </div>
+                <div class="w-full md:w-2/5 flex flex-col justify-center space-y-6">
+                    <div class="flex gap-2">
+                        <span class="text-[10px] font-bold bg-accent/20 text-accent px-3 py-1 rounded-full uppercase tracking-widest">Main</span>
+                        <span class="text-[10px] font-bold bg-white/10 text-white px-3 py-1 rounded-full uppercase tracking-widest">Reverse Engineering</span>
+                    </div>
+                    <h4 class="text-4xl font-black leading-tight">원신: 와타츠미섬<br>레벨 역기획</h4>
+                    <p class="text-gray-400 leading-relaxed font-light">
+                        1100m * 600m의 대규모 필드 구현. '월광욕 연못'의 수직적 동선 설계와 기믹 배치를 통해 탐험의 몰입감을 극대화한 프로젝트입니다.
+                    </p>
+                    <div class="text-accent font-bold text-sm tracking-widest uppercase flex items-center gap-2">
+                        View Project Detail <span class="text-xl">→</span>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  function addLinkBlock() {
-    const div = document.createElement('div');
-    div.className = 'editor-block';
-    div.innerHTML = `
-      <input type="text" placeholder="링크 텍스트" oninput="updateLink(this)" />
-      <input type="url" placeholder="https://..." oninput="updateLink(this)" />
-      <p><a href="#" target="_blank">링크 텍스트</a></p>
-    `;
-    addDeleteButton(div);
-    editorArea.appendChild(div);
-  }
+        <section id="history" class="bg-[#080c18] py-32 px-6">
+            <div class="max-w-7xl mx-auto">
+                <h2 class="text-xs font-bold text-blue-400 tracking-[0.4em] uppercase mb-4">Experience</h2>
+                <h3 class="text-4xl font-black mb-16 uppercase">프로젝트 이력</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="glass p-8 rounded-3xl card-hover" data-aos="fade-up">
+                        <h5 class="text-xl font-bold mb-2">Pearl Rush</h5>
+                        <p class="text-gray-500 text-sm leading-relaxed mb-6">진주 테마의 게임 플레이 설계 및 레벨 밸런싱 최적화</p>
+                        <span class="text-[10px] font-bold text-blue-400 uppercase tracking-widest">Game Design</span>
+                    </div>
+                    <div class="glass p-8 rounded-3xl card-hover" data-aos="fade-up" data-aos-delay="100">
+                        <h5 class="text-xl font-bold mb-2">Modem Space</h5>
+                        <p class="text-gray-500 text-sm leading-relaxed mb-6">관람객 동선 및 미디어 인터랙션 전시기획</p>
+                        <span class="text-[10px] font-bold text-purple-400 uppercase tracking-widest">Exhibition</span>
+                    </div>
+                    </div>
+            </div>
+        </section>
+    </div>
 
-  function updateLink(input) {
-    const block = input.closest('.editor-block');
-    const [textInput, urlInput] = block.querySelectorAll('input');
-    const link = block.querySelector('a');
-    link.textContent = textInput.value || '링크 텍스트';
-    link.href = urlInput.value || '#';
-  }
+    <div id="detail-page" class="page">
+        <nav class="fixed top-0 w-full z-50 glass py-5 px-10 flex justify-between items-center">
+            <button onclick="showPage('home-page')" class="text-accent font-bold tracking-widest uppercase text-xs">← Back to Gallery</button>
+            <div class="text-xs font-bold uppercase tracking-widest text-gray-500">Watatsumi Island Case Study</div>
+        </nav>
 
-  function addPdfBlock() {
-    const div = document.createElement('div');
-    div.className = 'editor-block';
-    div.innerHTML = `
-      <input type="url" placeholder="PDF 링크 (https://...)" />
-      <iframe src="" style="display:none;"></iframe>
-    `;
-    const input = div.querySelector('input');
-    const iframe = div.querySelector('iframe');
+        <header class="pt-40 pb-20 px-6 max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+                <div data-aos="fade-right">
+                    <span class="text-accent font-bold tracking-[0.3em] uppercase text-xs mb-4 block">Major Project</span>
+                    <h1 class="text-5xl md:text-7xl font-black leading-none mb-6">원신: 와타츠미섬<br>역기획 포트폴리오</h1>
+                </div>
+                <div class="grid grid-cols-2 gap-8 text-sm border-l border-white/10 pl-8" data-aos="fade-left">
+                    <div>
+                        <p class="text-gray-500 uppercase font-bold tracking-widest mb-1 text-[10px]">Scale</p>
+                        <p class="font-bold">1100m * 600m</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-500 uppercase font-bold tracking-widest mb-1 text-[10px]">Engine</p>
+                        <p class="font-bold">Unreal Engine 5</p>
+                    </div>
+                </div>
+            </div>
 
-    input.addEventListener('input', () => {
-      if (input.value.startsWith('http')) {
-        iframe.src = input.value;
-        iframe.style.display = 'block';
-      } else {
-        iframe.src = '';
-        iframe.style.display = 'none';
-      }
-    });
+            <div class="w-full aspect-video rounded-[2.5rem] overflow-hidden bg-slate-900 shadow-2xl mb-32 border border-white/5" data-aos="zoom-in">
+                <iframe class="w-full h-full" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen></iframe>
+            </div>
 
-    addDeleteButton(div);
-    editorArea.appendChild(div);
-  }
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-20 mb-32">
+                <div class="space-y-8" data-aos="fade-right">
+                    <h2 class="text-3xl font-black border-l-4 border-accent pl-6">Spatial Intent</h2>
+                    <p class="text-gray-400 leading-loose text-lg font-light">
+                        와타츠미섬 특유의 조개 형태 지형과 소용돌이치는 고저차를 분석했습니다. 플레이어가 중심부인 '산고노미야'로 자연스럽게 시선이 향하도록 랜드마크를 배치하고, 수직적 이동 시 시각적 피로도를 줄이기 위한 동선 가이드를 구축했습니다.
+                    </p>
+                </div>
+                <div class="space-y-8" data-aos="fade-left">
+                    <h2 class="text-3xl font-black border-l-4 border-accent pl-6">Gimmick Logic</h2>
+                    <p class="text-gray-400 leading-loose text-lg font-light">
+                        '월광욕 연못' 퀘스트를 테마로 한 던전 기믹을 구현했습니다. 물의 높낮이를 조절하거나 원소 상호작용을 통해 문을 여는 등, 필드 탐험이 단순한 이동이 아닌 하나의 거대한 '퍼즐'로 작동하도록 시스템을 설계했습니다.
+                    </p>
+                </div>
+            </div>
 
-  document.getElementById('imageUpload').addEventListener('change', function(e) {
-    [...e.target.files].forEach(file => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const div = document.createElement('div');
-        div.className = 'editor-block';
-        div.innerHTML = `<img src="${reader.result}" alt="업로드 이미지" />`;
-        addDeleteButton(div);
-        editorArea.appendChild(div);
-      };
-      reader.readAsDataURL(file);
-    });
-  });
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-32">
+                <div class="col-span-2 row-span-2 rounded-3xl overflow-hidden glass" data-aos="fade-up">
+                    <img src="photo1.jpg" class="w-full h-full object-cover hover:scale-105 transition duration-700">
+                </div>
+                <div class="rounded-3xl overflow-hidden glass h-64" data-aos="fade-up" data-aos-delay="100">
+                    <img src="photo2.jpg" class="w-full h-full object-cover hover:scale-105 transition duration-700">
+                </div>
+                <div class="rounded-3xl overflow-hidden glass h-64" data-aos="fade-up" data-aos-delay="200">
+                    <img src="photo3.jpg" class="w-full h-full object-cover hover:scale-105 transition duration-700">
+                </div>
+            </div>
 
-  function addButtonBlock() {
-    const text = document.getElementById('buttonText').value.trim();
-    const link = document.getElementById('buttonLink').value.trim();
-    if (text && link) {
-      const div = document.createElement('div');
-      div.className = 'editor-block';
-      div.innerHTML = `<a href="${link}" class="button" target="_blank">${text}</a>`;
-      addDeleteButton(div);
-      editorArea.appendChild(div);
-    }
-  }
+            <div class="space-y-12" data-aos="fade-up">
+                <h2 class="text-3xl font-black text-center uppercase tracking-widest">Planning Document</h2>
+                <div class="w-full h-[800px] rounded-[2rem] overflow-hidden border border-white/10 glass shadow-2xl">
+                    <embed src="watatsumi_plan.pdf" type="application/pdf" width="100%" height="100%" />
+                </div>
+            </div>
+        </main>
+    </div>
 
-  new Sortable(editorArea, {
-    animation: 150,
-    handle: '.editor-block',
-    draggable: '.editor-block'
-  });
+    <footer class="py-20 text-center text-gray-700 text-[10px] tracking-[0.5em] uppercase">
+        &copy; 2026 PARK MINJI. LEVEL DESIGN PORTFOLIO.
+    </footer>
 
-  function previewPage() {
-    const title = document.getElementById('title').value;
-    const description = document.getElementById('description').value;
-    const pdf = document.getElementById('pdf').value;
-    const iframe = pdf ? `<div class='iframe-container'><iframe src='${pdf}'></iframe></div>` : '';
+    <script>
+        AOS.init({ duration: 1000, once: true });
 
-    const cleanContent = Array.from(editorArea.children).map(block => {
-      const clone = block.cloneNode(true);
-      // 삭제버튼, input 제거
-      clone.querySelectorAll('.delete-btn, input').forEach(el => el.remove());
-      return clone.innerHTML;
-    }).join('\n');
+        function showPage(pageId) {
+            // 모든 페이지에서 active 제거 및 숨김
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+                page.style.display = 'none';
+            });
+            
+            // 대상 페이지 표시
+            const target = document.getElementById(pageId);
+            target.style.display = 'block';
+            setTimeout(() => {
+                target.classList.add('active');
+            }, 50);
 
-    document.getElementById('pagePreview').innerHTML = `<h1>${title}</h1><p>${description}</p>${cleanContent}${iframe}`;
-  }
-
-  document.getElementById('page-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const cleanContent = Array.from(editorArea.children).map(block => {
-      const clone = block.cloneNode(true);
-      clone.querySelectorAll('.delete-btn, input').forEach(el => el.remove());
-      return clone.innerHTML;
-    }).join('\n');
-
-    const newPage = {
-      title: document.getElementById('title').value.trim(),
-      slug: document.getElementById('slug').value.trim(),
-      description: document.getElementById('description').value.trim(),
-      content: cleanContent,
-      pdf: document.getElementById('pdf').value.trim()
-    };
-
-    fetch('data/pages.json')
-      .then(res => res.json())
-      .then(data => {
-        data.pages.push(newPage);
-        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'pages.json';
-        a.click();
-      });
-  });
-</script>
+            // 페이지 최상단으로 이동
+            window.scrollTo(0, 0);
+            // AOS 새로고침 (페이지 전환 시 애니메이션 재작동)
+            AOS.refresh();
+        }
+    </script>
 </body>
 </html>
