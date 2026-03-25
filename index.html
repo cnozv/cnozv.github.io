@@ -308,7 +308,7 @@
             }
 
             .nav-menu-container {
-                display: none; /* 모바일에서는 메뉴가 복잡해지므로 햄버거 메뉴 등이 필요할 수 있으나 임시로 처리 */
+                display: none; /* 모바일 메뉴는 임시 숨김 */
             }
 
             .slider-outer {
@@ -363,14 +363,13 @@
         <section id="home" class="page-section active">
             <div class="flex flex-col justify-center px-10 md:px-20 text-white" style="height: calc(100vh - 80px); background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://cnozv.github.io/genshin01.png'); background-size: cover; background-position: center;">
                 <h3 class="text-teal-400 font-bold text-sm mb-4 uppercase tracking-[0.3em]">Level Design Portfolio</h3>
-                <h2 class="text-7xl font-black leading-tight mb-8">레벨디자이너 지망생 박민지</h2>
-                <button onclick="showPage('watatsumi')" class="w-fit px-10 py-5 bg-teal-500 rounded-full font-bold uppercase tracking-widest hover:bg-teal-400 transition-all text-sm md:text-base">대표 포트폴리오 바로보기 →</button>
+                <h2 class="text-7xl font-black leading-tight mb-8">레벨디자이너<br>박민지</h2>
+                <button onclick="showPage('watatsumi')" class="w-fit px-10 py-5 bg-teal-500 rounded-full font-bold uppercase tracking-widest hover:bg-teal-400 transition-all text-sm md:text-base">레벨디자인 포폴 바로보기 →</button>
             </div>
         </section>
 
         <script>
             const genshinImages = Array.from({ length: 9 }, (_, i) => `https://cnozv.github.io/genshin0${i + 1}.png`);
-            // 네비바 개편으로 어워드 페이지들은 제거되었으므로 와타츠미섬만 생성합니다.
             const fullPageIds = ['watatsumi'];
             const pageTitles = {
                 'watatsumi': '원신 와타츠미섬 역기획 (2026)'
@@ -379,65 +378,83 @@
             fullPageIds.forEach(id => {
                 const title = pageTitles[id] || id.toUpperCase();
                 document.write(`
-                            <section id="${id}" class="page-section p-6 md:p-12 lg:p-20">
-                                <div class="max-w-6xl mx-auto">
-                                    <h2 class="text-4xl md:text-5xl font-black mb-12 tracking-tighter text-gray-900">${title}</h2>
-                                    <div class="mb-24">
-                                        <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.4em] mb-8 text-center md:text-left">Gameplay Movie</h3>
-                                        <div class="aspect-video w-full rounded-[2rem] overflow-hidden shadow-2xl">
-                                            <iframe class="w-full h-full" src="https://www.youtube.com/embed/D2FkUSN4pnw" frameborder="0" allowfullscreen></iframe>
-                                        </div>
-                                    </div>
-                                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 mb-24 py-16 border-y border-gray-100">
-                                        <div>
-                                            <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.4em] mb-8">Project Details</h3>
-                                            <ul class="space-y-4 text-sm md:text-base">
-                                                <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">장르</span> <span class="text-gray-700">3인칭 오픈월드 ARPG</span></li>
-                                                <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">엔진</span> <span class="text-gray-700">Unreal 엔진 5.6</span></li>
-                                                <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">맵 사이즈</span> <span class="text-gray-700">1100 * 700 * 200 (㎥)</span></li>
-                                                <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">테마</span> <span class="text-gray-700">산호, 조개, 진주빛의 몽환적인 섬 (분지)</span></li>
-                                                <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">플레이타임</span> <span class="text-gray-700">18분</span></li>
-                                                <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">제작기간</span> <span class="text-gray-700">2026.01. ~ 2026.03.</span></li>
-                                            </ul>
-                                        </div>
-                                        <div class="text-gray-600 leading-relaxed">
-                                            <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.4em] mb-8">Overview</h3>
-                                            <p class="text-sm md:text-base">원신 이나즈마 지역의 와타츠미섬, 월드 퀘스트 '월광욕 연못' 레벨디자인 역기획 영상입니다. 기존 레벨의 기획 의도를 분석하고, 퀘스트의 진행 방식을 개선하여 오픈월드의 탐험과 퀘스트 진행을 중심으로 분석하고자 했습니다.</p>
-                                        </div>
-                                    </div>
-                                    <div class="mb-24">
-                                        <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.4em] mb-8 text-center md:text-left">Detail Screenshots</h3>
-                                        <div class="slider-outer px-10 md:px-20">
-                                            <button onclick="moveSlide(-1)" class="nav-btn prev">←</button>
-                                            <div class="slider-container">
-                                                <div class="slider-track" id="${id}-slider">
-                                                    ${genshinImages.map((src, idx) => `<div class="slide" onclick="openZoom(${idx})" style="background-image: url('${src}');"></div>`).join('')}
+                                    <section id="${id}" class="page-section p-6 md:p-12 lg:p-20">
+                                        <div class="max-w-6xl mx-auto">
+                                            <h2 class="text-4xl md:text-5xl font-black mb-12 tracking-tighter text-gray-900">${title}</h2>
+                                            <div class="mb-24">
+                                                <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.4em] mb-8 text-center md:text-left">Gameplay Movie</h3>
+                                                <div class="aspect-video w-full rounded-[2rem] overflow-hidden shadow-2xl">
+                                                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/D2FkUSN4pnw" frameborder="0" allowfullscreen></iframe>
                                                 </div>
                                             </div>
-                                            <button onclick="moveSlide(1)" class="nav-btn next">→</button>
-                                            <div class="indicator-bar" id="${id}-indicators"></div>
-                                            <div class="thumb-bar flex-wrap" id="${id}-thumbs">
-                                                ${genshinImages.map((src, idx) => `<div class="thumb-item" onclick="jumpToSlide(${idx})"><img src="${src}"></div>`).join('')}
+                                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 mb-24 py-16 border-y border-gray-100">
+                                                <div>
+                                                    <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.4em] mb-8">Project Details</h3>
+                                                    <ul class="space-y-4 text-sm md:text-base">
+                                                        <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">장르</span> <span class="text-gray-700">3인칭 오픈월드 ARPG</span></li>
+                                                        <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">엔진</span> <span class="text-gray-700">Unreal 엔진 5.6</span></li>
+                                                        <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">맵 사이즈</span> <span class="text-gray-700">1100 * 700 * 200 (㎥)</span></li>
+                                                        <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">테마</span> <span class="text-gray-700">산호, 조개, 진주빛의 몽환적인 섬 (분지)</span></li>
+                                                        <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">플레이타임</span> <span class="text-gray-700">18분</span></li>
+                                                        <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">제작기간</span> <span class="text-gray-700">2026.01. ~ 2026.03.</span></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="text-gray-600 leading-relaxed">
+                                                    <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.4em] mb-8">Overview</h3>
+                                                    <p class="text-sm md:text-base">원신 이나즈마 지역의 와타츠미섬, 월드 퀘스트 '월광욕 연못' 레벨디자인 역기획 영상입니다. 기존 레벨의 기획 의도를 분석하고, 퀘스트의 진행 방식을 개선하여 오픈월드의 탐험과 퀘스트 진행을 중심으로 분석하고자 했습니다.</p>
+                                                </div>
+                                            </div>
+                                            <div class="mb-24">
+                                                <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.4em] mb-8 text-center md:text-left">Detail Screenshots</h3>
+                                                <div class="slider-outer px-10 md:px-20">
+                                                    <button onclick="moveSlide(-1)" class="nav-btn prev">←</button>
+                                                    <div class="slider-container">
+                                                        <div class="slider-track" id="${id}-slider">
+                                                            ${genshinImages.map((src, idx) => `<div class="slide" onclick="openZoom(${idx})" style="background-image: url('${src}');"></div>`).join('')}
+                                                        </div>
+                                                    </div>
+                                                    <button onclick="moveSlide(1)" class="nav-btn next">→</button>
+                                                    <div class="indicator-bar" id="${id}-indicators"></div>
+                                                    <div class="thumb-bar flex-wrap" id="${id}-thumbs">
+                                                        ${genshinImages.map((src, idx) => `<div class="thumb-item" onclick="jumpToSlide(${idx})"><img src="${src}"></div>`).join('')}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="w-full h-[600px] md:h-[800px] rounded-[2.5rem] border border-gray-100 overflow-hidden shadow-2xl mb-10">
+                                                <iframe src="https://cnozv.github.io/%EC%9B%90%EC%8B%A0_%EC%99%80%ED%83%80%EC%B8%A0%EB%AF%B8%EC%84%AC_%EC%97%AD%EA%B8%B0%ED%9A%8D_%EB%B0%95%EB%AF%BC%EC%A7%80.pdf" class="w-full h-full" frameborder="0"></iframe>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="w-full h-[600px] md:h-[800px] rounded-[2.5rem] border border-gray-100 overflow-hidden shadow-2xl mb-10">
-                                        <iframe src="https://cnozv.github.io/%EC%9B%90%EC%8B%A0_%EC%99%80%ED%83%80%EC%B8%A0%EB%AF%B8%EC%84%AC_%EC%97%AD%EA%B8%B0%ED%9A%8D_%EB%B0%95%EB%AF%BC%EC%A7%80.pdf" class="w-full h-full" frameborder="0"></iframe>
-                                    </div>
-                                </div>
-                            </section>
-                        `);
+                                    </section>
+                                `);
             });
         </script>
 
         <section id="projects-overview" class="page-section p-6 md:p-12 lg:p-20 bg-gray-50/50">
             <div class="max-w-6xl mx-auto space-y-12">
-                <div class="space-y-4 text-center md:text-left">
-                    <h2 class="text-4xl md:text-5xl font-black text-gray-900 tracking-tighter">인디 게임 개발 경험</h2>
-                    <p class="text-gray-500 text-base md:text-lg">2023년부터 2026년 현재까지 3년간, 2D 잠입 게임부터 3D 경쟁난투 리듬게임까지 다양한 게임을 개발하였습니다. <br /> 3명의 소규모 팀부터 12인의 대규모 팀까지, 8시간 게임잼부터 1년 이상의 장기 프로젝트까지 다양한 </p>
+                <div class="space-y-6">
+                    <h2 class="text-4xl md:text-5xl font-black text-gray-900 tracking-tighter">Project History</h2>
+
+                    <p class="text-gray-600 text-base md:text-lg leading-relaxed max-w-4xl">
+                        지난 3년간 9개의 프로젝트에 참여해, 8개의 게임을 성공적으로 완성했습니다.<br class="hidden md:block">
+                        3인 인디 팀부터 12인 협업까지, 8시간 단기 게임잼부터 1년 이상의 장기 프로젝트까지 다양한 환경을 거쳤습니다.<br class="hidden md:block">
+                        2D 잠입 액션부터 3D 난투 리듬 게임까지 장르의 벽을 넘나들며, 기획을 실제 플레이 경험으로 빚어내는 단단한 실행력을 키울 수 있었습니다.
+                    </p>
+
+                    <div class="flex flex-wrap gap-3 md:gap-4 pt-2">
+                        <div class="flex items-center bg-white border border-gray-200 rounded-xl px-4 py-2.5 shadow-sm">
+                            <span class="text-xs font-bold text-gray-400 uppercase tracking-wider mr-3">엔진</span>
+                            <span class="text-sm font-bold text-gray-800">Unity <span class="text-teal-600 mx-0.5">6</span> <span class="text-gray-300 font-normal mx-1">|</span> Unreal <span class="text-teal-600 mx-0.5">3</span></span>
+                        </div>
+                        <div class="flex items-center bg-white border border-gray-200 rounded-xl px-4 py-2.5 shadow-sm">
+                            <span class="text-xs font-bold text-gray-400 uppercase tracking-wider mr-3">그래픽</span>
+                            <span class="text-sm font-bold text-gray-800">2D <span class="text-teal-600 mx-0.5">5</span> <span class="text-gray-300 font-normal mx-1">|</span> 3D <span class="text-teal-600 mx-0.5">4</span></span>
+                        </div>
+                        <div class="flex items-center bg-white border border-gray-200 rounded-xl px-4 py-2.5 shadow-sm">
+                            <span class="text-xs font-bold text-gray-400 uppercase tracking-wider mr-3">협업 툴</span>
+                            <span class="text-sm font-bold text-gray-800">GitHub <span class="text-teal-600 mx-0.5">4</span> <span class="text-gray-300 font-normal mx-1">|</span> Plastic SCM <span class="text-teal-600 mx-0.5">1</span></span>
+                        </div>
+                    </div>
                 </div>
-
-
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                     <div class="group bg-white border border-gray-100 rounded-[2rem] overflow-hidden cursor-pointer shadow-sm hover:shadow-2xl hover:border-teal-400 transition-all duration-300 transform hover:-translate-y-2 flex flex-col" onclick="openProjectModal('rifa')">
@@ -464,8 +481,9 @@
                                 <span class="text-[10px] font-bold text-orange-600 bg-orange-100 px-2 py-1 rounded-lg shrink-0 whitespace-nowrap">🏆 최우수상</span>
                             </div>
                             <div class="flex flex-wrap gap-2 flex-grow content-start">
-                                <span class="bg-teal-50 text-teal-700 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">2인 아케이드</span>
-                                <span class="bg-gray-100 text-gray-600 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">NEXON GameJam</span>
+                                <span class="bg-teal-50 text-teal-700 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">2인 아케이드 게임</span>
+                                <span class="bg-teal-50 text-teal-700 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">Unity</span>
+                                <span class="bg-gray-100 text-gray-600 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">넥슨 2박3일 게임잼</span>
                             </div>
                             <p class="text-xs md:text-sm text-gray-500 font-medium pt-4 border-t border-gray-100 mt-auto">PM / 팀장 / 기획</p>
                         </div>
@@ -479,6 +497,8 @@
                             <h3 class="text-2xl font-black text-gray-900">Dream Pals</h3>
                             <div class="flex flex-wrap gap-2 flex-grow content-start">
                                 <span class="bg-teal-50 text-teal-700 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">3D 협동 퍼즐</span>
+                                <span class="bg-teal-50 text-teal-700 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">Unreal 5.3</span>
+                                <span class="bg-teal-50 text-teal-700 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">Github 협업</span>
                             </div>
                             <p class="text-xs md:text-sm text-gray-500 font-medium pt-4 border-t border-gray-100 mt-auto">기획(레벨디자인, UI)</p>
                         </div>
@@ -493,6 +513,8 @@
                             <div class="flex flex-wrap gap-2 flex-grow content-start">
                                 <span class="bg-teal-50 text-teal-700 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">피자 타이쿤</span>
                                 <span class="bg-gray-100 text-gray-600 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">PlayStore 출시</span>
+                                <span class="bg-teal-50 text-teal-700 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">Unity</span>
+                                <span class="bg-teal-50 text-teal-700 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">Github 협업</span>
                             </div>
                             <p class="text-xs md:text-sm text-gray-500 font-medium pt-4 border-t border-gray-100 mt-auto">기획 (UI, 콘텐츠)</p>
                         </div>
@@ -504,11 +526,13 @@
                         </div>
                         <div class="p-6 md:p-8 space-y-4 flex-grow flex flex-col">
                             <h3 class="text-2xl font-black text-gray-900">캐치 메모리!</h3>
-                            <div class="flex flex-wrap gap-2 flex-grow content-start">
+                            <div class="flex flex-wrap gap-2 flex-wrap gap-2 flex-grow content-start">
                                 <span class="bg-teal-50 text-teal-700 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">2D 플랫포머</span>
+                                <span class="bg-teal-50 text-teal-700 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">Unity</span>
+                                <span class="bg-teal-50 text-teal-700 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">Plastic SCM 협업</span>
                                 <span class="bg-gray-100 text-gray-600 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">PlayStore 출시</span>
                             </div>
-                            <p class="text-xs md:text-sm text-gray-500 font-medium pt-4 border-t border-gray-100 mt-auto">PM / 팀장 / 기획</p>
+                            <p class="text-xs md:text-sm text-gray-500 font-medium pt-4 border-t border-gray-100 mt-auto">PM / 팀장 / 기획 전반</p>
                         </div>
                     </div>
 
@@ -520,7 +544,10 @@
                             <h3 class="text-xl md:text-2xl font-black text-gray-900 leading-tight">모뎀 스페이스</h3>
                             <div class="flex flex-wrap gap-2 flex-grow content-start">
                                 <span class="bg-teal-50 text-teal-700 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">모바일 전시 App</span>
-                                <span class="bg-gray-100 text-gray-600 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">iOS / Android 출시</span>
+                                <span class="bg-teal-50 text-teal-700 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">Unity</span>
+                                <span class="bg-teal-50 text-teal-700 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">Blender</span>
+                                <span class="bg-gray-100 text-gray-600 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">애플 앱스토어 출시</span>
+                                <span class="bg-gray-100 text-gray-600 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">PlayStore 출시</span>
                             </div>
                             <p class="text-xs md:text-sm text-gray-500 font-medium pt-4 border-t border-gray-100 mt-auto">PM / 기획</p>
                         </div>
@@ -534,8 +561,9 @@
                             <h3 class="text-2xl font-black text-gray-900">착하게 살자</h3>
                             <div class="flex flex-wrap gap-2 flex-grow content-start">
                                 <span class="bg-teal-50 text-teal-700 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">2D 잠입</span>
+                                <span class="bg-teal-50 text-teal-700 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">Unity</span>
                                 <span class="bg-gray-100 text-gray-600 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">24h GameJam</span>
-                                <span class="bg-gray-100 text-gray-600 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">PlayStore</span>
+                                <span class="bg-gray-100 text-gray-600 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">PlayStore 출시</span>
                             </div>
                             <p class="text-xs md:text-sm text-gray-500 font-medium pt-4 border-t border-gray-100 mt-auto">기획 전반</p>
                         </div>
@@ -550,6 +578,7 @@
                             <div class="flex flex-wrap gap-2 flex-grow content-start">
                                 <span class="bg-teal-50 text-teal-700 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">3D 리듬 게임</span>
                                 <span class="bg-gray-100 text-gray-600 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">Steam 출시</span>
+                                <span class="bg-yellow-50 text-yellow-600 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold border border-yellow-200">폴리싱 진행 중</span>
                             </div>
                             <p class="text-xs md:text-sm text-gray-500 font-medium pt-4 border-t border-gray-100 mt-auto">기획 (콘텐츠, 레벨)</p>
                         </div>
@@ -564,12 +593,72 @@
                             <div class="flex flex-wrap gap-2 flex-grow content-start">
                                 <span class="bg-teal-50 text-teal-700 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">2D 아케이드</span>
                                 <span class="bg-gray-100 text-gray-600 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">8h GameJam</span>
-                                <span class="bg-gray-100 text-gray-600 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">PlayStore</span>
+                                <span class="bg-gray-100 text-gray-600 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">PlayStore 출시</span>
                             </div>
                             <p class="text-xs md:text-sm text-gray-500 font-medium pt-4 border-t border-gray-100 mt-auto">기획</p>
                         </div>
                     </div>
 
+                </div>
+            </div>
+        </section>
+
+        <section id="study-overview" class="page-section p-6 md:p-12 lg:p-20 bg-gray-50/50">
+            <div class="max-w-6xl mx-auto space-y-12">
+                <div class="space-y-4 text-center md:text-left">
+                    <h2 class="text-4xl md:text-5xl font-black text-gray-900 tracking-tighter">게임 디자인 스터디</h2>
+                    <p class="text-gray-500 text-base md:text-lg">레벨 디자인, 게임 기획, 공간론 등에 관한 분석과 학습 기록입니다.</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                    <div class="group bg-white border border-gray-100 rounded-[2rem] overflow-hidden cursor-pointer shadow-sm hover:shadow-2xl hover:border-teal-400 transition-all duration-300 transform hover:-translate-y-2 flex flex-col" onclick="window.open('https://cnozv.github.io/포탈1_리뷰_박민지.pdf', '_blank')">
+                        <div class="aspect-video bg-gray-100 overflow-hidden flex items-center justify-center bg-teal-50">
+                            <img src="https://cnozv.github.io/포탈.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <div class="p-6 md:p-8 space-y-4 flex-grow flex flex-col">
+                            <h3 class="text-2xl font-black text-gray-900">포탈 1 살펴보기</h3>
+                            <div class="flex flex-wrap gap-2 flex-grow content-start">
+                                <span class="bg-gray-100 text-gray-600 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">게임 디자인 스터디</span>
+                                <span class="bg-gray-100 text-gray-600 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">분석 및 정리</span>
+                            </div>
+                            <p class="text-sm text-teal-600 font-bold pt-4 border-t border-gray-100 mt-auto flex items-center justify-between">
+                                PDF 문서 열기
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="group bg-white border border-gray-100 rounded-[2rem] overflow-hidden cursor-pointer shadow-sm hover:shadow-2xl hover:border-teal-400 transition-all duration-300 transform hover:-translate-y-2 flex flex-col" onclick="window.open('https://cnozv.github.io/study_mabi01.pdf', '_blank')">
+                        <div class="aspect-video bg-gray-100 overflow-hidden flex items-center justify-center bg-teal-50">
+                            <img src="https://cnozv.github.io/마비노기.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <div class="p-6 md:p-8 space-y-4 flex-grow flex flex-col">
+                            <h3 class="text-xl font-black text-gray-900 leading-tight">마비노기 모바일<br>초반 던전 살펴보기</h3>
+                            <div class="flex flex-wrap gap-2 flex-grow content-start">
+                                <span class="bg-gray-100 text-gray-600 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">레벨 디자인 스터디</span>
+                            </div>
+                            <p class="text-sm text-teal-600 font-bold pt-4 border-t border-gray-100 mt-auto flex items-center justify-between">
+                                PDF 문서 열기
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="group bg-white border border-gray-100 rounded-[2rem] overflow-hidden cursor-pointer shadow-sm hover:shadow-2xl hover:border-teal-400 transition-all duration-300 transform hover:-translate-y-2 flex flex-col" onclick="window.open('https://cnozv.github.io/건축공간론_스터디_박민지.pdf', '_blank')">
+                        <div class="aspect-video bg-gray-100 overflow-hidden flex items-center justify-center bg-teal-50">
+                            <img src="https://cnozv.github.io/공간론.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <div class="p-6 md:p-8 space-y-4 flex-grow flex flex-col">
+                            <h3 class="text-2xl font-black text-gray-900">건축공간론 스터디</h3>
+                            <div class="flex flex-wrap gap-2 flex-grow content-start">
+                                <span class="bg-gray-100 text-gray-600 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">공간 디자인 이론</span>
+                            </div>
+                            <p class="text-sm text-teal-600 font-bold pt-4 border-t border-gray-100 mt-auto flex items-center justify-between">
+                                PDF 문서 열기
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -702,7 +791,7 @@
             <div class="max-w-7xl mx-auto space-y-12">
                 <div class="space-y-4 text-center md:text-left">
                     <h2 class="text-4xl md:text-5xl font-black text-gray-900 tracking-tighter">게임 플레이 리뷰</h2>
-                    <p class="text-gray-500 text-base md:text-lg max-w-2xl mx-auto md:mx-0">다양한 장르의 게임들을 플레이하며 분석하고 기록한 리뷰 모음입니다. <br /> 젤다의 전설, 원신, 명조, 붕괴, 엔드필드, 페르소나 등 가장 좋아하는 게임들 위주로 정리하였습니다.</p>
+                    <p class="text-gray-500 text-base md:text-lg max-w-2xl mx-auto md:mx-0">다양한 장르의 게임들을 플레이하며 분석하고 기록한 리뷰 모음입니다.</p>
                 </div>
 
                 <div class="bg-white rounded-[2rem] md:rounded-[3rem] shadow-2xl border border-gray-100 flex justify-center overflow-hidden">
