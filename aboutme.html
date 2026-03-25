@@ -1,0 +1,520 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>박민지 | 레벨 디자이너 포트폴리오</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 기본 폰트 및 스타일 */
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        /* 스크롤바 디자인 (어두운 테마용) */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #555;
+            border-radius: 4px;
+        }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background: #777;
+            }
+
+        /* 모달 스타일 (기존 스타일 유지하되 크기/레이아웃 조정) */
+        #modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        #modal-content {
+            max-width: 900px;
+            width: 100%;
+            background: #1a1a1a;
+            border-radius: 1rem;
+            color: white;
+            padding: 40px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* 프로젝트 카드 호버 효과 */
+        .project-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .project-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 20px 25px -5px rgba(197, 160, 100, 0.2), 0 10px 10px -5px rgba(197, 160, 100, 0.1);
+            }
+    </style>
+</head>
+<body class="bg-black text-gray-100">
+
+    <main>
+        <section id="aboutme" class="page-section p-6 md:p-12 lg:p-20 border-b border-gray-800">
+            <div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 lg:gap-24 items-start">
+
+                <div class="lg:w-1/2 space-y-12">
+                    <div class="space-y-6">
+                        <h1 class="text-5xl lg:text-6xl font-black leading-tight text-white">
+                            설명보단 **공간으로 이야기하는**<br>
+                            레벨 디자이너 <span class="text-[#C5A064]">박민지</span>입니다.
+                        </h1>
+                        <p class="text-gray-400 text-xl leading-relaxed max-w-2xl">
+                            다양한 장르와 플랫폼에서 플레이어 경험을 설계하는 것을 지향합니다.
+                            </s
+                    </div>
+
+                    <div class="flex flex-wrap gap-4 pt-6">
+                        <div class="inline-flex items-center bg-[#C5A064]/20 text-[#C5A064] border border-[#C5A064] rounded-full px-5 py-2 text-base font-semibold"># 8번의 프로젝트</div>
+                        <div class="inline-flex items-center bg-[#C5A064]/20 text-[#C5A064] border border-[#C5A064] rounded-full px-5 py-2 text-base font-semibold"># 2번의 최우수상</div>
+                        <div class="inline-flex items-center bg-[#C5A064]/20 text-[#C5A064] border border-[#C5A064] rounded-full px-5 py-2 text-base font-semibold"># 6번의 플랫폼 출시</div>
+                    </div>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-8">
+                        <div class="aspect-[3/4] bg-gray-900 rounded-xl overflow-hidden border border-gray-700 p-2 cursor-pointer" onclick="openZoom(0)">
+                            <img src="https://cnozv.github.io/genshin01.png" class="w-full h-full object-cover rounded-lg opacity-80 hover:opacity-100 transition">
+                        </div>
+                        <div class="aspect-[3/4] bg-gray-900 rounded-xl overflow-hidden border border-gray-700 p-2 cursor-pointer" onclick="openZoom(1)">
+                            <img src="https://cnozv.github.io/genshin02.png" class="w-full h-full object-cover rounded-lg opacity-80 hover:opacity-100 transition">
+                        </div>
+                        <div class="aspect-[3/4] bg-gray-900 rounded-xl overflow-hidden border border-gray-700 p-2 cursor-pointer" onclick="openZoom(2)">
+                            <img src="https://cnozv.github.io/genshin03.png" class="w-full h-full object-cover rounded-lg opacity-80 hover:opacity-100 transition">
+                        </div>
+                        <div class="aspect-[3/4] bg-gray-900 rounded-xl overflow-hidden border border-gray-700 p-2 cursor-pointer" onclick="openZoom(3)">
+                            <img src="https://cnozv.github.io/genshin04.png" class="w-full h-full object-cover rounded-lg opacity-80 hover:opacity-100 transition">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:w-1/2 space-y-16 lg:pt-20">
+
+                    <div class="space-y-8">
+                        <h2 class="inline-flex items-center bg-[#C5A064] text-black font-semibold rounded-full px-6 py-1.5 text-lg">Education</h2>
+                        <div class="space-y-6">
+                            <div class="flex flex-col md:flex-row justify-between gap-2 md:items-center">
+                                <p class="text-xl font-bold text-white">홍익대학교 미술대학 예술학과</p>
+                                <p class="text-gray-500 text-sm">2021.03 ~ 2026.08 수료</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-8">
+                        <h2 class="inline-flex items-center bg-[#C5A064] text-black font-semibold rounded-full px-6 py-1.5 text-lg">Experience (Activities)</h2>
+                        <div class="space-y-8 text-gray-300">
+                            <div class="flex flex-col md:flex-row justify-between gap-2 md:items-start border-b border-gray-800 pb-6">
+                                <div class="space-y-1">
+                                    <p class="text-lg font-semibold text-white">전시 《AutoSave_》 기획 및 웹사이트 제작</p>
+                                    <p class="text-sm text-gray-500">프로그램 바이브 코딩 구현, 관객 참여 컨셉</p>
+                                </div>
+                                <p class="text-gray-500 text-sm flex-shrink-0">2025.08</p>
+                            </div>
+                            <div class="flex flex-col md:flex-row justify-between gap-2 md:items-start border-b border-gray-800 pb-6">
+                                <div class="space-y-1">
+                                    <p class="text-lg font-semibold text-white">게임개발연합동아리 BRIDGE</p>
+                                </div>
+                                <p class="text-gray-500 text-sm flex-shrink-0">2025.08 ~</p>
+                            </div>
+                            <div class="flex flex-col md:flex-row justify-between gap-2 md:items-start border-b border-gray-800 pb-6">
+                                <div class="space-y-1">
+                                    <p class="text-lg font-semibold text-white">홍익대학교 게임개발동아리 Exp Make</p>
+                                </div>
+                                <p class="text-gray-500 text-sm flex-shrink-0">2023.03 ~</p>
+                            </div>
+                            <div class="flex flex-col md:flex-row justify-between gap-2 md:items-start border-b border-gray-800 pb-6">
+                                <div class="space-y-1">
+                                    <p class="text-lg font-semibold text-white">전시 《언피지컬 리듬》 기획 및 웹사이트 제작</p>
+                                </div>
+                                <p class="text-gray-500 text-sm flex-shrink-0">2024.01</p>
+                            </div>
+                            <div class="flex flex-col md:flex-row justify-between gap-2 md:items-start border-b border-gray-800 pb-6">
+                                <div class="space-y-1">
+                                    <p class="text-lg font-semibold text-white">환기미술관 뮤지엄가이드 동행 서포터즈</p>
+                                </div>
+                                <p class="text-gray-500 text-sm flex-shrink-0">2023.04 ~ 2023.07</p>
+                            </div>
+                            <div class="flex flex-col md:flex-row justify-between gap-2 md:items-start border-b border-gray-800 pb-6">
+                                <div class="space-y-1">
+                                    <p class="text-lg font-semibold text-white">홍익대학교 예술학과 학생회</p>
+                                </div>
+                                <p class="text-gray-500 text-sm flex-shrink-0">2021</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-8 border-t border-gray-800 pt-16">
+                        <h2 class="inline-flex items-center bg-[#C5A064] text-black font-semibold rounded-full px-6 py-1.5 text-lg">Awards</h2>
+                        <div class="space-y-8 text-gray-300">
+                            <div class="flex flex-col md:flex-row justify-between gap-3 md:items-start border-l-2 border-[#C5A064] pl-6 py-1">
+                                <div class="space-y-1">
+                                    <p class="text-lg font-bold text-white">2025 넥슨 대학생 커리어 캠프 메토링 2기 최우수상</p>
+                                    <p class="text-sm">메이플 신규 미니게임 ‘할로윈 유령사냥’ 기획 및 제안</p>
+                                    <a href="https://cnozv.github.io/metoring_02.pdf" target="_blank" class="text-sm text-[#C5A064] hover:underline font-medium">[발표안 보기]</a>
+                                </div>
+                                <p class="text-gray-500 text-sm flex-shrink-0">2025.02</p>
+                            </div>
+                            <div class="flex flex-col md:flex-row justify-between gap-3 md:items-start border-l-2 border-[#C5A064] pl-6 py-1">
+                                <div class="space-y-1">
+                                    <p class="text-lg font-bold text-white">2024 넥슨 대학생 게임잼 재밌넥 최우수상</p>
+                                    <p class="text-sm">게임 ‘펄 러쉬’ 팀장 및 기획</p>
+                                    <a href="https://cnozv.github.io/pearlrush.pdf" target="_blank" class="text-sm text-[#C5A064] hover:underline font-medium">[게임 소개 PDF 보기]</a>
+                                </div>
+                                <p class="text-gray-500 text-sm flex-shrink-0">2024.07</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-16 border-t border-gray-800 text-gray-400 space-y-2 text-sm">
+                        <p>박민지 | 25세 (2002년생)</p>
+                        <p>이메일: <a href="mailto:parmji2111@gmail.com" class="text-white hover:text-[#C5A064]">parmji2111@gmail.com</a></p>
+                        <p>연락처: 010-5349-9247</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="page-section p-6 md:p-12 lg:p-20 bg-[#111]">
+            <div class="max-w-7xl mx-auto space-y-16">
+
+                <div class="text-center space-y-4">
+                    <h2 class="text-4xl lg:text-5xl font-black text-white">프로젝트 이력</h2>
+                    <p class="text-gray-400 text-lg max-w-xl mx-auto">다양한 장르와 플랫폼에서의 게임 개발 경험과 프로젝트 히스토리</p>
+                </div>
+
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-4 flex flex-col md:flex-row gap-4 items-center">
+                    <div class="relative w-full md:flex-grow">
+                        <input type="text" placeholder="프로젝트 제목, 역할, 장르 검색..." class="w-full bg-gray-800 text-gray-100 rounded-lg py-2.5 px-10 border border-gray-700 focus:border-[#C5A064] outline-none text-sm">
+                        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+                    <button class="w-full md:w-auto flex items-center gap-2 bg-[#C5A064] text-black font-semibold rounded-lg px-6 py-2.5 text-sm hover:bg-[#d4b47e]">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
+                        필터
+                    </button>
+                    <p class="text-xs text-gray-600 w-full md:w-auto text-center md:text-right">총 8개의 프로젝트</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                    <div class="project-card bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden cursor-pointer" onclick="openProjectModal('rifa')">
+                        <div class="aspect-video bg-gray-800">
+                            <img src="https://cnozv.github.io/rifa_thumb.png" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <h3 class="text-2xl font-bold text-white">RIFA</h3>
+                            <div class="flex gap-2">
+                                <span class="bg-[#C5A064]/20 text-[#C5A064] text-xs px-2 py-0.5 rounded-full font-medium">힐링 어드벤처</span>
+                                <span class="bg-gray-800 text-gray-300 text-xs px-2 py-0.5 rounded-full font-medium">Steam 출시</span>
+                            </div>
+                            <p class="text-sm text-gray-500 font-medium">PM / 팀장 / 기획</p>
+                        </div>
+                    </div>
+
+                    <div class="project-card bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden cursor-pointer" onclick="openProjectModal('pearlrush')">
+                        <div class="aspect-video bg-gray-800">
+                            <img src="https://cnozv.github.io/pearlrush_thumb.png" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-2xl font-bold text-white">펄 러쉬 (Pearl Rush)</h3>
+                                <span class="text-xs font-semibold text-[#C5A064]">🏆 최우수상</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="bg-[#C5A064]/20 text-[#C5A064] text-xs px-2 py-0.5 rounded-full font-medium">아케이드</span>
+                                <span class="bg-gray-800 text-gray-300 text-xs px-2 py-0.5 rounded-full font-medium">NEXON GameJam</span>
+                            </div>
+                            <p class="text-sm text-gray-500 font-medium">PM / 팀장 / 기획</p>
+                        </div>
+                    </div>
+
+                    <div class="project-card bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden cursor-pointer" onclick="openProjectModal('dreampals')">
+                        <div class="aspect-video bg-gray-800">
+                            <img src="https://cnozv.github.io/dreampals_thumb.png" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <h3 class="text-2xl font-bold text-white">드림 팰즈</h3>
+                            <div class="flex gap-2">
+                                <span class="bg-[#C5A064]/20 text-[#C5A064] text-xs px-2 py-0.5 rounded-full font-medium">협동 퍼즐</span>
+                                <span class="bg-gray-800 text-gray-300 text-xs px-2 py-0.5 rounded-full font-medium">3D</span>
+                            </div>
+                            <p class="text-sm text-gray-500 font-medium">레벨디자인 / UI기획</p>
+                        </div>
+                    </div>
+
+                    <div class="project-card bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden cursor-pointer" onclick="openProjectModal('savealba')">
+                        <div class="aspect-video bg-gray-800">
+                            <img src="https://cnozv.github.io/catchmemory_thumb.png" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <h3 class="text-2xl font-bold text-white">구해줘! 알바생</h3>
+                            <div class="flex gap-2">
+                                <span class="bg-[#C5A064]/20 text-[#C5A064] text-xs px-2 py-0.5 rounded-full font-medium">타이쿤</span>
+                                <span class="bg-gray-800 text-gray-300 text-xs px-2 py-0.5 rounded-full font-medium">PlayStore 출시</span>
+                            </div>
+                            <p class="text-sm text-gray-500 font-medium">기획 (UI, 콘텐츠)</p>
+                        </div>
+                    </div>
+
+                    <div class="project-card bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden cursor-pointer" onclick="openProjectModal('catchmemory')">
+                        <div class="aspect-video bg-gray-800">
+                            <img src="https://cnozv.github.io/catchmemory_thumb.png" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <h3 class="text-2xl font-bold text-white">캐치 메모리!</h3>
+                            <div class="flex gap-2">
+                                <span class="bg-[#C5A064]/20 text-[#C5A064] text-xs px-2 py-0.5 rounded-full font-medium">플랫포머</span>
+                                <span class="bg-gray-800 text-gray-300 text-xs px-2 py-0.5 rounded-full font-medium">PlayStore 출시</span>
+                            </div>
+                            <p class="text-sm text-gray-500 font-medium">PM / 팀장 / 기획</p>
+                        </div>
+                    </div>
+
+                    <div class="project-card bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden cursor-pointer" onclick="openProjectModal('modemspace')">
+                        <div class="aspect-video bg-gray-800">
+                            <img src="https://cnozv.github.io/modemspace_thumb.png" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <h3 class="text-2xl font-bold text-white">모뎀 스페이스 (MODEM SPACE)</h3>
+                            <div class="flex gap-2">
+                                <span class="bg-[#C5A064]/20 text-[#C5A064] text-xs px-2 py-0.5 rounded-full font-medium">모바일 전시 App</span>
+                                <span class="bg-gray-800 text-gray-300 text-xs px-2 py-0.5 rounded-full font-medium">iOS/Google 출시</span>
+                            </div>
+                            <p class="text-sm text-gray-500 font-medium">PM / 기획</p>
+                        </div>
+                    </div>
+
+                    <div class="project-card bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden cursor-pointer" onclick="openProjectModal('bekind')">
+                        <div class="aspect-video bg-gray-800">
+                            <img src="https://cnozv.github.io/bekind_thumb.png" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <h3 class="text-2xl font-bold text-white">착하게 살자</h3>
+                            <div class="flex gap-2">
+                                <span class="bg-[#C5A064]/20 text-[#C5A064] text-xs px-2 py-0.5 rounded-full font-medium">잠입</span>
+                                <span class="bg-gray-800 text-gray-300 text-xs px-2 py-0.5 rounded-full font-medium">PlayStore 출시</span>
+                            </div>
+                            <p class="text-sm text-gray-500 font-medium">기획</p>
+                        </div>
+                    </div>
+
+                    <div class="project-card bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden cursor-pointer" onclick="openProjectModal('trombone')">
+                        <div class="aspect-video bg-gray-800">
+                            <img src="https://cnozv.github.io/trombone_thumb.png" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <h3 class="text-2xl font-bold text-white">트럼본 럼블</h3>
+                            <div class="flex gap-2">
+                                <span class="bg-gray-800 text-gray-300 text-xs px-2 py-0.5 rounded-full font-medium">Steam 출시</span>
+                                <span class="bg-gray-800 text-gray-300 text-xs px-2 py-0.5 rounded-full font-medium">폴리싱 중</span>
+                            </div>
+                            <p class="text-sm text-gray-500 font-medium">기획 (콘텐츠, 레벨)</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="border-t border-gray-800 pt-16 space-y-8">
+                    <h2 class="inline-flex items-center bg-[#C5A064] text-black font-semibold rounded-full px-6 py-1.5 text-lg">Other Experience (Interaction)</h2>
+                    <div class="bg-gray-900 border border-gray-800 rounded-2xl p-8 flex flex-col md:flex-row gap-8 items-center">
+                        <div class="flex-grow space-y-4">
+                            <p class="text-xl font-bold text-white">《AutoSave_》 관객 참여형 프로그램 구현</p>
+                            <p class="text-gray-400 text-sm leading-relaxed">전시장에 사람들이 ‘로그인’하며 자신만의 유저네임을 기록한다는 컨셉의 프로그램을 바이브 코딩으로 구현하였습니다. 전시장 TV 출력 페이지와 아카이브 웹페이지를 제작하였습니다.</p>
+                        </div>
+                        <div class="flex flex-wrap gap-2 md:flex-shrink-0">
+                            <a href="cnozv.github.io/username.html" target="_blank" class="text-xs bg-gray-800 border border-gray-700 text-gray-300 rounded px-3 py-1.5 hover:bg-gray-700">[기록 페이지]</a>
+                            <a href="cnozv.github.io/usernamearchive.html" target="_blank" class="text-xs bg-gray-800 border border-gray-700 text-gray-300 rounded px-3 py-1.5 hover:bg-gray-700">[아카이브]</a>
+                            <a href="cnozv.github.io/usernameoutput.html" target="_blank" class="text-xs bg-gray-800 border border-gray-700 text-gray-300 rounded px-3 py-1.5 hover:bg-gray-700">[TV 출력]</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <div id="modal" onclick="closeZoom()">
+        <span class="close-modal" onclick="event.stopPropagation(); closeZoom()">×</span>
+
+        <div id="image-zoom-content" class="modal-content flex justify-center items-center" style="display: none;">
+            <img id="modal-zoom-img" src="" class="max-h-[85vh] rounded-lg shadow-2xl">
+        </div>
+
+        <div id="project-detail-content" class="modal-content" style="display: none;">
+            <div id="modal-content" class="relative">
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
+                    <div class="md:col-span-2 aspect-video bg-gray-800 rounded-xl overflow-hidden shadow-lg border border-gray-800">
+                        <img id="modal-project-img" src="" class="w-full h-full object-cover">
+                    </div>
+                    <div class="bg-gray-900 border border-gray-800 rounded-xl p-8 space-y-6 flex flex-col justify-center">
+                        <div class="space-y-1">
+                            <p class="text-sm text-gray-600 font-medium">장르 / 플랫폼</p>
+                            <p id="modal-project-type" class="text-lg font-bold text-white"></p>
+                        </div>
+                        <div class="space-y-1">
+                            <p class="text-sm text-gray-600 font-medium">주요 역할</p>
+                            <p id="modal-project-role" class="text-lg font-bold text-white"></p>
+                        </div>
+                        <a id="modal-project-link" href="" target="_blank" class="w-full text-center inline-flex justify-center items-center gap-2 bg-[#C5A064] text-black font-semibold rounded-lg px-6 py-3 text-base hover:bg-[#d4b47e] shadow-md">
+                            프로젝트 소개 (PDF) 보기
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="space-y-8 text-gray-300">
+                    <h2 id="modal-project-name" class="text-4xl lg:text-5xl font-extrabold text-white"></h2>
+                    <p id="modal-project-desc" class="text-gray-400 text-lg leading-relaxed max-w-3xl"></p>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // 프로젝트 데이터를 JS 객체로 정리 (모달 팝업용)
+        // 사용자가 제공한 PDF 링크를 각 프로젝트에 매핑
+        const projectsData = {
+            'rifa': {
+                name: 'RIFA',
+                type: '3D 힐링 어드벤처 / Steam 출시',
+                role: 'PM / 팀장 / 기획',
+                thumb: 'https://cnozv.github.io/rifa_thumb.png', // 실제 썸네일 필요
+                link: 'https://cnozv.github.io/rifa.pdf',
+                desc: '설명은 PDF에 상세히 정리되어 있습니다.'
+            },
+            'pearlrush': {
+                name: '펄 러쉬 (Pearl Rush)',
+                type: '아케이드 / NEXON GameJam (최우수상)',
+                role: 'PM / 팀장 / 기획',
+                thumb: 'https://cnozv.github.io/pearlrush_thumb.png',
+                link: 'https://cnozv.github.io/pearlrush.pdf',
+                desc: '2024 넥슨 대학생 게임잼 재밌넥 최우수상 수상작입니다. 설명은 PDF에 상세히 정리되어 있습니다.'
+            },
+            'dreampals': {
+                name: '드림 팰즈 (Dream Pals)',
+                type: '3D 2인 협동 퍼즐',
+                role: '레벨디자인 / UI기획',
+                thumb: 'https://cnozv.github.io/dreampals_thumb.png',
+                link: 'https://cnozv.github.io/dreampals_.pdf',
+                desc: '설명은 PDF에 상세히 정리되어 있습니다.'
+            },
+            'savealba': {
+                name: '구해줘! 알바생',
+                type: '피자 제작 타이쿤 / PlayStore 출시',
+                role: '기획 (UI, 콘텐츠)',
+                thumb: 'https://cnozv.github.io/catchmemory_thumb.png',
+                link: 'https://cnozv.github.io/catchmemory.pdf', // catchmemory.pdf가 구해줘!알바생과 캐치메모리 공통인가보네요.
+                desc: '설명은 PDF에 상세히 정리되어 있습니다.'
+            },
+            'catchmemory': {
+                name: '캐치 메모리!',
+                type: '2D 플랫포머 / PlayStore 출시',
+                role: 'PM / 팀장 / 기획',
+                thumb: 'https://cnozv.github.io/catchmemory_thumb.png',
+                link: 'https://cnozv.github.io/catchmemory.pdf',
+                desc: '설명은 PDF에 상세히 정리되어 있습니다.'
+            },
+            'modemspace': {
+                name: '모뎀 스페이스 (MODEM SPACE)',
+                type: '모바일 전시 App / iOS/Google 출시',
+                role: 'PM / 기획',
+                thumb: 'https://cnozv.github.io/modemspace_thumb.png',
+                link: 'https://cnozv.github.io/modemspace_about.pdf',
+                desc: '홍익대 혁신지원사업 지원 프로젝트입니다. 설명은 PDF에 상세히 정리되어 있습니다.'
+            },
+            'bekind': {
+                name: '착하게 살자',
+                type: '2D 잠입 / 24시간 게임잼 / PlayStore 출시',
+                role: '기획',
+                thumb: 'https://cnozv.github.io/bekind_thumb.png',
+                link: 'https://cnozv.github.io/bekind.pdf',
+                desc: '설명은 PDF에 상세히 정리되어 있습니다.'
+            },
+            'trombone': {
+                name: '트럼본 럼블 (Trombone Rumble)',
+                type: '3D / Steam 출시 (폴리싱 진행 중)',
+                role: '기획 (콘텐츠, 레벨)',
+                thumb: 'https://cnozv.github.io/trombone_thumb.png',
+                link: 'https://cnozv.github.io/trombone_thumb.png', // Trombone Rumble의 설명 파일이 데이터에 없으므로 일단 썸네일 링크를 걸었습니다.
+                desc: '트럼본 럼블은 현재 추가 개발 진행 중입니다.'
+            }
+        };
+
+        // 모달 제어 함수들 (기존 코드의 slider 로직 제거)
+        function openZoom(idx) {
+            // 상장 줌 모드 활성화
+            document.getElementById('modal').style.display = 'flex';
+            document.getElementById('image-zoom-content').style.display = 'flex';
+            document.getElementById('project-detail-content').style.display = 'none';
+
+            // 기존 genshin0x.png 템플릿 사용
+            document.getElementById('modal-zoom-img').src = `https://cnozv.github.io/genshin0${idx + 1}.png`;
+        }
+
+        function openProjectModal(projectId) {
+            const data = projectsData[projectId];
+            if(!data) return;
+
+            // 프로젝트 상세 정보 모드 활성화
+            document.getElementById('modal').style.display = 'flex';
+            document.getElementById('image-zoom-content').style.display = 'none';
+            document.getElementById('project-detail-content').style.display = 'block';
+
+            // 데이터 채우기
+            document.getElementById('modal-project-img').src = data.thumb;
+            document.getElementById('modal-project-name').innerText = data.name;
+            document.getElementById('modal-project-type').innerText = data.type;
+            document.getElementById('modal-project-role').innerText = data.role;
+            document.getElementById('modal-project-desc').innerText = data.desc;
+            document.getElementById('modal-project-link').href = data.link;
+        }
+
+        function closeZoom() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        // 기존 slider 코드 제거됨
+        window.onload = () => {
+            // onload 시 slider 초기화 로직 제거
+        };
+
+        // ESC 키로 모달 닫기
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('modal').style.display === 'flex') {
+                if (e.key === 'Escape') closeZoom();
+            }
+        });
+    </script>
+
+</body>
+</html>
