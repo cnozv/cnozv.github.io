@@ -35,22 +35,85 @@
                 background: #94a3b8;
             }
 
-        .sidebar {
-            height: 100vh;
+        /* 상단 네비게이션 바 */
+        .top-navbar {
             position: fixed;
             top: 0;
             left: 0;
-            overflow-y: auto;
-            background: #fff;
+            width: 100%;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
             z-index: 50;
-            border-right: 1px solid #f3f4f6;
+            border-bottom: 1px solid #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
 
+        /* 메인 콘텐츠 여백 조정 (상단바 높이만큼 띄움) */
         .main-content {
-            margin-left: 280px;
+            padding-top: 80px; /* 상단바 높이 */
             min-height: 100vh;
         }
 
+        /* 드롭다운 메뉴 스타일 */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 60px; /* 버튼 아래 위치 */
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #fff;
+            min-width: 220px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            border: 1px solid #f3f4f6;
+            overflow: hidden;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.2s ease-in-out;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            opacity: 1;
+        }
+
+        .dropdown-content a, .dropdown-content button {
+            color: #4b5563;
+            padding: 12px 20px;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 500;
+            width: 100%;
+            transition: all 0.2s;
+            border-bottom: 1px solid #f9fafb;
+        }
+
+            .dropdown-content a:last-child, .dropdown-content button:last-child {
+                border-bottom: none;
+            }
+
+            .dropdown-content a:hover, .dropdown-content button:hover {
+                background-color: #f0fdfa;
+                color: #0f766e;
+                font-weight: 700;
+            }
+
+        /* 페이지 섹션 트랜지션 */
         .page-section {
             display: none;
             width: 100%;
@@ -58,16 +121,18 @@
 
             .page-section.active {
                 display: block;
-                animation: fadeIn 0.2s ease-in-out;
+                animation: fadeIn 0.3s ease-in-out;
             }
 
         @keyframes fadeIn {
             from {
                 opacity: 0;
+                transform: translateY(10px);
             }
 
             to {
                 opacity: 1;
+                transform: translateY(0);
             }
         }
 
@@ -156,6 +221,7 @@
             justify-content: center;
             gap: 8px;
             margin-top: 20px;
+            flex-wrap: wrap;
         }
 
         .thumb-item {
@@ -186,8 +252,8 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(4px);
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px);
             z-index: 100;
             align-items: center;
             justify-content: center;
@@ -237,15 +303,12 @@
         }
 
         @media (max-width: 1024px) {
-            .sidebar {
-                position: relative;
-                height: auto;
-                width: 100%;
-                border-right: none;
+            .top-navbar {
+                padding: 0 20px;
             }
 
-            .main-content {
-                margin-left: 0;
+            .nav-menu-container {
+                display: none; /* 모바일에서는 메뉴가 복잡해지므로 햄버거 메뉴 등이 필요할 수 있으나 임시로 처리 */
             }
 
             .slider-outer {
@@ -256,92 +319,95 @@
 </head>
 <body>
 
-    <aside class="sidebar w-[280px] p-8">
-        <div class="mb-12">
-            <button onclick="showPage('home')" class="text-left hover:opacity-70 transition-opacity outline-none">
-                <h1 class="text-xl font-black tracking-tighter">PARK MINJI</h1>
-                <p class="text-[10px] text-gray-400 mt-1 uppercase tracking-widest font-bold">Level Designer</p>
+    <header class="top-navbar">
+        <button onclick="showPage('home')" class="text-left hover:opacity-70 transition-opacity outline-none flex flex-col justify-center">
+            <h1 class="text-xl font-black tracking-tighter text-gray-900 leading-none">PARK MINJI</h1>
+            <p class="text-[10px] text-teal-600 mt-1 uppercase tracking-widest font-bold leading-none">Level Designer</p>
+        </button>
+
+        <nav class="nav-menu-container flex items-center h-full gap-8 text-[14px] font-bold text-gray-600">
+            <button onclick="showPage('watatsumi')" class="hover:text-teal-600 transition-colors h-full flex items-center">
+                원신 와타츠미섬 역기획 (2026)
             </button>
-        </div>
 
-        <nav class="space-y-10 text-[12px]">
-            <div>
-                <h2 class="font-bold text-gray-900 mb-4 text-sm tracking-wide">포트폴리오</h2>
-                <ul class="space-y-4 text-gray-500">
-                    <li><button onclick="showPage('watatsumi')" class="hover:text-teal-600 outline-none text-left leading-relaxed">원신 이나즈마 와타츠미섬<br>레벨디자인 역기획 (2026)</button></li>
-                    <li><button onclick="showPage('projects-overview')" class="hover:text-teal-600 outline-none text-left leading-relaxed">인디 프로젝트 개발 경험 (9회)</button></li>
-                </ul>
+            <button onclick="showPage('projects-overview')" class="hover:text-teal-600 transition-colors h-full flex items-center">
+                인디 프로젝트 개발 경험
+            </button>
+
+            <div class="dropdown">
+                <button class="hover:text-teal-600 transition-colors h-full flex items-center gap-1">
+                    게임 디자인 스터디
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="dropdown-content">
+                    <a href="https://cnozv.github.io/포탈1_리뷰_박민지.pdf" target="_blank">포탈 1 살펴보기</a>
+                    <a href="https://cnozv.github.io/study_mabi01.pdf" target="_blank">마비노기 모바일 초반 던전 살펴보기</a>
+                    <a href="https://cnozv.github.io/건축공간론_스터디_박민지.pdf" target="_blank">건축공간론 스터디</a>
+                </div>
             </div>
 
-            <div>
-                <button onclick="showPage('study-overview')" class="font-bold text-gray-900 mb-4 text-sm tracking-wide hover:text-teal-600 outline-none text-left w-full">STUDY</button>
-                <ul class="space-y-4 text-gray-500">
-                    <li><a href="https://cnozv.github.io/포탈1_리뷰_박민지.pdf" target="_blank" class="hover:text-teal-600 block leading-relaxed">포탈 1 살펴보기</a></li>
-                    <li><a href="https://cnozv.github.io/study_mabi01.pdf" target="_blank" class="hover:text-teal-600 block leading-relaxed">마비노기 모바일<br>초반 던전 살펴보기</a></li>
-                    <li><a href="https://cnozv.github.io/건축공간론_스터디_박민지.pdf" target="_blank" class="hover:text-teal-600 block leading-relaxed">건축공간론 스터디</a></li>
-                </ul>
-            </div>
-
-            <div>
-                <h2 class="font-bold text-gray-900 mb-4 text-sm tracking-wide">자기소개</h2>
-                <ul class="space-y-4 text-gray-500">
-                    <li><button onclick="showPage('aboutme')" class="hover:text-teal-600 outline-none text-left leading-relaxed">About Me</button></li>
-                    <li><button onclick="showPage('game-reviews')" class="hover:text-teal-600 outline-none text-left leading-relaxed">게임 플레이 리뷰</button></li>
-                </ul>
+            <div class="dropdown">
+                <button class="hover:text-teal-600 transition-colors h-full flex items-center gap-1">
+                    자기소개
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="dropdown-content">
+                    <button onclick="showPage('aboutme')">About Me</button>
+                    <button onclick="showPage('game-reviews')">게임 플레이 리뷰</button>
+                </div>
             </div>
         </nav>
-    </aside>
+    </header>
 
     <main class="main-content">
         <section id="home" class="page-section active">
-            <div class="h-screen flex flex-col justify-center px-10 md:px-20 text-white" style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://cnozv.github.io/genshin01.png'); background-size: cover; background-position: center;">
+            <div class="flex flex-col justify-center px-10 md:px-20 text-white" style="height: calc(100vh - 80px); background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://cnozv.github.io/genshin01.png'); background-size: cover; background-position: center;">
                 <h3 class="text-teal-400 font-bold text-sm mb-4 uppercase tracking-[0.3em]">Level Design Portfolio</h3>
-                <h2 class="text-7xl font-black leading-tight mb-8">레벨디자이너<br>박민지</h2>
-                <button onclick="showPage('watatsumi')" class="w-fit px-10 py-5 bg-teal-500 rounded-full font-bold uppercase tracking-widest hover:bg-teal-400 transition-all">레벨디자인 포폴 바로보기 →</button>
+                <h2 class="text-7xl font-black leading-tight mb-8">레벨디자이너 지망생 박민지</h2>
+                <button onclick="showPage('watatsumi')" class="w-fit px-10 py-5 bg-teal-500 rounded-full font-bold uppercase tracking-widest hover:bg-teal-400 transition-all text-sm md:text-base">대표 포트폴리오 바로보기 →</button>
             </div>
         </section>
 
         <script>
             const genshinImages = Array.from({ length: 9 }, (_, i) => `https://cnozv.github.io/genshin0${i + 1}.png`);
-            const fullPageIds = ['watatsumi', 'award-nexon', 'award-mentoring'];
+            // 네비바 개편으로 어워드 페이지들은 제거되었으므로 와타츠미섬만 생성합니다.
+            const fullPageIds = ['watatsumi'];
             const pageTitles = {
-                'watatsumi': '원신 와타츠미섬 역기획 (2026)',
-                'award-nexon': '넥슨 대학생 게임잼 \'재밌넥\' 최우수상 (2024)',
-                'award-mentoring': '넥슨 대학생 멘토링 \'메토링\' 2기 최우수상'
+                'watatsumi': '원신 와타츠미섬 역기획 (2026)'
             };
 
             fullPageIds.forEach(id => {
                 const title = pageTitles[id] || id.toUpperCase();
                 document.write(`
-                            <section id="${id}" class="page-section p-10 md:p-20">
+                            <section id="${id}" class="page-section p-6 md:p-12 lg:p-20">
                                 <div class="max-w-6xl mx-auto">
-                                    <h2 class="text-5xl font-black mb-12 tracking-tighter text-gray-900">${title}</h2>
+                                    <h2 class="text-4xl md:text-5xl font-black mb-12 tracking-tighter text-gray-900">${title}</h2>
                                     <div class="mb-24">
-                                        <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.4em] mb-10 text-center md:text-left">Gameplay Movie</h3>
-                                        <div class="aspect-video w-full rounded-[2.5rem] overflow-hidden shadow-2xl">
+                                        <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.4em] mb-8 text-center md:text-left">Gameplay Movie</h3>
+                                        <div class="aspect-video w-full rounded-[2rem] overflow-hidden shadow-2xl">
                                             <iframe class="w-full h-full" src="https://www.youtube.com/embed/D2FkUSN4pnw" frameborder="0" allowfullscreen></iframe>
                                         </div>
                                     </div>
-                                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 mb-24 py-20 border-y border-gray-100">
+                                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 mb-24 py-16 border-y border-gray-100">
                                         <div>
-                                            <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.4em] mb-10">Project Details</h3>
-                                            <ul class="space-y-5 text-sm">
-                                                <li class="flex gap-6"><span class="font-bold w-24 text-gray-400">장르</span> <span>3인칭 오픈월드 ARPG</span></li>
-                                                <li class="flex gap-6"><span class="font-bold w-24 text-gray-400">엔진</span> <span>Unreal 엔진 5.6</span></li>
-                                                <li class="flex gap-6"><span class="font-bold w-24 text-gray-400">맵 사이즈</span> <span>1100 * 700 * 200 (㎥)</span></li>
-                                                <li class="flex gap-6"><span class="font-bold w-24 text-gray-400">테마</span> <span>산호, 조개, 진주빛의 몽환적인 섬 (분지)</span></li>
-                                                <li class="flex gap-6"><span class="font-bold w-24 text-gray-400">플레이타임</span> <span>18분</span></li>
-                                                <li class="flex gap-6"><span class="font-bold w-24 text-gray-400">제작기간</span> <span>2026.01. ~ 2026.03.</span></li>
+                                            <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.4em] mb-8">Project Details</h3>
+                                            <ul class="space-y-4 text-sm md:text-base">
+                                                <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">장르</span> <span class="text-gray-700">3인칭 오픈월드 ARPG</span></li>
+                                                <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">엔진</span> <span class="text-gray-700">Unreal 엔진 5.6</span></li>
+                                                <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">맵 사이즈</span> <span class="text-gray-700">1100 * 700 * 200 (㎥)</span></li>
+                                                <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">테마</span> <span class="text-gray-700">산호, 조개, 진주빛의 몽환적인 섬 (분지)</span></li>
+                                                <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">플레이타임</span> <span class="text-gray-700">18분</span></li>
+                                                <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">제작기간</span> <span class="text-gray-700">2026.01. ~ 2026.03.</span></li>
                                             </ul>
                                         </div>
                                         <div class="text-gray-600 leading-relaxed">
-                                            <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.4em] mb-10">Overview</h3>
-                                            <p>원신 이나즈마 지역의 와타츠미섬, 월드 퀘스트 '월광욕 연못' 레벨디자인 역기획 영상입니다. 기존 레벨의 기획 의도를 분석하고, 퀘스트의 진행 방식을 개선하여 오픈월드의 탐험과 퀘스트 진행을 중심으로 분석하고자 했습니다.</p>
+                                            <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.4em] mb-8">Overview</h3>
+                                            <p class="text-sm md:text-base">원신 이나즈마 지역의 와타츠미섬, 월드 퀘스트 '월광욕 연못' 레벨디자인 역기획 영상입니다. 기존 레벨의 기획 의도를 분석하고, 퀘스트의 진행 방식을 개선하여 오픈월드의 탐험과 퀘스트 진행을 중심으로 분석하고자 했습니다.</p>
                                         </div>
                                     </div>
                                     <div class="mb-24">
-                                        <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.4em] mb-10">Detail Screenshots</h3>
-                                        <div class="slider-outer">
+                                        <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.4em] mb-8 text-center md:text-left">Detail Screenshots</h3>
+                                        <div class="slider-outer px-10 md:px-20">
                                             <button onclick="moveSlide(-1)" class="nav-btn prev">←</button>
                                             <div class="slider-container">
                                                 <div class="slider-track" id="${id}-slider">
@@ -350,12 +416,12 @@
                                             </div>
                                             <button onclick="moveSlide(1)" class="nav-btn next">→</button>
                                             <div class="indicator-bar" id="${id}-indicators"></div>
-                                            <div class="thumb-bar" id="${id}-thumbs">
+                                            <div class="thumb-bar flex-wrap" id="${id}-thumbs">
                                                 ${genshinImages.map((src, idx) => `<div class="thumb-item" onclick="jumpToSlide(${idx})"><img src="${src}"></div>`).join('')}
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="w-full h-[800px] rounded-[2.5rem] border border-gray-100 overflow-hidden shadow-2xl mb-10">
+                                    <div class="w-full h-[600px] md:h-[800px] rounded-[2.5rem] border border-gray-100 overflow-hidden shadow-2xl mb-10">
                                         <iframe src="https://cnozv.github.io/%EC%9B%90%EC%8B%A0_%EC%99%80%ED%83%80%EC%B8%A0%EB%AF%B8%EC%84%AC_%EC%97%AD%EA%B8%B0%ED%9A%8D_%EB%B0%95%EB%AF%BC%EC%A7%80.pdf" class="w-full h-full" frameborder="0"></iframe>
                                     </div>
                                 </div>
@@ -364,156 +430,143 @@
             });
         </script>
 
-        <section id="projects-overview" class="page-section p-10 md:p-20 bg-gray-50/50">
+        <section id="projects-overview" class="page-section p-6 md:p-12 lg:p-20 bg-gray-50/50">
             <div class="max-w-6xl mx-auto space-y-12">
-                <div class="space-y-4">
-                    <h2 class="text-5xl font-black text-gray-900 tracking-tighter">Project History</h2>
-                    <p class="text-gray-500 text-lg">다양한 장르와 플랫폼에서의 게임 개발 경험과 히스토리</p>
+                <div class="space-y-4 text-center md:text-left">
+                    <h2 class="text-4xl md:text-5xl font-black text-gray-900 tracking-tighter">인디 게임 개발 경험</h2>
+                    <p class="text-gray-500 text-base md:text-lg">2023년부터 2026년 현재까지 3년간, 2D 잠입 게임부터 3D 경쟁난투 리듬게임까지 다양한 게임을 개발하였습니다. <br /> 3명의 소규모 팀부터 12인의 대규모 팀까지, 8시간 게임잼부터 1년 이상의 장기 프로젝트까지 다양한 </p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                     <div class="group bg-white border border-gray-100 rounded-[2rem] overflow-hidden cursor-pointer shadow-sm hover:shadow-2xl hover:border-teal-400 transition-all duration-300 transform hover:-translate-y-2 flex flex-col" onclick="openProjectModal('rifa')">
                         <div class="aspect-video bg-gray-100 overflow-hidden">
-                            <img src="https://cnozv.github.io/genshin01.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <img src="https://cnozv.github.io/rifa_image.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="RIFA 썸네일">
                         </div>
-                        <div class="p-8 space-y-4 flex-grow flex flex-col">
+                        <div class="p-6 md:p-8 space-y-4 flex-grow flex flex-col">
                             <h3 class="text-2xl font-black text-gray-900">RIFA</h3>
                             <div class="flex flex-wrap gap-2 flex-grow content-start">
-                                <span class="bg-teal-50 text-teal-600 text-xs px-3 py-1 rounded-full font-bold">3D 힐링 어드벤처</span>
-                                <span class="bg-teal-50 text-teal-600 text-xs px-3 py-1 rounded-full font-bold">Unreal 5.3</span>
-                                <span class="bg-teal-50 text-teal-600 text-xs px-3 py-1 rounded-full font-bold">Github 협업</span>
-                                <span class="bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full font-bold">Steam 출시</span>
-                                <span class="bg-yellow-50 text-yellow-600 text-xs px-3 py-1 rounded-full font-bold border border-yellow-200">리메이크 진행 중</span>
+                                <span class="bg-teal-50 text-teal-700 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">3D 힐링 어드벤처</span>
+                                <span class="bg-gray-100 text-gray-600 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">Steam 출시</span>
                             </div>
-                            <p class="text-sm text-gray-500 font-medium pt-4 border-t border-gray-100 mt-auto">PM / 팀장 / 기획</p>
+                            <p class="text-xs md:text-sm text-gray-500 font-medium pt-4 border-t border-gray-100 mt-auto">PM / 팀장 / 기획</p>
                         </div>
                     </div>
 
                     <div class="group bg-white border border-gray-100 rounded-[2rem] overflow-hidden cursor-pointer shadow-sm hover:shadow-2xl hover:border-teal-400 transition-all duration-300 transform hover:-translate-y-2 flex flex-col" onclick="openProjectModal('pearlrush')">
                         <div class="aspect-video bg-gray-100 overflow-hidden">
-                            <img src="https://cnozv.github.io/genshin02.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <img src="https://cnozv.github.io/%ED%8E%84%EB%9F%AC%EC%89%AC_%EC%9D%B4%EB%AF%B8%EC%A7%80.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="펄 러쉬 썸네일">
                         </div>
-                        <div class="p-8 space-y-4 flex-grow flex flex-col">
-                            <div class="flex items-center justify-between">
-                                <h3 class="text-2xl font-black text-gray-900">Pearl Rush</h3>
+                        <div class="p-6 md:p-8 space-y-4 flex-grow flex flex-col">
+                            <div class="flex items-start justify-between gap-2">
+                                <h3 class="text-2xl font-black text-gray-900 leading-tight">Pearl Rush</h3>
+                                <span class="text-[10px] font-bold text-orange-600 bg-orange-100 px-2 py-1 rounded-lg shrink-0 whitespace-nowrap">🏆 최우수상</span>
                             </div>
                             <div class="flex flex-wrap gap-2 flex-grow content-start">
-                                <span class="bg-teal-50 text-teal-600 text-xs px-3 py-1 rounded-full font-bold">2인 경쟁 아케이드 게임</span>
-                                <span class="bg-teal-50 text-teal-600 text-xs px-3 py-1 rounded-full font-bold">Unity</span>
-                                <span class="bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full font-bold">넥슨 2박3일 게임잼</span>
-                                <span class="text-[10px] font-bold text-orange-600 bg-orange-100 px-2 py-1 rounded-lg shrink-0">🏆 최우수상</span>
+                                <span class="bg-teal-50 text-teal-700 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">2인 아케이드</span>
+                                <span class="bg-gray-100 text-gray-600 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">NEXON GameJam</span>
                             </div>
-                            <p class="text-sm text-gray-500 font-medium pt-4 border-t border-gray-100 mt-auto">PM / 팀장 / 기획</p>
+                            <p class="text-xs md:text-sm text-gray-500 font-medium pt-4 border-t border-gray-100 mt-auto">PM / 팀장 / 기획</p>
                         </div>
                     </div>
 
                     <div class="group bg-white border border-gray-100 rounded-[2rem] overflow-hidden cursor-pointer shadow-sm hover:shadow-2xl hover:border-teal-400 transition-all duration-300 transform hover:-translate-y-2 flex flex-col" onclick="openProjectModal('dreampals')">
                         <div class="aspect-video bg-gray-100 overflow-hidden">
-                            <img src="https://cnozv.github.io/genshin03.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <img src="https://cnozv.github.io/%EB%93%9C%EB%A6%BC%ED%8C%B0%EC%A6%88_%EC%9D%B4%EB%AF%B8%EC%A7%80.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="드림 팰즈 썸네일">
                         </div>
-                        <div class="p-8 space-y-4 flex-grow flex flex-col">
+                        <div class="p-6 md:p-8 space-y-4 flex-grow flex flex-col">
                             <h3 class="text-2xl font-black text-gray-900">Dream Pals</h3>
                             <div class="flex flex-wrap gap-2 flex-grow content-start">
-                                <span class="bg-teal-50 text-teal-600 text-xs px-3 py-1 rounded-full font-bold">3D 협동 퍼즐</span>
-                                <span class="bg-teal-50 text-teal-600 text-xs px-3 py-1 rounded-full font-bold">Unreal 5.3</span>
-                                <span class="bg-teal-50 text-teal-600 text-xs px-3 py-1 rounded-full font-bold">Github 협업</span>
+                                <span class="bg-teal-50 text-teal-700 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">3D 협동 퍼즐</span>
                             </div>
-                            <p class="text-sm text-gray-500 font-medium pt-4 border-t border-gray-100 mt-auto">기획(레벨디자인, UI)</p>
+                            <p class="text-xs md:text-sm text-gray-500 font-medium pt-4 border-t border-gray-100 mt-auto">기획(레벨디자인, UI)</p>
                         </div>
                     </div>
 
                     <div class="group bg-white border border-gray-100 rounded-[2rem] overflow-hidden cursor-pointer shadow-sm hover:shadow-2xl hover:border-teal-400 transition-all duration-300 transform hover:-translate-y-2 flex flex-col" onclick="openProjectModal('savealba')">
                         <div class="aspect-video bg-gray-100 overflow-hidden">
-                            <img src="https://cnozv.github.io/genshin04.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <img src="https://cnozv.github.io/%EC%95%8C%EB%B0%94%EC%83%9D_%EC%9D%B4%EB%AF%B8%EC%A7%80.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="구해줘 알바생 썸네일">
                         </div>
-                        <div class="p-8 space-y-4 flex-grow flex flex-col">
-                            <h3 class="text-2xl font-black text-gray-900">구해줘! 알바생</h3>
+                        <div class="p-6 md:p-8 space-y-4 flex-grow flex flex-col">
+                            <h3 class="text-xl md:text-2xl font-black text-gray-900 leading-tight">구해줘! 알바생</h3>
                             <div class="flex flex-wrap gap-2 flex-grow content-start">
-                                <span class="bg-teal-50 text-teal-600 text-xs px-3 py-1 rounded-full font-bold">피자 제작 타이쿤</span>
-                                <span class="bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full font-bold">구글 플레이스토어 출시</span>
-                                <span class="bg-teal-50 text-teal-600 text-xs px-3 py-1 rounded-full font-bold">Unity</span>
-                                <span class="bg-teal-50 text-teal-600 text-xs px-3 py-1 rounded-full font-bold">Github 협업</span>
+                                <span class="bg-teal-50 text-teal-700 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">피자 타이쿤</span>
+                                <span class="bg-gray-100 text-gray-600 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">PlayStore 출시</span>
                             </div>
-                            <p class="text-sm text-gray-500 font-medium pt-4 border-t border-gray-100 mt-auto">기획 (UI, 콘텐츠)</p>
+                            <p class="text-xs md:text-sm text-gray-500 font-medium pt-4 border-t border-gray-100 mt-auto">기획 (UI, 콘텐츠)</p>
                         </div>
                     </div>
 
                     <div class="group bg-white border border-gray-100 rounded-[2rem] overflow-hidden cursor-pointer shadow-sm hover:shadow-2xl hover:border-teal-400 transition-all duration-300 transform hover:-translate-y-2 flex flex-col" onclick="openProjectModal('catchmemory')">
                         <div class="aspect-video bg-gray-100 overflow-hidden">
-                            <img src="https://cnozv.github.io/genshin05.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <img src="https://cnozv.github.io/%EC%BA%90%EC%B9%98%EB%A9%94%EB%AA%A8%EB%A6%AC_%EC%9D%B4%EB%AF%B8%EC%A7%80.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="캐치 메모리 썸네일">
                         </div>
-                        <div class="p-8 space-y-4 flex-grow flex flex-col">
+                        <div class="p-6 md:p-8 space-y-4 flex-grow flex flex-col">
                             <h3 class="text-2xl font-black text-gray-900">캐치 메모리!</h3>
                             <div class="flex flex-wrap gap-2 flex-grow content-start">
-                                <span class="bg-teal-50 text-teal-600 text-xs px-3 py-1 rounded-full font-bold">2D 플랫포머</span>
-                                <span class="bg-teal-50 text-teal-600 text-xs px-3 py-1 rounded-full font-bold">Unity</span>
-                                <span class="bg-teal-50 text-teal-600 text-xs px-3 py-1 rounded-full font-bold">Plastic SCM 협업</span>
-                                <span class="bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full font-bold">구글 플레이스토어 출시</span>
+                                <span class="bg-teal-50 text-teal-700 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">2D 플랫포머</span>
+                                <span class="bg-gray-100 text-gray-600 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">PlayStore 출시</span>
                             </div>
-                            <p class="text-sm text-gray-500 font-medium pt-4 border-t border-gray-100 mt-auto">PM / 팀장 / 기획 전반</p>
+                            <p class="text-xs md:text-sm text-gray-500 font-medium pt-4 border-t border-gray-100 mt-auto">PM / 팀장 / 기획</p>
                         </div>
                     </div>
 
                     <div class="group bg-white border border-gray-100 rounded-[2rem] overflow-hidden cursor-pointer shadow-sm hover:shadow-2xl hover:border-teal-400 transition-all duration-300 transform hover:-translate-y-2 flex flex-col" onclick="openProjectModal('modemspace')">
                         <div class="aspect-video bg-gray-100 overflow-hidden">
-                            <img src="https://cnozv.github.io/genshin06.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <img src="https://cnozv.github.io/%EB%AA%A8%EB%8E%80%EC%8A%A4%ED%8E%98%EC%9D%B4%EC%8A%A4_%EC%9D%B4%EB%AF%B8%EC%A7%80.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="모뎀 스페이스 썸네일">
                         </div>
-                        <div class="p-8 space-y-4 flex-grow flex flex-col">
-                            <h3 class="text-2xl font-black text-gray-900">모뎀 스페이스</h3>
+                        <div class="p-6 md:p-8 space-y-4 flex-grow flex flex-col">
+                            <h3 class="text-xl md:text-2xl font-black text-gray-900 leading-tight">모뎀 스페이스</h3>
                             <div class="flex flex-wrap gap-2 flex-grow content-start">
-                                <span class="bg-teal-50 text-teal-600 text-xs px-3 py-1 rounded-full font-bold">모바일 전시 App</span>
-                                <span class="bg-teal-50 text-teal-600 text-xs px-3 py-1 rounded-full font-bold">Unity</span>
-                                <span class="bg-teal-50 text-teal-600 text-xs px-3 py-1 rounded-full font-bold">Blender</span>
-                                <span class="bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full font-bold">애플 앱스토어 출시</span>
-                                <span class="bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full font-bold">구글 플레이스토어 출시</span>
+                                <span class="bg-teal-50 text-teal-700 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">모바일 전시 App</span>
+                                <span class="bg-gray-100 text-gray-600 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">iOS / Android 출시</span>
                             </div>
-                            <p class="text-sm text-gray-500 font-medium pt-4 border-t border-gray-100 mt-auto">PM / 기획</p>
+                            <p class="text-xs md:text-sm text-gray-500 font-medium pt-4 border-t border-gray-100 mt-auto">PM / 기획</p>
                         </div>
                     </div>
 
                     <div class="group bg-white border border-gray-100 rounded-[2rem] overflow-hidden cursor-pointer shadow-sm hover:shadow-2xl hover:border-teal-400 transition-all duration-300 transform hover:-translate-y-2 flex flex-col" onclick="openProjectModal('bekind')">
                         <div class="aspect-video bg-gray-100 overflow-hidden">
-                            <img src="https://cnozv.github.io/genshin07.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <img src="https://cnozv.github.io/bekind_%EC%9D%B4%EB%AF%B8%EC%A7%80.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="착하게 살자 썸네일">
                         </div>
-                        <div class="p-8 space-y-4 flex-grow flex flex-col">
+                        <div class="p-6 md:p-8 space-y-4 flex-grow flex flex-col">
                             <h3 class="text-2xl font-black text-gray-900">착하게 살자</h3>
                             <div class="flex flex-wrap gap-2 flex-grow content-start">
-                                <span class="bg-teal-50 text-teal-600 text-xs px-3 py-1 rounded-full font-bold">2D 잠입</span>
-                                <span class="bg-teal-50 text-teal-600 text-xs px-3 py-1 rounded-full font-bold">Unity</span>
-                                <span class="bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full font-bold">24시간 게임잼</span>
-                                <span class="bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full font-bold">구글 플레이스토어 출시</span>
+                                <span class="bg-teal-50 text-teal-700 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">2D 잠입</span>
+                                <span class="bg-gray-100 text-gray-600 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">24h GameJam</span>
+                                <span class="bg-gray-100 text-gray-600 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">PlayStore</span>
                             </div>
-                            <p class="text-sm text-gray-500 font-medium pt-4 border-t border-gray-100 mt-auto">기획 전반</p>
+                            <p class="text-xs md:text-sm text-gray-500 font-medium pt-4 border-t border-gray-100 mt-auto">기획 전반</p>
                         </div>
                     </div>
 
                     <div class="group bg-white border border-gray-100 rounded-[2rem] overflow-hidden cursor-pointer shadow-sm hover:shadow-2xl hover:border-teal-400 transition-all duration-300 transform hover:-translate-y-2 flex flex-col" onclick="openProjectModal('trombone')">
                         <div class="aspect-video bg-gray-100 overflow-hidden">
-                            <img src="https://cnozv.github.io/genshin08.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <img src="https://cnozv.github.io/%ED%8A%B8%EB%9F%BC%EB%B3%B8_%EC%9D%B4%EB%AF%B8%EC%A7%80.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="트럼본 럼블 썸네일">
                         </div>
-                        <div class="p-8 space-y-4 flex-grow flex flex-col">
+                        <div class="p-6 md:p-8 space-y-4 flex-grow flex flex-col">
                             <h3 class="text-2xl font-black text-gray-900">트럼본 럼블</h3>
                             <div class="flex flex-wrap gap-2 flex-grow content-start">
-                                <span class="bg-teal-50 text-teal-600 text-xs px-3 py-1 rounded-full font-bold">3D 게임</span>
-                                <span class="bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full font-bold">Steam 출시</span>
-                                <span class="bg-yellow-50 text-yellow-600 text-xs px-3 py-1 rounded-full font-bold border border-yellow-200">폴리싱 진행 중</span>
+                                <span class="bg-teal-50 text-teal-700 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">3D 리듬 게임</span>
+                                <span class="bg-gray-100 text-gray-600 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">Steam 출시</span>
                             </div>
-                            <p class="text-sm text-gray-500 font-medium pt-4 border-t border-gray-100 mt-auto">기획 (콘텐츠, 레벨)</p>
+                            <p class="text-xs md:text-sm text-gray-500 font-medium pt-4 border-t border-gray-100 mt-auto">기획 (콘텐츠, 레벨)</p>
                         </div>
                     </div>
 
                     <div class="group bg-white border border-gray-100 rounded-[2rem] overflow-hidden cursor-pointer shadow-sm hover:shadow-2xl hover:border-teal-400 transition-all duration-300 transform hover:-translate-y-2 flex flex-col" onclick="openProjectModal('latetrain')">
                         <div class="aspect-video bg-gray-100 overflow-hidden">
-                            <img src="https://cnozv.github.io/genshin09.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <img src="https://cnozv.github.io/%EC%A7%80%EA%B0%81%EC%97%B4%EC%B0%A8_%EC%9D%B4%EB%AF%B8%EC%A7%80.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="지각 열차 썸네일">
                         </div>
-                        <div class="p-8 space-y-4 flex-grow flex flex-col">
+                        <div class="p-6 md:p-8 space-y-4 flex-grow flex flex-col">
                             <h3 class="text-2xl font-black text-gray-900">지각! 열차!</h3>
                             <div class="flex flex-wrap gap-2 flex-grow content-start">
-                                <span class="bg-teal-50 text-teal-600 text-xs px-3 py-1 rounded-full font-bold">2D 아케이드</span>
-                                <span class="bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full font-bold">8시간 게임잼</span>
-                                <span class="bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full font-bold">구글 플레이스토어 출시</span>
+                                <span class="bg-teal-50 text-teal-700 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">2D 아케이드</span>
+                                <span class="bg-gray-100 text-gray-600 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">8h GameJam</span>
+                                <span class="bg-gray-100 text-gray-600 text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full font-bold">PlayStore</span>
                             </div>
-                            <p class="text-sm text-gray-500 font-medium pt-4 border-t border-gray-100 mt-auto">기획</p>
+                            <p class="text-xs md:text-sm text-gray-500 font-medium pt-4 border-t border-gray-100 mt-auto">기획</p>
                         </div>
                     </div>
 
@@ -521,97 +574,34 @@
             </div>
         </section>
 
-        <section id="study-overview" class="page-section p-10 md:p-20 bg-gray-50/50">
-            <div class="max-w-6xl mx-auto space-y-12">
-                <div class="space-y-4">
-                    <h2 class="text-5xl font-black text-gray-900 tracking-tighter">STUDY</h2>
-                    <p class="text-gray-500 text-lg">레벨 디자인, 게임 기획, 공간론 등에 관한 깊이 있는 분석과 학습 기록입니다.</p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="group bg-white border border-gray-100 rounded-[2rem] overflow-hidden cursor-pointer shadow-sm hover:shadow-2xl hover:border-teal-400 transition-all duration-300 transform hover:-translate-y-2 flex flex-col" onclick="window.open('https://cnozv.github.io/포탈1_리뷰_박민지.pdf', '_blank')">
-                        <div class="aspect-video bg-gray-100 overflow-hidden">
-                            <img src="https://cnozv.github.io/genshin10.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        </div>
-                        <div class="p-8 space-y-4 flex-grow flex flex-col">
-                            <h3 class="text-2xl font-black text-gray-900">포탈 1 살펴보기</h3>
-                            <div class="flex flex-wrap gap-2 flex-grow content-start">
-                                <span class="bg-teal-50 text-teal-600 text-xs px-3 py-1 rounded-full font-bold">게임 디자인 스터디</span>
-                                <span class="bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full font-bold">분석 및 정리</span>
-                            </div>
-                            <p class="text-sm text-teal-600 font-bold pt-4 border-t border-gray-100 mt-auto flex items-center justify-between">
-                                PDF 문서 열기
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="group bg-white border border-gray-100 rounded-[2rem] overflow-hidden cursor-pointer shadow-sm hover:shadow-2xl hover:border-teal-400 transition-all duration-300 transform hover:-translate-y-2 flex flex-col" onclick="window.open('https://cnozv.github.io/study_mabi01.pdf', '_blank')">
-                        <div class="aspect-video bg-gray-100 overflow-hidden">
-                            <img src="https://cnozv.github.io/genshin11.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        </div>
-                        <div class="p-8 space-y-4 flex-grow flex flex-col">
-                            <h3 class="text-xl font-black text-gray-900">마비노기 모바일<br>초반 던전 살펴보기</h3>
-                            <div class="flex flex-wrap gap-2 flex-grow content-start">
-                                <span class="bg-teal-50 text-teal-600 text-xs px-3 py-1 rounded-full font-bold">레벨 디자인 스터디</span>
-                                <span class="bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full font-bold">분석 및 정리</span>
-                            </div>
-                            <p class="text-sm text-teal-600 font-bold pt-4 border-t border-gray-100 mt-auto flex items-center justify-between">
-                                PDF 문서 열기
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="group bg-white border border-gray-100 rounded-[2rem] overflow-hidden cursor-pointer shadow-sm hover:shadow-2xl hover:border-teal-400 transition-all duration-300 transform hover:-translate-y-2 flex flex-col" onclick="window.open('https://cnozv.github.io/건축공간론_스터디_박민지.pdf', '_blank')">
-                        <div class="aspect-video bg-gray-100 overflow-hidden">
-                            <img src="https://cnozv.github.io/genshin12.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        </div>
-                        <div class="p-8 space-y-4 flex-grow flex flex-col">
-                            <h3 class="text-2xl font-black text-gray-900">건축공간론 스터디</h3>
-                            <div class="flex flex-wrap gap-2 flex-grow content-start">
-                                <span class="bg-teal-50 text-teal-600 text-xs px-3 py-1 rounded-full font-bold">공간 디자인 이론</span>
-                                <span class="bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full font-bold">스터디 및 정리</span>
-                            </div>
-                            <p class="text-sm text-teal-600 font-bold pt-4 border-t border-gray-100 mt-auto flex items-center justify-between">
-                                PDF 문서 열기
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <section id="aboutme" class="page-section p-10 md:p-20 bg-white">
+        <section id="aboutme" class="page-section p-6 md:p-12 lg:p-20 bg-white">
             <div class="max-w-6xl mx-auto space-y-20">
-                <div class="flex flex-col lg:flex-row gap-16 items-center lg:items-start">
-                    <div class="w-64 h-64 lg:w-80 lg:h-80 rounded-[3rem] shrink-0 shadow-2xl overflow-hidden bg-gray-100 border border-gray-200">
+                <div class="flex flex-col md:flex-row gap-10 md:gap-16 items-center md:items-start">
+                    <div class="w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 rounded-[2rem] md:rounded-[3rem] shrink-0 shadow-2xl overflow-hidden bg-gray-100 border border-gray-200">
                         <img src="https://cnozv.github.io/genshin01.png" class="w-full h-full object-cover">
                     </div>
-                    <div class="space-y-6 text-center lg:text-left">
-                        <h2 class="text-5xl font-black text-gray-900 tracking-tighter">박민지 <span class="text-2xl text-teal-600 ml-2 font-bold">Level Designer</span></h2>
-                        <p class="text-gray-500 text-xl leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                    <div class="space-y-6 text-center md:text-left mt-4 md:mt-0">
+                        <h2 class="text-4xl md:text-5xl font-black text-gray-900 tracking-tighter flex flex-col md:flex-row md:items-end gap-2 justify-center md:justify-start">박민지 <span class="text-xl md:text-2xl text-teal-600 font-bold tracking-normal">Level Designer</span></h2>
+                        <p class="text-gray-500 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto md:mx-0">
                             설명보단 <strong>공간으로 이야기하는</strong> 레벨 디자이너 지망생입니다.<br>
                             다양한 장르와 플랫폼에서 플레이어 경험을 설계하는 것을 지향합니다.
                         </p>
-                        <div class="pt-4 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start text-sm font-medium text-gray-600">
-                            <span class="flex items-center gap-2 bg-gray-50 px-4 py-2 rounded-lg border border-gray-100"><svg class="w-4 h-4 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg> 25세 (2002년생)</span>
-                            <span class="flex items-center gap-2 bg-gray-50 px-4 py-2 rounded-lg border border-gray-100"><svg class="w-4 h-4 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg> 010-5349-9247</span>
-                            <span class="flex items-center gap-2 bg-gray-50 px-4 py-2 rounded-lg border border-gray-100"><svg class="w-4 h-4 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> parmji2111@gmail.com</span>
+                        <div class="pt-4 flex flex-col sm:flex-row gap-3 md:gap-4 justify-center md:justify-start text-xs md:text-sm font-medium text-gray-600">
+                            <span class="flex items-center gap-2 bg-gray-50 px-3 md:px-4 py-2 rounded-lg border border-gray-100"><svg class="w-4 h-4 text-teal-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg> 25세 (2002년생)</span>
+                            <span class="flex items-center gap-2 bg-gray-50 px-3 md:px-4 py-2 rounded-lg border border-gray-100"><svg class="w-4 h-4 text-teal-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg> 010-5349-9247</span>
+                            <span class="flex items-center gap-2 bg-gray-50 px-3 md:px-4 py-2 rounded-lg border border-gray-100 overflow-hidden text-ellipsis"><svg class="w-4 h-4 text-teal-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> parmji2111@gmail.com</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 pt-12 border-t border-gray-100">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 pt-12 border-t border-gray-100">
                     <div class="space-y-12">
                         <div class="space-y-6">
                             <h3 class="text-2xl font-black text-gray-900 flex items-center gap-3">
                                 <span class="w-8 h-8 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center text-sm">🎓</span> Education
                             </h3>
                             <div class="bg-gray-50 border border-gray-100 rounded-2xl p-6">
-                                <div class="flex justify-between items-start">
+                                <div class="flex flex-col sm:flex-row justify-between items-start gap-2">
                                     <div>
                                         <p class="font-bold text-gray-900 text-lg">홍익대학교 미술대학 예술학과</p>
                                         <p class="text-gray-500 text-sm mt-1">4학년 수료</p>
@@ -628,21 +618,21 @@
                             <div class="space-y-4">
                                 <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
                                     <div class="absolute top-0 left-0 w-1 h-full bg-teal-500 transform origin-bottom scale-y-0 group-hover:scale-y-100 transition-transform"></div>
-                                    <div class="flex justify-between items-start mb-2">
-                                        <p class="font-bold text-gray-900">넥슨 대학생 커리어 캠프 메토링 2기 <span class="text-orange-500">최우수상</span></p>
+                                    <div class="flex flex-col sm:flex-row justify-between items-start mb-2 gap-2">
+                                        <p class="font-bold text-gray-900">넥슨 대학생 커리어 캠프 메토링 2기 <span class="text-orange-500 inline-block">최우수상</span></p>
                                         <span class="text-gray-400 text-sm shrink-0">2025.02</span>
                                     </div>
                                     <p class="text-gray-600 text-sm mb-3">메이플 신규 미니게임 '할로윈 유령사냥' 기획 및 제안</p>
-                                    <a href="https://cnozv.github.io/metoring_02.pdf" target="_blank" class="inline-flex items-center text-xs font-bold text-teal-600 hover:text-teal-700 bg-teal-50 px-3 py-1.5 rounded-lg">발표안 보기 →</a>
+                                    <a href="https://cnozv.github.io/metoring_02.pdf" target="_blank" class="inline-flex items-center text-xs font-bold text-teal-600 hover:text-teal-700 bg-teal-50 px-3 py-1.5 rounded-lg transition-colors">발표안 보기 →</a>
                                 </div>
                                 <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
                                     <div class="absolute top-0 left-0 w-1 h-full bg-teal-500 transform origin-bottom scale-y-0 group-hover:scale-y-100 transition-transform"></div>
-                                    <div class="flex justify-between items-start mb-2">
-                                        <p class="font-bold text-gray-900">넥슨 대학생 게임잼 재밌넥 <span class="text-orange-500">최우수상</span></p>
+                                    <div class="flex flex-col sm:flex-row justify-between items-start mb-2 gap-2">
+                                        <p class="font-bold text-gray-900">넥슨 대학생 게임잼 재밌넥 <span class="text-orange-500 inline-block">최우수상</span></p>
                                         <span class="text-gray-400 text-sm shrink-0">2024.07</span>
                                     </div>
                                     <p class="text-gray-600 text-sm mb-3">게임 '펄 러쉬' 팀장 및 기획</p>
-                                    <a href="https://cnozv.github.io/pearlrush.pdf" target="_blank" class="inline-flex items-center text-xs font-bold text-teal-600 hover:text-teal-700 bg-teal-50 px-3 py-1.5 rounded-lg">소개 PDF 보기 →</a>
+                                    <a href="https://cnozv.github.io/pearlrush.pdf" target="_blank" class="inline-flex items-center text-xs font-bold text-teal-600 hover:text-teal-700 bg-teal-50 px-3 py-1.5 rounded-lg transition-colors">소개 PDF 보기 →</a>
                                 </div>
                             </div>
                         </div>
@@ -653,36 +643,36 @@
                             <h3 class="text-2xl font-black text-gray-900 flex items-center gap-3">
                                 <span class="w-8 h-8 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center text-sm">💡</span> Experience
                             </h3>
-                            <div class="relative border-l border-gray-200 ml-4 space-y-8 pl-8">
+                            <div class="relative border-l border-gray-200 ml-4 space-y-8 pl-6 md:pl-8">
                                 <div class="relative">
-                                    <span class="absolute -left-[41px] top-1 w-5 h-5 rounded-full bg-white border-2 border-teal-500"></span>
-                                    <p class="font-bold text-gray-900">게임개발연합동아리 BRIDGE</p>
-                                    <p class="text-gray-500 text-sm mt-1">2025.08 ~ 현재</p>
+                                    <span class="absolute -left-[33px] md:-left-[41px] top-1 w-4 h-4 md:w-5 md:h-5 rounded-full bg-white border-2 border-teal-500"></span>
+                                    <p class="font-bold text-gray-900 text-sm md:text-base">게임개발연합동아리 BRIDGE</p>
+                                    <p class="text-gray-500 text-xs md:text-sm mt-1">2025.08 ~ 현재</p>
                                 </div>
                                 <div class="relative">
-                                    <span class="absolute -left-[41px] top-1 w-5 h-5 rounded-full bg-gray-100 border-2 border-gray-300"></span>
-                                    <p class="font-bold text-gray-900">전시 《AutoSave_》 기획 및 웹사이트 제작</p>
-                                    <p class="text-gray-500 text-sm mt-1">2025.08</p>
+                                    <span class="absolute -left-[33px] md:-left-[41px] top-1 w-4 h-4 md:w-5 md:h-5 rounded-full bg-gray-100 border-2 border-gray-300"></span>
+                                    <p class="font-bold text-gray-900 text-sm md:text-base">전시 《AutoSave_》 기획 및 웹사이트 제작</p>
+                                    <p class="text-gray-500 text-xs md:text-sm mt-1">2025.08</p>
                                 </div>
                                 <div class="relative">
-                                    <span class="absolute -left-[41px] top-1 w-5 h-5 rounded-full bg-gray-100 border-2 border-gray-300"></span>
-                                    <p class="font-bold text-gray-900">전시 《언피지컬 리듬》 기획 및 웹사이트 제작</p>
-                                    <p class="text-gray-500 text-sm mt-1">2024.01</p>
+                                    <span class="absolute -left-[33px] md:-left-[41px] top-1 w-4 h-4 md:w-5 md:h-5 rounded-full bg-gray-100 border-2 border-gray-300"></span>
+                                    <p class="font-bold text-gray-900 text-sm md:text-base">전시 《언피지컬 리듬》 기획 및 웹사이트 제작</p>
+                                    <p class="text-gray-500 text-xs md:text-sm mt-1">2024.01</p>
                                 </div>
                                 <div class="relative">
-                                    <span class="absolute -left-[41px] top-1 w-5 h-5 rounded-full bg-gray-100 border-2 border-gray-300"></span>
-                                    <p class="font-bold text-gray-900">홍익대학교 게임개발동아리 Exp Make</p>
-                                    <p class="text-gray-500 text-sm mt-1">2023.03 ~ 현재</p>
+                                    <span class="absolute -left-[33px] md:-left-[41px] top-1 w-4 h-4 md:w-5 md:h-5 rounded-full bg-gray-100 border-2 border-gray-300"></span>
+                                    <p class="font-bold text-gray-900 text-sm md:text-base">홍익대학교 게임개발동아리 Exp Make</p>
+                                    <p class="text-gray-500 text-xs md:text-sm mt-1">2023.03 ~ 현재</p>
                                 </div>
                                 <div class="relative">
-                                    <span class="absolute -left-[41px] top-1 w-5 h-5 rounded-full bg-gray-100 border-2 border-gray-300"></span>
-                                    <p class="font-bold text-gray-900">환기미술관 뮤지엄가이드 동행 서포터즈</p>
-                                    <p class="text-gray-500 text-sm mt-1">2023.04 ~ 2023.07</p>
+                                    <span class="absolute -left-[33px] md:-left-[41px] top-1 w-4 h-4 md:w-5 md:h-5 rounded-full bg-gray-100 border-2 border-gray-300"></span>
+                                    <p class="font-bold text-gray-900 text-sm md:text-base">환기미술관 뮤지엄가이드 동행 서포터즈</p>
+                                    <p class="text-gray-500 text-xs md:text-sm mt-1">2023.04 ~ 2023.07</p>
                                 </div>
                                 <div class="relative">
-                                    <span class="absolute -left-[41px] top-1 w-5 h-5 rounded-full bg-gray-100 border-2 border-gray-300"></span>
-                                    <p class="font-bold text-gray-900">홍익대학교 예술학과 학생회</p>
-                                    <p class="text-gray-500 text-sm mt-1">2021</p>
+                                    <span class="absolute -left-[33px] md:-left-[41px] top-1 w-4 h-4 md:w-5 md:h-5 rounded-full bg-gray-100 border-2 border-gray-300"></span>
+                                    <p class="font-bold text-gray-900 text-sm md:text-base">홍익대학교 예술학과 학생회</p>
+                                    <p class="text-gray-500 text-xs md:text-sm mt-1">2021</p>
                                 </div>
                             </div>
                         </div>
@@ -693,32 +683,34 @@
                     <h3 class="text-2xl font-black text-gray-900 flex items-center gap-3 mb-6">
                         <span class="w-8 h-8 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center text-sm">✨</span> Other Experience (Interaction)
                     </h3>
-                    <div class="bg-gray-50 border border-gray-100 rounded-3xl p-8 lg:p-10 flex flex-col md:flex-row gap-8 items-center">
+                    <div class="bg-gray-50 border border-gray-100 rounded-[2rem] p-6 md:p-10 flex flex-col md:flex-row gap-8 items-center">
                         <div class="flex-grow space-y-4">
-                            <p class="text-xl font-bold text-gray-900">《AutoSave_》 관객 참여형 프로그램 구현</p>
-                            <p class="text-gray-600 text-sm leading-relaxed">전시장에 사람들이 ‘로그인’하며 자신만의 유저네임을 기록한다는 컨셉의 프로그램을 바이브 코딩으로 구현하였습니다. 전시장 TV 출력 페이지와 아카이브 웹페이지를 제작하였습니다.</p>
+                            <p class="text-lg md:text-xl font-bold text-gray-900">《AutoSave_》 관객 참여형 프로그램 구현</p>
+                            <p class="text-gray-600 text-sm md:text-base leading-relaxed">전시장에 사람들이 ‘로그인’하며 자신만의 유저네임을 기록한다는 컨셉의 프로그램을 바이브 코딩으로 구현하였습니다. 전시장 TV 출력 페이지와 아카이브 웹페이지를 제작하였습니다.</p>
                         </div>
-                        <div class="flex flex-col sm:flex-row gap-3 md:flex-shrink-0">
-                            <a href="https://cnozv.github.io/username.html" target="_blank" class="text-sm bg-white border border-gray-200 text-gray-700 font-bold rounded-xl px-5 py-2.5 hover:border-teal-500 hover:text-teal-600 shadow-sm transition-all text-center">기록 페이지</a>
-                            <a href="https://cnozv.github.io/usernamearchive.html" target="_blank" class="text-sm bg-white border border-gray-200 text-gray-700 font-bold rounded-xl px-5 py-2.5 hover:border-teal-500 hover:text-teal-600 shadow-sm transition-all text-center">아카이브</a>
-                            <a href="https://cnozv.github.io/usernameoutput.html" target="_blank" class="text-sm bg-white border border-gray-200 text-gray-700 font-bold rounded-xl px-5 py-2.5 hover:border-teal-500 hover:text-teal-600 shadow-sm transition-all text-center">TV 출력</a>
+                        <div class="flex flex-wrap sm:flex-row gap-2 md:gap-3 justify-center w-full md:w-auto md:flex-shrink-0">
+                            <a href="https://cnozv.github.io/username.html" target="_blank" class="text-xs md:text-sm bg-white border border-gray-200 text-gray-700 font-bold rounded-xl px-4 py-2 hover:border-teal-500 hover:text-teal-600 shadow-sm transition-all text-center flex-grow sm:flex-grow-0">기록 페이지</a>
+                            <a href="https://cnozv.github.io/usernamearchive.html" target="_blank" class="text-xs md:text-sm bg-white border border-gray-200 text-gray-700 font-bold rounded-xl px-4 py-2 hover:border-teal-500 hover:text-teal-600 shadow-sm transition-all text-center flex-grow sm:flex-grow-0">아카이브</a>
+                            <a href="https://cnozv.github.io/usernameoutput.html" target="_blank" class="text-xs md:text-sm bg-white border border-gray-200 text-gray-700 font-bold rounded-xl px-4 py-2 hover:border-teal-500 hover:text-teal-600 shadow-sm transition-all text-center flex-grow sm:flex-grow-0">TV 출력</a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="game-reviews" class="page-section p-10 md:p-20 bg-gray-50/50">
-            <div class="max-w-4xl mx-auto space-y-12">
+        <section id="game-reviews" class="page-section p-6 md:p-12 lg:p-20 bg-gray-50/50">
+            <div class="max-w-7xl mx-auto space-y-12">
                 <div class="space-y-4 text-center md:text-left">
-                    <h2 class="text-5xl font-black text-gray-900 tracking-tighter">게임 플레이 리뷰</h2>
-                    <p class="text-gray-500 text-lg">다양한 게임들을 플레이하며 기록한 개인적인 리뷰와 감상입니다.</p>
+                    <h2 class="text-4xl md:text-5xl font-black text-gray-900 tracking-tighter">게임 플레이 리뷰</h2>
+                    <p class="text-gray-500 text-base md:text-lg max-w-2xl mx-auto md:mx-0">다양한 장르의 게임들을 플레이하며 분석하고 기록한 리뷰 모음입니다. <br /> 젤다의 전설, 원신, 명조, 붕괴, 엔드필드, 페르소나 등 가장 좋아하는 게임들 위주로 정리하였습니다.</p>
                 </div>
-                <div class="bg-white p-4 rounded-[2rem] shadow-xl border border-gray-100 flex justify-center">
-                    <img src="https://cnozv.github.io/게임리뷰.png" class="w-full h-auto rounded-[1.5rem]" alt="게임 플레이 리뷰 상세 이미지">
+
+                <div class="bg-white rounded-[2rem] md:rounded-[3rem] shadow-2xl border border-gray-100 flex justify-center overflow-hidden">
+                    <img src="https://cnozv.github.io/게임리뷰.png" class="w-full h-auto shadow-sm" alt="게임 플레이 리뷰 이미지">
                 </div>
             </div>
         </section>
+
     </main>
 
     <div id="modal" onclick="closeModal()">
@@ -730,49 +722,48 @@
             <span class="modal-nav modal-next" onclick="moveModal(1)">&#10095;</span>
         </div>
 
-        <div id="project-detail-content" class="max-w-5xl w-full bg-white rounded-[2rem] text-gray-900 p-8 md:p-12 overflow-y-auto max-h-[90vh] shadow-2xl relative" style="display: none;" onclick="event.stopPropagation()">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
+        <div id="project-detail-content" class="max-w-5xl w-full bg-white rounded-[2rem] text-gray-900 p-6 md:p-12 overflow-y-auto max-h-[90vh] shadow-2xl relative" style="display: none;" onclick="event.stopPropagation()">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-8 md:mb-10">
                 <div class="md:col-span-2 aspect-video bg-gray-100 rounded-[1.5rem] overflow-hidden shadow-sm border border-gray-100">
                     <img id="modal-project-img" src="" class="w-full h-full object-cover">
                 </div>
-                <div class="bg-gray-50 border border-gray-100 rounded-[1.5rem] p-8 flex flex-col justify-center">
-                    <div class="space-y-6 flex-grow">
+                <div class="bg-gray-50 border border-gray-100 rounded-[1.5rem] p-6 md:p-8 flex flex-col justify-center">
+                    <div class="space-y-4 md:space-y-6 flex-grow">
                         <div class="space-y-1">
-                            <p class="text-sm text-gray-400 font-bold uppercase tracking-widest">장르 / 플랫폼</p>
-                            <p id="modal-project-type" class="text-lg font-black text-gray-900"></p>
+                            <p class="text-xs md:text-sm text-gray-400 font-bold uppercase tracking-widest">장르 / 플랫폼</p>
+                            <p id="modal-project-type" class="text-base md:text-lg font-black text-gray-900"></p>
                         </div>
                         <div class="space-y-1">
-                            <p class="text-sm text-gray-400 font-bold uppercase tracking-widest">주요 역할</p>
-                            <p id="modal-project-role" class="text-lg font-black text-gray-900"></p>
+                            <p class="text-xs md:text-sm text-gray-400 font-bold uppercase tracking-widest">주요 역할</p>
+                            <p id="modal-project-role" class="text-base md:text-lg font-black text-gray-900"></p>
                         </div>
                     </div>
                     <div class="flex flex-col gap-3 mt-6">
-                        <a id="modal-project-link" href="" target="_blank" class="w-full text-center inline-flex justify-center items-center gap-2 bg-teal-500 text-white font-bold rounded-xl px-6 py-4 text-base hover:bg-teal-400 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1" style="display: none;">
+                        <a id="modal-project-link" href="" target="_blank" class="w-full text-center inline-flex justify-center items-center gap-2 bg-teal-500 text-white font-bold rounded-xl px-4 md:px-6 py-3 md:py-4 text-sm md:text-base hover:bg-teal-400 shadow-md hover:shadow-xl transition-all hover:-translate-y-1" style="display: none;">
                             프로젝트 소개 (PDF) 보기
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                         </a>
 
-                        <a id="modal-project-download" href="" target="_blank" class="w-full text-center inline-flex justify-center items-center gap-2 bg-gray-800 text-white font-bold rounded-xl px-6 py-4 text-base hover:bg-gray-700 shadow-md hover:shadow-xl transition-all hover:-translate-y-1" style="display: none;">
+                        <a id="modal-project-download" href="" target="_blank" class="w-full text-center inline-flex justify-center items-center gap-2 bg-gray-800 text-white font-bold rounded-xl px-4 md:px-6 py-3 md:py-4 text-sm md:text-base hover:bg-gray-700 shadow-md hover:shadow-xl transition-all hover:-translate-y-1" style="display: none;">
                             앱 다운로드
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                         </a>
 
-                        <a id="modal-project-video" href="" target="_blank" class="w-full text-center inline-flex justify-center items-center gap-2 bg-red-600 text-white font-bold rounded-xl px-6 py-4 text-base hover:bg-red-500 shadow-md hover:shadow-xl transition-all hover:-translate-y-1" style="display: none;">
+                        <a id="modal-project-video" href="" target="_blank" class="w-full text-center inline-flex justify-center items-center gap-2 bg-red-600 text-white font-bold rounded-xl px-4 md:px-6 py-3 md:py-4 text-sm md:text-base hover:bg-red-500 shadow-md hover:shadow-xl transition-all hover:-translate-y-1" style="display: none;">
                             플레이 영상 보기
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"></path></svg>
+                            <svg class="w-4 h-4 md:w-5 md:h-5 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"></path></svg>
                         </a>
                     </div>
                 </div>
             </div>
-            <div class="space-y-6 text-gray-600">
-                <h2 id="modal-project-name" class="text-4xl font-black text-gray-900 tracking-tighter"></h2>
-                <p id="modal-project-desc" class="text-lg leading-relaxed"></p>
+            <div class="space-y-4 md:space-y-6 text-gray-600">
+                <h2 id="modal-project-name" class="text-3xl md:text-4xl font-black text-gray-900 tracking-tighter"></h2>
+                <p id="modal-project-desc" class="text-base md:text-lg leading-relaxed"></p>
             </div>
         </div>
     </div>
 
     <script>
-        // --- 1. 페이지 네비게이션 및 슬라이더 스크립트 ---
         let currentIdx = 0;
         let slideTimer;
         const total = 9;
@@ -816,65 +807,62 @@
             startTimer();
         };
 
-        // --- 2. 프로젝트 상세 팝업용 데이터 (지각 열차 추가됨!) ---
         const projectsData = {
             'rifa': {
                 name: 'RIFA', type: '3D 힐링 어드벤처 / Steam 출시', role: 'PM / 팀장 / 기획',
-                thumb: 'https://cnozv.github.io/genshin01.png', link: 'https://cnozv.github.io/rifa.pdf',
+                thumb: 'https://cnozv.github.io/rifa_image.jpg', link: 'https://cnozv.github.io/rifa.pdf',
                 videoLink: 'https://www.youtube.com/watch?v=WGvM_FdMuak',
                 desc: '인간의 몸이 조각나버린 먼 미래의 지구, 기억을 잃고 눈을 뜬 플레이어가 세계를 탐험하는 힐링 어드벤처 게임.'
             },
             'pearlrush': {
                 name: '펄 러쉬 (Pearl Rush)', type: '아케이드 / NEXON GameJam (최우수상)', role: 'PM / 팀장 / 기획',
-                thumb: 'https://cnozv.github.io/genshin02.png', link: 'https://cnozv.github.io/pearlrush.pdf',
+                thumb: 'https://cnozv.github.io/%ED%8E%84%EB%9F%AC%EC%89%AC_%EC%9D%B4%EB%AF%B8%EC%A7%80.png', link: 'https://cnozv.github.io/pearlrush.pdf',
                 videoLink: 'https://www.youtube.com/watch?v=V4h_nH9RuCM',
                 desc: '제한시간 1분 내에, 상대 플레이어보다 더 많은 진주를 모으면 승리하는 캐주얼 2인 경쟁 게임.'
             },
             'dreampals': {
                 name: '드림 팰즈 (Dream Pals)', type: '3D 2인 협동 퍼즐', role: '기획(레벨디자인, UI)',
-                thumb: 'https://cnozv.github.io/genshin03.png', link: 'https://cnozv.github.io/dreampals_.pdf',
+                thumb: 'https://cnozv.github.io/%EB%93%9C%EB%A6%BC%ED%8C%B0%EC%A6%88_%EC%9D%B4%EB%AF%B8%EC%A7%80.png', link: 'https://cnozv.github.io/dreampals_.pdf',
                 desc: '어린 아이의 악몽을 멈추기 위해, 오리인형과 반려 고양이가 아이의 꿈 속으로 들어가는 2인 협동 어드벤처 게임.'
             },
             'savealba': {
                 name: '구해줘! 알바생', type: '피자 제작 타이쿤 / PlayStore 출시', role: '기획 (UI, 콘텐츠)',
-                thumb: 'https://cnozv.github.io/genshin04.png', link: 'https://cnozv.github.io/catchmemory.pdf',
+                thumb: 'https://cnozv.github.io/%EC%95%8C%EB%B0%94%EC%83%9D_%EC%9D%B4%EB%AF%B8%EC%A7%80.png', link: 'https://cnozv.github.io/catchmemory.pdf',
                 downloadLink: 'https://play.google.com/store/apps/details?id=com.Exp.SaveThePartTimer',
                 desc: '돈을 모아 알바를 그만두는 그날까지, 레시피에 맞춰 피자를 만드는 타이쿤 게임.'
             },
             'catchmemory': {
                 name: '캐치 메모리!', type: '2D 플랫포머 / PlayStore 출시', role: 'PM / 팀장 / 기획 전반',
-                thumb: 'https://cnozv.github.io/genshin05.png', link: 'https://cnozv.github.io/catchmemory.pdf',
+                thumb: 'https://cnozv.github.io/%EC%BA%90%EC%B9%98%EB%A9%94%EB%AA%A8%EB%A6%AC_%EC%9D%B4%EB%AF%B8%EC%A7%80.png', link: 'https://cnozv.github.io/catchmemory.pdf',
                 downloadLink: 'https://play.google.com/store/apps/details?id=com.ExP_CatchMemory.CatchMemory&pcampaignid=web_share',
                 desc: '기억을 잃어버린 고양이가 되어, 세계를 탐험하며 기억을 되찾아가는 2D 플랫포머 게임.'
             },
             'modemspace': {
                 name: '모뎀 스페이스 (MODEM SPACE)', type: '모바일 전시 App / iOS/Google 출시', role: 'PM / 기획',
-                thumb: 'https://cnozv.github.io/genshin06.png', link: 'https://cnozv.github.io/modemspace_about.pdf',
+                thumb: 'https://cnozv.github.io/%EB%AA%A8%EB%8E%80%EC%8A%A4%ED%8E%98%EC%9D%B4%EC%8A%A4_%EC%9D%B4%EB%AF%B8%EC%A7%80.png', link: 'https://cnozv.github.io/modemspace_about.pdf',
                 videoLink: 'https://www.youtube.com/watch?v=aJvMYAesdYg',
                 desc: '가상 공간에서 전시 환경을 구현한 모바일 전시 어플리케이션.'
             },
             'bekind': {
                 name: '착하게 살자', type: '2D 잠입 / 24시간 게임잼 / PlayStore 출시', role: '기획 전반',
-                thumb: 'https://cnozv.github.io/genshin07.png', link: 'https://cnozv.github.io/bekind.pdf',
+                thumb: 'https://cnozv.github.io/bekind_%EC%9D%B4%EB%AF%B8%EC%A7%80.png', link: 'https://cnozv.github.io/bekind.pdf',
                 downloadLink: 'https://play.google.com/store/apps/details?id=com.ExPStudio.BeKind',
                 desc: '밤의 학교에 잠입한 비행 청소년이 되어, 학교의 물건을 모두 훔쳐내는 2D 잠입 게임.'
             },
             'trombone': {
                 name: '트럼본 럼블 (Trombone Rumble)', type: '3D / Steam 출시 (폴리싱 진행 중)', role: '기획 (콘텐츠, 레벨)',
-                thumb: 'https://cnozv.github.io/genshin08.png', link: 'https://cnozv.github.io/trombone_thumb.png',
-                downloadLink: 'https://store.steampowered.com/app/4418320/Trombone_Rumble/',
+                thumb: 'https://cnozv.github.io/%ED%8A%B8%EB%9F%BC%EB%B3%B8_%EC%9D%B4%EB%AF%B8%EC%A7%80.png', link: 'https://cnozv.github.io/trombone_thumb.png',
                 videoLink: 'https://www.youtube.com/watch?v=jCb-AlxVdWw',
                 desc: '술을 마시고도 쉽게 즐길 수 있는, 우당탕탕 4인 경쟁 난투 리듬게임'
             },
-            'latetrain': { // ★ 새로 추가된 지각! 열차! 데이터
+            'latetrain': {
                 name: '지각! 열차!', type: '2D 아케이드 / 8시간 게임잼', role: '기획',
-                thumb: 'https://cnozv.github.io/genshin09.png', link: '', // pdf가 없으므로 공란 (버튼 자동 숨김)
-                downloadLink: 'https://play.google.com/store/apps/details?id=com.Emergency.ExP&hl=ko', // 임시 플레이스토어 주소
+                thumb: 'https://cnozv.github.io/%EC%A7%80%EA%B0%81%EC%97%B4%EC%B0%A8_%EC%9D%B4%EB%AF%B8%EC%A7%80.png', link: '',
+                downloadLink: 'https://play.google.com/store/apps/details?id=com.ExP.LateTrain',
                 desc: '사람이 너무나 많은 홍대입구역에서, 제한 시간 내에 사람들을 뚫고 환승에 성공하자!'
             }
         };
 
-        // --- 3. 팝업(모달) 제어 함수 ---
         function openZoom(idx) {
             currentIdx = idx;
             document.getElementById('modal').style.display = 'flex';
@@ -899,27 +887,24 @@
             document.getElementById('modal-project-role').innerText = data.role;
             document.getElementById('modal-project-desc').innerText = data.desc;
 
-            // PDF 소개서 링크 버튼 노출 로직
             const pdfBtn = document.getElementById('modal-project-link');
-            if (data.link) {
+            if (data.link && data.link !== '') {
                 pdfBtn.href = data.link;
                 pdfBtn.style.display = 'inline-flex';
             } else {
                 pdfBtn.style.display = 'none';
             }
 
-            // 다운로드 버튼 로직
             const downloadBtn = document.getElementById('modal-project-download');
-            if (data.downloadLink) {
+            if (data.downloadLink && data.downloadLink !== '') {
                 downloadBtn.href = data.downloadLink;
                 downloadBtn.style.display = 'inline-flex';
             } else {
                 downloadBtn.style.display = 'none';
             }
 
-            // 플레이 영상 버튼 로직
             const videoBtn = document.getElementById('modal-project-video');
-            if (data.videoLink) {
+            if (data.videoLink && data.videoLink !== '') {
                 videoBtn.href = data.videoLink;
                 videoBtn.style.display = 'inline-flex';
             } else {
