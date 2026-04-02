@@ -17,24 +17,15 @@
             color: #1f2937;
         }
 
-        /* 스크롤바 디자인 */
-        ::-webkit-scrollbar {
-            width: 8px;
+        /* 🚫 스크롤바 완전 숨김 (스크롤 기능은 정상 작동) */
+        * {
+            -ms-overflow-style: none; /* IE, Edge */
+            scrollbar-width: none; /* Firefox */
         }
 
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 4px;
-        }
-
-            ::-webkit-scrollbar-thumb:hover {
-                background: #94a3b8;
+            *::-webkit-scrollbar {
+                display: none; /* Chrome, Safari, Opera */
             }
-
         /* 상단 네비게이션 바 */
         .top-navbar {
             position: fixed;
@@ -378,61 +369,61 @@
             fullPageIds.forEach(id => {
                 const title = pageTitles[id] || id.toUpperCase();
                 document.write(`
-                                    <section id="${id}" class="page-section p-6 md:p-12 lg:p-20">
-                                        <div class="max-w-6xl mx-auto">
-                                            <h2 class="text-4xl md:text-5xl font-black mb-12 tracking-tighter text-gray-900">${title}</h2>
-                                            <div class="mb-24">
-                                                <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.4em] mb-8 text-center md:text-left">Gameplay Movie</h3>
-                                                <div class="aspect-video w-full rounded-[2rem] overflow-hidden shadow-2xl">
-                                                    <iframe class="w-full h-full" 
-    src="https://www.youtube.com/embed/GIn5LHzQ3tc" 
-srcdoc="<style>*{padding:0;margin:0;overflow:hidden}html,body{height:100%}img{position:absolute;width:100%;height:100%;object-fit:cover;top:0;left:0;}.play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:68px;height:48px;background-color:rgba(33,33,33,0.8);border-radius:12px;display:flex;justify-content:center;align-items:center;transition:all 0.2s;}.play-btn:hover{background-color:#ff0000;}.play-btn svg{fill:#fff;width:32px;height:32px;}</style><a href='https://www.youtube.com/embed/GIn5LHzQ3tc?autoplay=1'><img src='https://img.youtube.com/vi/GIn5LHzQ3tc/maxresdefault.jpg' alt='영상 재생'><div class='play-btn'><svg viewBox='0 0 24 24'><path d='M8 5v14l11-7z'/></svg></div></a>"    frameborder="0" 
-    allow="autoplay; fullscreen" 
-    allowfullscreen>
+                                                    <section id="${id}" class="page-section p-6 md:p-12 lg:p-20">
+                                                        <div class="max-w-6xl mx-auto">
+                                                            <h2 class="text-4xl md:text-5xl font-black mb-12 tracking-tighter text-gray-900">${title}</h2>
+                                                            <div class="mb-24">
+                                                                <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.4em] mb-8 text-center md:text-left">Gameplay Movie</h3>
+                                                                <div class="aspect-video w-full rounded-[2rem] overflow-hidden shadow-2xl">
+                                                                    <iframe class="w-full h-full"
+                    src="https://www.youtube.com/embed/GIn5LHzQ3tc"
+srcdoc="<style>*{padding:0;margin:0;overflow:hidden}html,body{height:100%}img{position:absolute;width:100%;height:100%;object-fit:cover;top:0;left:0;}.play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:68px;height:48px;background-color:rgba(33,33,33,0.8);border-radius:12px;display:flex;justify-content:center;align-items:center;transition:all 0.2s;}.play-btn:hover{background-color:#ff0000;}.play-btn svg{fill:#fff;width:32px;height:32px;}</style><a href='https://www.youtube.com/embed/GIn5LHzQ3tc?autoplay=1'><img src='https://img.youtube.com/vi/GIn5LHzQ3tc/maxresdefault.jpg' alt='영상 재생'><div class='play-btn'><svg viewBox='0 0 24 24'><path d='M8 5v14l11-7z'/></svg></div></a>"    frameborder="0"
+                    allow="autoplay; fullscreen"
+                    allowfullscreen>
 </iframe>
-                                                </div>
-                                            </div>
- <div class="grid grid-cols-1 lg:grid-cols-9 gap-12 lg:gap-20 mb-24 py-16 border-y border-gray-100">
-      
-      <div class="lg:col-span-4">
-          <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.4em] mb-8">Project Details</h3>
-          <ul class="space-y-4 text-sm md:text-base">
-              <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">장르</span> <span class="text-gray-700">3인칭 오픈월드 ARPG</span></li>
-              <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">엔진</span> <span class="text-gray-700">Unreal 엔진 5.6</span></li>
-              <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">맵 사이즈</span> <span class="text-gray-700">1100(m) x 600(m) x 200(m)</span></li>
-              <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">테마</span> <span class="text-gray-700">산호, 조개, 진주빛의 몽환적인 섬 (분지)</span></li>
-              <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">플레이타임</span> <span class="text-gray-700">18분</span></li>
-              <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">제작기간</span> <span class="text-gray-700">2026.01. ~ 2026.03.</span></li>
-          </ul>
-      </div>
+                                                                </div>
+                                                            </div>
+                 <div class="grid grid-cols-1 lg:grid-cols-9 gap-12 lg:gap-20 mb-24 py-16 border-y border-gray-100">
 
-      <div class="lg:col-span-5 text-gray-600">
-          <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.4em] mb-8">Overview</h3>
-          <p class="text-sm md:text-base leading-[3]">원신 이나즈마 지역의 와타츠미섬, 월드 퀘스트 '월광욕 연못' 레벨디자인 역기획 영상입니다. <br> 언리얼 엔진을 활용해 핵심 기믹과 탐사 동선을 직접 구현 및 재설계하였습니다.</p>
-      </div>
-  </div>
-                                            <div class="mb-24">
-                                                <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.4em] mb-8 text-center md:text-left">Detail Screenshots</h3>
-                                                <div class="slider-outer px-10 md:px-20">
-                                                    <button onclick="moveSlide(-1)" class="nav-btn prev">←</button>
-                                                    <div class="slider-container">
-                                                        <div class="slider-track" id="${id}-slider">
-                                                            ${genshinImages.map((src, idx) => `<div class="slide" onclick="openZoom(${idx})" style="background-image: url('${src}');"></div>`).join('')}
+                      <div class="lg:col-span-4">
+                          <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.4em] mb-8">Project Details</h3>
+                          <ul class="space-y-4 text-sm md:text-base">
+                              <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">장르</span> <span class="text-gray-700">3인칭 오픈월드 ARPG</span></li>
+                              <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">엔진</span> <span class="text-gray-700">Unreal 엔진 5.6</span></li>
+                              <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">맵 사이즈</span> <span class="text-gray-700">1100(m) x 600(m) x 200(m)</span></li>
+                              <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">테마</span> <span class="text-gray-700">산호, 조개, 진주빛의 몽환적인 섬 (분지)</span></li>
+                              <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">플레이타임</span> <span class="text-gray-700">18분</span></li>
+                              <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">제작기간</span> <span class="text-gray-700">2026.01. ~ 2026.03.</span></li>
+                          </ul>
+                      </div>
+
+                      <div class="lg:col-span-5 text-gray-600">
+                          <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.4em] mb-8">Overview</h3>
+                          <p class="text-sm md:text-base leading-[3]">원신 이나즈마 지역의 와타츠미섬, 월드 퀘스트 '월광욕 연못' 레벨디자인 역기획 영상입니다. <br> 언리얼 엔진을 활용해 핵심 기믹과 탐사 동선을 직접 구현 및 재설계하였습니다.</p>
+                      </div>
+                  </div>
+                                                            <div class="mb-24">
+                                                                <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.4em] mb-8 text-center md:text-left">Detail Screenshots</h3>
+                                                                <div class="slider-outer px-10 md:px-20">
+                                                                    <button onclick="moveSlide(-1)" class="nav-btn prev">←</button>
+                                                                    <div class="slider-container">
+                                                                        <div class="slider-track" id="${id}-slider">
+                                                                            ${genshinImages.map((src, idx) => `<div class="slide" onclick="openZoom(${idx})" style="background-image: url('${src}');"></div>`).join('')}
+                                                                        </div>
+                                                                    </div>
+                                                                    <button onclick="moveSlide(1)" class="nav-btn next">→</button>
+                                                                    <div class="indicator-bar" id="${id}-indicators"></div>
+                                                                    <div class="thumb-bar flex-wrap" id="${id}-thumbs">
+                                                                        ${genshinImages.map((src, idx) => `<div class="thumb-item" onclick="jumpToSlide(${idx})"><img src="${src}"></div>`).join('')}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="w-full h-[600px] md:h-[800px] rounded-[2.5rem] border border-gray-100 overflow-hidden shadow-2xl mb-10">
+                                                                <iframe src="https://cnozv.github.io/%EC%9B%90%EC%8B%A0_%EC%99%80%ED%83%80%EC%B8%A0%EB%AF%B8%EC%84%AC_%EC%97%AD%EA%B8%B0%ED%9A%8D_%EB%B0%95%EB%AF%BC%EC%A7%80.pdf" class="w-full h-full" frameborder="0"></iframe>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <button onclick="moveSlide(1)" class="nav-btn next">→</button>
-                                                    <div class="indicator-bar" id="${id}-indicators"></div>
-                                                    <div class="thumb-bar flex-wrap" id="${id}-thumbs">
-                                                        ${genshinImages.map((src, idx) => `<div class="thumb-item" onclick="jumpToSlide(${idx})"><img src="${src}"></div>`).join('')}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="w-full h-[600px] md:h-[800px] rounded-[2.5rem] border border-gray-100 overflow-hidden shadow-2xl mb-10">
-                                                <iframe src="https://cnozv.github.io/%EC%9B%90%EC%8B%A0_%EC%99%80%ED%83%80%EC%B8%A0%EB%AF%B8%EC%84%AC_%EC%97%AD%EA%B8%B0%ED%9A%8D_%EB%B0%95%EB%AF%BC%EC%A7%80.pdf" class="w-full h-full" frameborder="0"></iframe>
-                                            </div>
-                                        </div>
-                                    </section>
-                                `);
+                                                    </section>
+                                                `);
             });
         </script>
 
@@ -680,7 +671,7 @@ srcdoc="<style>*{padding:0;margin:0;overflow:hidden}html,body{height:100%}img{po
                         <h2 class="text-4xl md:text-5xl font-black text-gray-900 tracking-tighter flex flex-col md:flex-row md:items-end gap-2 justify-center md:justify-start">박민지 <span class="text-xl md:text-2xl text-teal-600 font-bold tracking-normal">Level Designer</span></h2>
                         <p class="text-gray-500 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto md:mx-0">
                             설명보단 <strong>공간으로 이야기하는</strong> 레벨 디자이너입니다.<br>
-                            
+
                         </p>
                         <div class="pt-4 flex flex-col sm:flex-row gap-3 md:gap-4 justify-center md:justify-start text-xs md:text-sm font-medium text-gray-600">
                             <span class="flex items-center gap-2 bg-gray-50 px-3 md:px-4 py-2 rounded-lg border border-gray-100"><svg class="w-4 h-4 text-teal-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg> 25세 (2002년생)</span>
@@ -769,28 +760,6 @@ srcdoc="<style>*{padding:0;margin:0;overflow:hidden}html,body{height:100%}img{po
                                     </div>
                                 </div>
 
-                                <div class="relative group cursor-pointer" onclick="openProjectModal('bekind')">
-                                    <span class="absolute -left-[33px] md:-left-[42px] top-2 w-4 h-4 md:w-5 md:h-5 rounded-full bg-white border-[3px] border-teal-500 group-hover:scale-125 group-hover:bg-teal-500 transition-all duration-300 shadow-sm z-10"></span>
-                                    <div class="bg-white group-hover:bg-teal-50 border border-transparent group-hover:border-teal-100 p-3 -mt-2 rounded-xl transition-all duration-300 shadow-sm group-hover:shadow-md">
-                                        <p class="font-black text-gray-900 text-sm md:text-base group-hover:text-teal-700 flex items-center justify-between">
-                                            <span>2D 잠입 게임 '착하게 살자' 기획</span>
-                                            <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"></path></svg>
-                                        </p>
-                                        <p class="text-teal-600 font-bold text-xs md:text-sm mt-1">2024.08</p>
-                                    </div>
-                                </div>
-
-                                <div class="relative group cursor-pointer" onclick="openProjectModal('latetrain')">
-                                    <span class="absolute -left-[33px] md:-left-[42px] top-2 w-4 h-4 md:w-5 md:h-5 rounded-full bg-white border-[3px] border-teal-500 group-hover:scale-125 group-hover:bg-teal-500 transition-all duration-300 shadow-sm z-10"></span>
-                                    <div class="bg-white group-hover:bg-teal-50 border border-transparent group-hover:border-teal-100 p-3 -mt-2 rounded-xl transition-all duration-300 shadow-sm group-hover:shadow-md">
-                                        <p class="font-black text-gray-900 text-sm md:text-base group-hover:text-teal-700 flex items-center justify-between">
-                                            <span>2D 아케이드 게임 '지각! 열차!' 기획</span>
-                                            <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"></path></svg>
-                                        </p>
-                                        <p class="text-teal-600 font-bold text-xs md:text-sm mt-1">2024.08</p>
-                                    </div>
-                                </div>
-
                                 <div class="relative group cursor-pointer" onclick="openProjectModal('pearlrush')">
                                     <span class="absolute -left-[33px] md:-left-[42px] top-2 w-4 h-4 md:w-5 md:h-5 rounded-full bg-white border-[3px] border-teal-500 group-hover:scale-125 group-hover:bg-teal-500 transition-all duration-300 shadow-sm z-10"></span>
                                     <div class="bg-white group-hover:bg-teal-50 border border-transparent group-hover:border-teal-100 p-3 -mt-2 rounded-xl transition-all duration-300 shadow-sm group-hover:shadow-md">
@@ -853,6 +822,30 @@ srcdoc="<style>*{padding:0;margin:0;overflow:hidden}html,body{height:100%}img{po
                                         <p class="text-gray-300 text-[10px] md:text-xs mt-0.5">2023.09 ~ 2023.12</p>
                                     </div>
                                 </div>
+
+
+                                <div class="relative group cursor-pointer" onclick="openProjectModal('bekind')">
+                                    <span class="absolute -left-[33px] md:-left-[42px] top-2 w-4 h-4 md:w-5 md:h-5 rounded-full bg-white border-[3px] border-teal-500 group-hover:scale-125 group-hover:bg-teal-500 transition-all duration-300 shadow-sm z-10"></span>
+                                    <div class="bg-white group-hover:bg-teal-50 border border-transparent group-hover:border-teal-100 p-3 -mt-2 rounded-xl transition-all duration-300 shadow-sm group-hover:shadow-md">
+                                        <p class="font-black text-gray-900 text-sm md:text-base group-hover:text-teal-700 flex items-center justify-between">
+                                            <span>2D 잠입 게임 '착하게 살자' 기획</span>
+                                            <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"></path></svg>
+                                        </p>
+                                        <p class="text-teal-600 font-bold text-xs md:text-sm mt-1">2023.08</p>
+                                    </div>
+                                </div>
+
+                                <div class="relative group cursor-pointer" onclick="openProjectModal('latetrain')">
+                                    <span class="absolute -left-[33px] md:-left-[42px] top-2 w-4 h-4 md:w-5 md:h-5 rounded-full bg-white border-[3px] border-teal-500 group-hover:scale-125 group-hover:bg-teal-500 transition-all duration-300 shadow-sm z-10"></span>
+                                    <div class="bg-white group-hover:bg-teal-50 border border-transparent group-hover:border-teal-100 p-3 -mt-2 rounded-xl transition-all duration-300 shadow-sm group-hover:shadow-md">
+                                        <p class="font-black text-gray-900 text-sm md:text-base group-hover:text-teal-700 flex items-center justify-between">
+                                            <span>2D 아케이드 게임 '지각! 열차!' 기획</span>
+                                            <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"></path></svg>
+                                        </p>
+                                        <p class="text-teal-600 font-bold text-xs md:text-sm mt-1">2023.08</p>
+                                    </div>
+                                </div>
+
 
                                 <div class="relative">
                                     <span class="absolute -left-[29px] md:-left-[37px] top-1.5 w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-gray-200 border-2 border-white z-10"></span>
@@ -936,8 +929,8 @@ srcdoc="<style>*{padding:0;margin:0;overflow:hidden}html,body{height:100%}img{po
             <span class="modal-nav modal-next" onclick="moveModal(1)">&#10095;</span>
         </div>
 
-        <div id="project-detail-content" class="max-w-5xl w-full bg-white rounded-[2rem] text-gray-900 p-6 md:p-12 overflow-y-auto max-h-[90vh] shadow-2xl relative" style="display: none;" onclick="event.stopPropagation()">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-8 md:mb-10">
+        <div id="project-detail-content" class="max-w-5xl w-full bg-white rounded-[2rem] text-gray-900 px-6 py-6 md:px-12 md:py-10 overflow-y-auto max-h-[90vh] shadow-2xl relative" style="display: none;" onclick="event.stopPropagation()">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-8">
                 <div class="md:col-span-2 aspect-video bg-gray-100 rounded-[1.5rem] overflow-hidden shadow-sm border border-gray-100">
                     <img id="modal-project-img" src="" class="w-full h-full object-cover">
                 </div>
@@ -952,14 +945,14 @@ srcdoc="<style>*{padding:0;margin:0;overflow:hidden}html,body{height:100%}img{po
                             <p id="modal-project-role" class="text-base md:text-lg font-black text-gray-900"></p>
                         </div>
                     </div>
-                    <div class="flex flex-col gap-3 mt-6">
+                    <div class="flex flex-col gap-3 mt-5">
                         <a id="modal-project-link" href="" target="_blank" class="w-full text-center inline-flex justify-center items-center gap-2 bg-teal-500 text-white font-bold rounded-xl px-4 md:px-6 py-3 md:py-4 text-sm md:text-base hover:bg-teal-400 shadow-md hover:shadow-xl transition-all hover:-translate-y-1" style="display: none;">
                             프로젝트 소개 (PDF)
                             <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                         </a>
 
                         <a id="modal-project-download" href="" target="_blank" class="w-full text-center inline-flex justify-center items-center gap-2 bg-gray-800 text-white font-bold rounded-xl px-4 md:px-6 py-3 md:py-4 text-sm md:text-base hover:bg-gray-700 shadow-md hover:shadow-xl transition-all hover:-translate-y-1" style="display: none;">
-                            앱 다운로드
+                            게임 다운로드
                             <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                         </a>
 
@@ -970,12 +963,30 @@ srcdoc="<style>*{padding:0;margin:0;overflow:hidden}html,body{height:100%}img{po
                     </div>
                 </div>
             </div>
+
             <div class="space-y-4 md:space-y-6 text-gray-600">
                 <h2 id="modal-project-name" class="text-3xl md:text-4xl font-black text-gray-900 tracking-tighter"></h2>
                 <p id="modal-project-desc" class="text-base md:text-lg leading-relaxed"></p>
+
+                <div id="insight-container" class="mt-5 space-y-4" style="display: none;">
+                    <div id="insight-box" class="bg-teal-50 border border-teal-100 rounded-2xl p-5 md:p-6" style="display: none;">
+                        <h4 class="text-teal-800 font-bold text-sm md:text-base mb-2 flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                            핵심 기획 의도
+                        </h4>
+                        <p id="modal-project-insight" class="text-teal-900 font-medium text-sm md:text-base leading-relaxed"></p>
+                    </div>
+
+                    <div id="learned-box" class="bg-blue-50 border border-blue-100 rounded-2xl p-5 md:p-6" style="display: none;">
+                        <h4 class="text-blue-800 font-bold text-sm md:text-base mb-2 flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                            문제 해결 및 배운 점
+                        </h4>
+                        <p id="modal-project-learned" class="text-blue-900 font-medium text-sm md:text-base leading-relaxed"></p>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
     <script>
         let currentIdx = 0;
@@ -1026,54 +1037,72 @@ srcdoc="<style>*{padding:0;margin:0;overflow:hidden}html,body{height:100%}img{po
                 name: 'RIFA', type: '3D 힐링 어드벤처 / Steam 출시', role: 'PM / 팀장 / 기획',
                 thumb: 'https://cnozv.github.io/rifa_image.jpg', link: 'https://cnozv.github.io/rifa.pdf',
                 videoLink: 'https://www.youtube.com/watch?v=WGvM_FdMuak',
-                desc: '인간의 몸이 조각나버린 먼 미래의 지구, 기억을 잃고 눈을 뜬 플레이어가 세계를 탐험하는 힐링 어드벤처 게임.'
+                desc: '인간의 몸이 조각나버린 먼 미래의 지구, 기억을 잃고 눈을 뜬 플레이어가 세계를 탐험하는 힐링 어드벤처 게임.',
+                insight: '탐험의 몰입감을 극대화하는 환경 설계와 치유의 서사를 결합한 3D 공간 기획',
+                learned: '장기 프로젝트의 PM으로서 비전 동기화와 일정 관리의 중요성을 체득한 경험'
             },
             'pearlrush': {
                 name: '펄 러쉬 (Pearl Rush)', type: '아케이드 / NEXON GameJam (최우수상)', role: 'PM / 팀장 / 기획',
                 thumb: 'https://cnozv.github.io/%ED%8E%84%EB%9F%AC%EC%89%AC_%EC%9D%B4%EB%AF%B8%EC%A7%80.png', link: 'https://cnozv.github.io/pearlrush.pdf',
                 videoLink: 'https://www.youtube.com/watch?v=V4h_nH9RuCM',
-                desc: '제한시간 1분 내에, 상대 플레이어보다 더 많은 진주를 모으면 승리하는 캐주얼 2인 경쟁 게임.'
+                desc: '제한시간 1분 내에, 상대 플레이어보다 더 많은 진주를 모으면 승리하는 캐주얼 2인 경쟁 게임.',
+                insight: '1분이라는 짧은 제한 시간 내에 직관적인 룰과 극한의 텐션을 유발하는 맵 구조 설계',
+                learned: '해커톤 환경에서 핵심 재미 요소만 남기고 과감히 덜어내는 선택과 집중의 기획력 배양'
             },
             'dreampals': {
                 name: '드림 팰즈 (Dream Pals)', type: '3D 2인 협동 퍼즐', role: '기획(레벨디자인, UI)',
                 thumb: 'https://cnozv.github.io/%EB%93%9C%EB%A6%BC%ED%8C%B0%EC%A6%88_%EC%9D%B4%EB%AF%B8%EC%A7%80.png', link: 'https://cnozv.github.io/dreampals_.pdf',
-                desc: '어린 아이의 악몽을 멈추기 위해, 오리인형과 반려 고양이가 아이의 꿈 속으로 들어가는 2인 협동 어드벤처 게임.'
+                desc: '어린 아이의 악몽을 멈추기 위해, 오리인형과 반려 고양이가 아이의 꿈 속으로 들어가는 2인 협동 어드벤처 게임.',
+                insight: '두 플레이어의 완벽한 협동을 유도하는 기믹 배치와 직관적인 퍼즐 동선 구축',
+                learned: '언리얼 엔진을 활용한 레벨 디자인 훈련 및 비언어적 UI가 플레이어 소통에 미치는 영향 연구'
             },
             'savealba': {
                 name: '구해줘! 알바생', type: '피자 제작 타이쿤 / PlayStore 출시', role: '기획 (UI, 콘텐츠)',
                 thumb: 'https://cnozv.github.io/%EC%95%8C%EB%B0%94%EC%83%9D_%EC%9D%B4%EB%AF%B8%EC%A7%80.png', link: 'https://cnozv.github.io/catchmemory.pdf',
                 downloadLink: 'https://play.google.com/store/apps/details?id=com.Exp.SaveThePartTimer',
-                desc: '돈을 모아 알바를 그만두는 그날까지, 레시피에 맞춰 피자를 만드는 타이쿤 게임.'
+                desc: '돈을 모아 알바를 그만두는 그날까지, 레시피에 맞춰 피자를 만드는 타이쿤 게임.',
+                insight: '반복적인 조작 속에서도 시각적 피드백과 텐션을 유지하게 만드는 난이도 스케일링 설계',
+                learned: '모바일 환경에 최적화된 터치 UI/UX 설계와 상용화 단계의 콘텐츠 폴리싱 경험'
             },
             'catchmemory': {
                 name: '캐치 메모리!', type: '2D 플랫포머 / PlayStore 출시', role: 'PM / 팀장 / 기획 전반',
                 thumb: 'https://cnozv.github.io/%EC%BA%90%EC%B9%98%EB%A9%94%EB%AA%A8%EB%A6%AC_%EC%9D%B4%EB%AF%B8%EC%A7%80.png', link: 'https://cnozv.github.io/catchmemory.pdf',
                 downloadLink: 'https://play.google.com/store/apps/details?id=com.ExP_CatchMemory.CatchMemory&pcampaignid=web_share',
-                desc: '기억을 잃어버린 고양이가 되어, 세계를 탐험하며 기억을 되찾아가는 2D 플랫포머 게임.'
+                desc: '기억을 잃어버린 고양이가 되어, 세계를 탐험하며 기억을 되찾아가는 2D 플랫포머 게임.',
+                insight: '기본적인 점프와 이동 조작만으로도 지속적인 성취감을 느낄 수 있는 플랫포머 레벨 구조 설계',
+                learned: '기획부터 스토어 출시까지 전 과정을 리드하며, 버그 수정과 레벨 폴리싱이 플레이 경험에 미치는 영향을 확인'
             },
             'modemspace': {
                 name: '모뎀 스페이스 (MODEM SPACE)', type: '모바일 전시 App / iOS/Google 출시', role: 'PM / 기획',
                 thumb: 'https://cnozv.github.io/%EB%AA%A8%EB%8E%80%EC%8A%A4%ED%8E%98%EC%9D%B4%EC%8A%A4_%EC%9D%B4%EB%AF%B8%EC%A7%80.png', link: 'https://cnozv.github.io/modemspace_about.pdf',
                 videoLink: 'https://www.youtube.com/watch?v=aJvMYAesdYg',
-                desc: '가상 공간에서 전시 환경을 구현한 모바일 전시 어플리케이션.'
+                desc: '가상 공간에서 전시 환경을 구현한 모바일 전시 어플리케이션.',
+                insight: '오프라인 전시의 감각을 모바일 3D 가상 공간으로 위화감 없이 치환하는 공간 기획',
+                learned: '비게이머도 쉽게 접근할 수 있는 동선과 UI/UX를 고민하며 사용자 층에 따른 기획 시각 확장'
             },
             'bekind': {
                 name: '착하게 살자', type: '2D 잠입 / 24시간 게임잼 / PlayStore 출시', role: '기획 전반',
                 thumb: 'https://cnozv.github.io/bekind_%EC%9D%B4%EB%AF%B8%EC%A7%80.png', link: 'https://cnozv.github.io/bekind.pdf',
                 downloadLink: 'https://play.google.com/store/apps/details?id=com.ExPStudio.BeKind',
-                desc: '밤의 학교에 잠입한 비행 청소년이 되어, 학교의 물건을 모두 훔쳐내는 2D 잠입 게임.'
+                desc: '밤의 학교에 잠입한 비행 청소년이 되어, 학교의 물건을 모두 훔쳐내는 2D 잠입 게임.',
+                insight: '\'잠입\'이라는 장르적 긴장감을 제한된 시야와 사운드 피드백만으로 구현한 맵 디자인',
+                learned: '24시간의 제약 속에서 핵심 기믹을 모듈화하여 맵을 빠르게 확장하고 레벨 조립하는 방법론 습득'
             },
             'trombone': {
                 name: '트럼본 럼블 (Trombone Rumble)', type: '3D / Steam 출시 (폴리싱 진행 중)', role: '기획 (콘텐츠, 레벨)',
                 thumb: 'https://cnozv.github.io/%ED%8A%B8%EB%9F%BC%EB%B3%B8_%EC%9D%B4%EB%AF%B8%EC%A7%80.png',
-                videoLink: 'https://www.youtube.com/watch?v=jCb-AlxVdWw',
-                desc: '술을 마시고도 쉽게 즐길 수 있는, 우당탕탕 4인 경쟁 난투 리듬게임'
+                downloadLink: 'https://store.steampowered.com/app/4418320/Trombone_Rumble/?l=koreana',
+                desc: '술을 마시고도 쉽게 즐길 수 있는, 우당탕탕 4인 경쟁 난투 리듬게임',
+                insight: '4인 난투극의 혼란스러움 속에서도 리듬감과 타격감을 잃지 않는 직관적인 맵 구성',
+                learned: '스팀 폴리싱 단계에서 유저 피드백을 수용하여 공간 내 오브젝트 배치와 시인성을 개선하는 데이터 기반 기획'
             },
             'latetrain': {
                 name: '지각! 열차!', type: '2D 아케이드 / 8시간 게임잼', role: '기획',
                 thumb: 'https://cnozv.github.io/%EC%A7%80%EA%B0%81%EC%97%B4%EC%B0%A8_%EC%9D%B4%EB%AF%B8%EC%A7%80.png', link: '',
-                downloadLink: 'https://play.google.com/store/apps/details?id=com.ExP.LateTrain',
-                desc: '사람이 너무나 많은 홍대입구역에서, 제한 시간 내에 사람들을 뚫고 환승에 성공하자!'
+                downloadLink: 'https://play.google.com/store/apps/details?id=com.Emergency.ExP&hl=ko',
+                desc: '사람이 너무나 많은 홍대입구역에서, 제한 시간 내에 사람들을 뚫고 환승에 성공하자!',
+                insight: '\'출근길 지옥철\'이라는 일상적 스트레스를 회피 컨트롤의 짜릿함으로 승화시킨 밀도 높은 맵 설계',
+                learned: '단 8시간 만에 아이디어를 프로토타입으로 완성하며, 즉각적인 재미를 검증하는 기획 순발력 강화'
             }
         };
 
@@ -1100,6 +1129,30 @@ srcdoc="<style>*{padding:0;margin:0;overflow:hidden}html,body{height:100%}img{po
             document.getElementById('modal-project-type').innerText = data.type;
             document.getElementById('modal-project-role').innerText = data.role;
             document.getElementById('modal-project-desc').innerText = data.desc;
+
+            const insightContainer = document.getElementById('insight-container');
+            const insightBox = document.getElementById('insight-box');
+            const learnedBox = document.getElementById('learned-box');
+
+            let showContainer = false;
+
+            if (data.insight && data.insight !== '') {
+                document.getElementById('modal-project-insight').innerText = data.insight;
+                insightBox.style.display = 'block';
+                showContainer = true;
+            } else {
+                insightBox.style.display = 'none';
+            }
+
+            if (data.learned && data.learned !== '') {
+                document.getElementById('modal-project-learned').innerText = data.learned;
+                learnedBox.style.display = 'block';
+                showContainer = true;
+            } else {
+                learnedBox.style.display = 'none';
+            }
+
+            insightContainer.style.display = showContainer ? 'block' : 'none';
 
             const pdfBtn = document.getElementById('modal-project-link');
             if (data.link && data.link !== '') {
