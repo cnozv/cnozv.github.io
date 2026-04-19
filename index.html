@@ -516,15 +516,13 @@
                         플레이어의 발걸음이 끊이지 않는 매력적인 세계를 만들기 위해<br>언제나 유저의 시선에서 몰입할 수 있는 환경을 고민하고 설계합니다.
                     </p>
 
-                    <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <div class="flex flex-col sm:flex-row flex-wrap justify-center gap-4">
                         <button onclick="showPage('aboutme')" class="px-8 py-4 bg-teal-600 text-white rounded-2xl font-bold hover:bg-teal-500 transition-all shadow-lg flex items-center justify-center gap-2">
                             <span>👤</span> 상세 자기소개 보기
                         </button>
                         <button onclick="showPage('game-reviews')" class="px-8 py-4 bg-gray-800 text-white border border-gray-700 rounded-2xl font-bold hover:bg-gray-700 transition-all flex items-center justify-center gap-2">
                             <span>🎮</span> 게임 플레이 리뷰
                         </button>
-                        <a href="https://cnozv.github.io/박민지_PR문서.pdf" target="_blank" class="px-8 py-4 bg-white text-gray-900 rounded-2xl font-bold hover:bg-gray-100 transition-all shadow-lg flex items-center justify-center gap-2">
-                            <span>📄</span> PR 문서 (이력서) 열기
                         </a>
                     </div>
                 </div>
@@ -548,39 +546,39 @@
             fullPageIds.forEach(id => {
                 const title = pageTitles[id] || id.toUpperCase();
                 document.write(`
-                                    <section id="${id}" class="page-section p-6 md:p-12 lg:p-20">
-                                        <div class="max-w-6xl mx-auto">
-                                            <h2 class="text-4xl md:text-5xl font-black mb-12 tracking-tighter text-gray-900">${title}</h2>
-                                            <div class="mb-24">
-                                                <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.4em] mb-8 text-center md:text-left">Gameplay Movie</h3>
-                                                <div class="aspect-video w-full rounded-[2rem] overflow-hidden shadow-2xl">
-                                                    <iframe class="w-full h-full"
-                                                    src="https://www.youtube.com/embed/GIn5LHzQ3tc"
-                        srcdoc="<style>*{padding:0;margin:0;overflow:hidden}html,body{height:100%}img{position:absolute;width:100%;height:100%;object-fit:cover;top:0;left:0;}.play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:68px;height:48px;background-color:rgba(33,33,33,0.8);border-radius:12px;display:flex;justify-content:center;align-items:center;transition:all 0.2s;}.play-btn:hover{background-color:#ff0000;}.play-btn svg{fill:#fff;width:32px;height:32px;}</style><a href='https://www.youtube.com/embed/GIn5LHzQ3tc?autoplay=1'><img src='https://img.youtube.com/vi/GIn5LHzQ3tc/maxresdefault.jpg' alt='영상 재생'><div class='play-btn'><svg viewBox='0 0 24 24'><path d='M8 5v14l11-7z'/></svg></div></a>"   frameborder="0"
-                                                    allow="autoplay; fullscreen"
-                                                    allowfullscreen>
-                        </iframe>
-                                                </div>
-                                            </div>
-                                                <div class="grid grid-cols-1 lg:grid-cols-9 gap-12 lg:gap-20 mb-24 py-16 border-y border-gray-100">
-
-                                                    <div class="lg:col-span-4">
-                                                        <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.4em] mb-8">Project Details</h3>
-                                                        <ul class="space-y-4 text-sm md:text-base">
-                                                            <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">장르</span> <span class="text-gray-700">3인칭 오픈월드 ARPG</span></li>
-                                                            <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">엔진</span> <span class="text-gray-700">Unreal 엔진 5.6</span></li>
-                                                            <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">맵 사이즈</span> <span class="text-gray-700">1100(m) x 600(m) x 200(m)</span></li>
-                                                            <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">테마</span> <span class="text-gray-700">산호, 조개, 진주빛의 몽환적인 섬 (분지)</span></li>
-                                                            <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">플레이타임</span> <span class="text-gray-700">18분</span></li>
-                                                            <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">제작기간</span> <span class="text-gray-700">2026.01. ~ 2026.03.</span></li>
-                                                        </ul>
+                                            <section id="${id}" class="page-section p-6 md:p-12 lg:p-20">
+                                                <div class="max-w-6xl mx-auto">
+                                                    <h2 class="text-4xl md:text-5xl font-black mb-12 tracking-tighter text-gray-900">${title}</h2>
+                                                    <div class="mb-24">
+                                                        <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.4em] mb-8 text-center md:text-left">Gameplay Movie</h3>
+                                                        <div class="aspect-video w-full rounded-[2rem] overflow-hidden shadow-2xl">
+                                                            <iframe class="w-full h-full"
+                                                            src="https://www.youtube.com/embed/GIn5LHzQ3tc"
+                                srcdoc="<style>*{padding:0;margin:0;overflow:hidden}html,body{height:100%}img{position:absolute;width:100%;height:100%;object-fit:cover;top:0;left:0;}.play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:68px;height:48px;background-color:rgba(33,33,33,0.8);border-radius:12px;display:flex;justify-content:center;align-items:center;transition:all 0.2s;}.play-btn:hover{background-color:#ff0000;}.play-btn svg{fill:#fff;width:32px;height:32px;}</style><a href='https://www.youtube.com/embed/GIn5LHzQ3tc?autoplay=1'><img src='https://img.youtube.com/vi/GIn5LHzQ3tc/maxresdefault.jpg' alt='영상 재생'><div class='play-btn'><svg viewBox='0 0 24 24'><path d='M8 5v14l11-7z'/></svg></div></a>"   frameborder="0"
+                                                            allow="autoplay; fullscreen"
+                                                            allowfullscreen>
+                                </iframe>
+                                                        </div>
                                                     </div>
+                                                    <div class="grid grid-cols-1 lg:grid-cols-9 gap-12 lg:gap-20 mb-24 py-16 border-y border-gray-100">
 
-                                                    <div class="lg:col-span-5 text-gray-600">
-                                                        <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.4em] mb-8">Overview</h3>
-                                                        <p class="text-sm md:text-base leading-[3]">원신 이나즈마 지역의 와타츠미섬, 월드 퀘스트 '월광욕 연못' 레벨디자인 분석 및 역기획 영상입니다. <br> 언리얼 엔진을 활용해 핵심 기믹과 탐사 동선을 직접 구현 및 재설계하였습니다.</p>
+                                                        <div class="lg:col-span-4">
+                                                            <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.4em] mb-8">Project Details</h3>
+                                                            <ul class="space-y-4 text-sm md:text-base">
+                                                                <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">장르</span> <span class="text-gray-700">3인칭 오픈월드 ARPG</span></li>
+                                                                <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">엔진</span> <span class="text-gray-700">Unreal 엔진 5.6</span></li>
+                                                                <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">맵 사이즈</span> <span class="text-gray-700">1100(m) x 600(m) x 200(m)</span></li>
+                                                                <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">테마</span> <span class="text-gray-700">산호, 조개, 진주빛의 몽환적인 섬 (분지)</span></li>
+                                                                <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">플레이타임</span> <span class="text-gray-700">18분</span></li>
+                                                                <li class="flex gap-4 md:gap-6"><span class="font-bold w-20 md:w-24 text-gray-400 shrink-0">제작기간</span> <span class="text-gray-700">2026.01. ~ 2026.03.</span></li>
+                                                            </ul>
+                                                        </div>
+
+                                                        <div class="lg:col-span-5 text-gray-600">
+                                                            <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.4em] mb-8">Overview</h3>
+                                                            <p class="text-sm md:text-base leading-[3]">원신 이나즈마 지역의 와타츠미섬, 월드 퀘스트 '월광욕 연못' 레벨디자인 분석 및 역기획 영상입니다. <br> 언리얼 엔진을 활용해 핵심 기믹과 탐사 동선을 직접 구현 및 재설계하였습니다.</p>
+                                                        </div>
                                                     </div>
-                                                </div>
                                                     <div class="mb-24">
                                                         <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.4em] mb-8 text-center md:text-left">Detail Screenshots</h3>
                                                         <div class="slider-outer px-10 md:px-20">
@@ -857,6 +855,15 @@
                             <span class="flex items-center gap-2 bg-gray-50 px-3 md:px-4 py-2 rounded-lg border border-gray-100">🎂 25세 (2002년생)</span>
                             <span class="flex items-center gap-2 bg-gray-50 px-3 md:px-4 py-2 rounded-lg border border-gray-100"><svg class="w-4 h-4 text-teal-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg> 010-5349-9247</span>
                             <span class="flex items-center gap-2 bg-gray-50 px-3 md:px-4 py-2 rounded-lg border border-gray-100 overflow-hidden text-ellipsis"><svg class="w-4 h-4 text-teal-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> parmji2111@gmail.com</span>
+                        </div>
+
+                        <div class="pt-6 flex flex-col sm:flex-row gap-3 md:gap-4 justify-center md:justify-start">
+                            <a href="https://cnozv.github.io/박민지_PR문서.pdf" target="_blank" class="px-6 py-3 bg-teal-600 text-white rounded-xl font-bold hover:bg-teal-500 transition-all shadow-md flex items-center justify-center gap-2 text-sm">
+                                <span>📄</span> PR 문서 열기
+                            </a>
+                            <a href="https://cnozv.github.io/%EB%B0%95%EB%AF%BC%EC%A7%80_%EC%9D%B4%EB%A0%A5%EC%84%9C.pdf" target="_blank" class="px-6 py-3 bg-gray-800 text-white rounded-xl font-bold hover:bg-gray-700 transition-all shadow-md flex items-center justify-center gap-2 text-sm">
+                                <span>📝</span> 이력서 열기
+                            </a>
                         </div>
                     </div>
                 </div>
